@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Core">
+      <UniqueIdentifier>{59727834-ecd7-4b0d-b27e-5e9488952783}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scanning">
+      <UniqueIdentifier>{768d1193-a836-4f55-9a84-99daea2b95a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Compilation">
+      <UniqueIdentifier>{c16db17d-fe22-4ac5-be2e-51c29cbc5049}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Core">
+      <UniqueIdentifier>{3d5c226e-909a-4980-b4ed-28913609baa1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scanning">
+      <UniqueIdentifier>{4c6d22f6-1b12-4b04-85da-832ca2074bd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Compilation">
+      <UniqueIdentifier>{5fbbba8a-675b-43cd-bcfd-10978808a46e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utils">
+      <UniqueIdentifier>{ac80f82a-2f66-4622-8c1c-5541ad32dfa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utils">
+      <UniqueIdentifier>{7be3353a-3523-4791-8cb9-08ae3466a504}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hyperscan_compiler.h">
+      <Filter>Header Files\Compilation</Filter>
+    </ClInclude>
+    <ClInclude Include="hyperscan_context.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="hyperscan_engine.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="hyperscan_exception.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="hyperscan_match.h">
+      <Filter>Header Files\Scanning</Filter>
+    </ClInclude>
+    <ClInclude Include="hyperscan_match_event_handler.h">
+      <Filter>Header Files\Scanning</Filter>
+    </ClInclude>
+    <ClInclude Include="hyperscan_match_observable.h">
+      <Filter>Header Files\Scanning</Filter>
+    </ClInclude>
+    <ClInclude Include="hyperscan_scanner.h">
+      <Filter>Header Files\Scanning</Filter>
+    </ClInclude>
+    <ClInclude Include="hyperscan_utils.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AssemblyInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hyperscan_compiler.cpp">
+      <Filter>Source Files\Compilation</Filter>
+    </ClCompile>
+    <ClCompile Include="hyperscan_context.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="hyperscan_engine.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="hyperscan_match.cpp">
+      <Filter>Source Files\Scanning</Filter>
+    </ClCompile>
+    <ClCompile Include="hyperscan_match_event_handler.cpp">
+      <Filter>Source Files\Scanning</Filter>
+    </ClCompile>
+    <ClCompile Include="hyperscan_match_observable.cpp">
+      <Filter>Source Files\Scanning</Filter>
+    </ClCompile>
+    <ClCompile Include="hyperscan_scanner.cpp">
+      <Filter>Source Files\Scanning</Filter>
+    </ClCompile>
+    <ClCompile Include="hyperscan_utils.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="app.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="app.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
