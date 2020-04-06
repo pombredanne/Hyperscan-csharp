@@ -55,7 +55,7 @@
       <AdditionalIncludeDirectories>C:\cygwin64\home\BenjaminBougot\hyperscan\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>chimera.lib;corpusomatic.lib;crosscompileutil.lib;databaseutil.lib;expressionutil.lib;hs.lib;hs_runtime.lib;pcred.lib;sqlite3_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>chimera.lib;corpusomatic.lib;crosscompileutil.lib;databaseutil.lib;expressionutil.lib;hs.lib;hs_runtime.lib;pcre.lib;sqlite3_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\cygwin64\home\BenjaminBougot\hyperscan\build\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -66,9 +66,10 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>C:\cygwin64\home\BenjaminBougot\hyperscan\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>chimera.lib;corpusomatic.lib;crosscompileutil.lib;databaseutil.lib;expressionutil.lib;hs.lib;hs_runtime.lib;pcred.lib;sqlite3_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>chimera.lib;corpusomatic.lib;crosscompileutil.lib;databaseutil.lib;expressionutil.lib;hs.lib;hs_runtime.lib;pcre.lib;sqlite3_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\cygwin64\home\BenjaminBougot\hyperscan\build\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>

@@ -37,6 +37,12 @@
     <Filter Include="Source Files\Utils">
       <UniqueIdentifier>{7be3353a-3523-4791-8cb9-08ae3466a504}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Scanning\Event">
+      <UniqueIdentifier>{e84940ed-b158-450f-b006-3733f782277e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scanning\Event">
+      <UniqueIdentifier>{4e831f20-20a8-484b-bbe8-e75f0fd38c40}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -60,9 +66,6 @@
     <ClInclude Include="hyperscan_match.h">
       <Filter>Header Files\Scanning</Filter>
     </ClInclude>
-    <ClInclude Include="hyperscan_match_event_handler.h">
-      <Filter>Header Files\Scanning</Filter>
-    </ClInclude>
     <ClInclude Include="hyperscan_match_observable.h">
       <Filter>Header Files\Scanning</Filter>
     </ClInclude>
@@ -71,6 +74,9 @@
     </ClInclude>
     <ClInclude Include="hyperscan_utils.h">
       <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="hyperscan_match_event_handler.h">
+      <Filter>Header Files\Scanning\Event</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -92,9 +98,6 @@
     <ClCompile Include="hyperscan_match.cpp">
       <Filter>Source Files\Scanning</Filter>
     </ClCompile>
-    <ClCompile Include="hyperscan_match_event_handler.cpp">
-      <Filter>Source Files\Scanning</Filter>
-    </ClCompile>
     <ClCompile Include="hyperscan_match_observable.cpp">
       <Filter>Source Files\Scanning</Filter>
     </ClCompile>
@@ -103,6 +106,9 @@
     </ClCompile>
     <ClCompile Include="hyperscan_utils.cpp">
       <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="hyperscan_match_event_handler.cpp">
+      <Filter>Source Files\Scanning\Event</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
