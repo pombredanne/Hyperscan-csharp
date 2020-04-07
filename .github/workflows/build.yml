@@ -24,19 +24,18 @@ jobs:
       - name: Set ENV
         run: |
           echo '::set-env name=PATH::C:\tools\cygwin\bin;C:\tools\cygwin\usr\bin'
-          refreshenv
-        shell: cmd
+          echo '::add-path::C:\tools\cygwin\bin'
+        shell: bash
       - name: Ragel
         run: |
           cd hyperscan
-          C:\tools\cygwin\bin\bash.exe
           wget http://www.colm.net/files/ragel/ragel-6.10.tar.gz
           tar xzvf ragel-6.10.tar.gz && rm ragel-6.10.tar.gz
           cd ragel-6.10
           ./configure
           make
           make install
-        shell: cmd
+        shell: bash
       - name: Microsoft Build tools
         run: |
           choco install microsoft-build-tools
