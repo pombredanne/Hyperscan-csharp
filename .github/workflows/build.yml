@@ -30,10 +30,11 @@ jobs:
       - name: Set ENV
         run: |
           echo '::set-env name=PATH::C:\tools\cygwin\bin;C:\tools\cygwin\usr\bin'
+      - uses: actions/checkout@v2
       - name: Ragel
         run: |
           cd hyperscan
-          bash.exe -c wget  http://www.colm.net/files/ragel/ragel-6.10.tar.gz
+          bash.exe -c wget http://www.colm.net/files/ragel/ragel-6.10.tar.gz
           bash.exe -c tar xzvf ragel-6.10.tar.gz && rm ragel-6.10.tar.gz
           cd ragel-6.10
           bash.exe -c ./configure
@@ -43,7 +44,6 @@ jobs:
       - name: Microsoft Build tools
         run: |
           choco install microsoft-build-tools
-      - uses: actions/checkout@v2
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
