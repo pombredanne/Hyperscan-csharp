@@ -37,6 +37,7 @@ jobs:
           make | tr -d '\r'
           make install | tr -d '\r'
         shell: bash
+        working-directory: ${{env.working-directory}}
       - name: Microsoft Build tools
         run: |
           choco install microsoft-build-tools
