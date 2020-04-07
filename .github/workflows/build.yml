@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - master
-      - develop
   pull_request:
     branches:
       - '*'
@@ -20,7 +19,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[ci skip]')" 
     steps:
       - uses: actions/checkout@v2
-      - name: Install cygwin base packages with chocolatey
+      - name: Install cygwin base packages and cmake with chocolatey
         run: |
           choco config get cacheLocation
           choco install --no-progress cygwin
@@ -54,13 +53,13 @@ jobs:
       - name: Download Boost
         run: |
           wget https://dl.bintray.com/boostorg/release/1.72.0/source/boost_1_72_0.tar.gz | tr -d '\r'
-          tar xzvf boost_1_72_0.tar.gz -C boost_1_72_0 && rm boost_1_72_0.tar.gz | tr -d '\r'
+          tar xzvf boost_1_72_0.tar.gz && rm boost_1_72_0.tar.gz | tr -d '\r'
         shell: bash
         working-directory: ${{env.working-directory}}\hyperscan
       - name: Download PCRE
         run: |
           wget ftp://ftp.pcre.org/pub/pcre/pcre-8.41.tar.gz | tr -d '\r'
-          tar xzvf pcre-8.41.tar.gz -C pcre-8.41 && rm pcre-8.41.tar.gz | tr -d '\r'
+          tar xzvf pcre-8.41.tar.gz && rm pcre-8.41.tar.gz | tr -d '\r'
         shell: bash
         working-directory: ${{env.working-directory}}\hyperscan
       - name: Download SQLite
@@ -69,6 +68,11 @@ jobs:
           tar xzvf sqlite-autoconf-3310100.tar.gz -C sqlite3 && rm sqlite-autoconf-3310100.tar.gz | tr -d '\r'
         shell: bash
         working-directory: ${{env.working-directory}}\hyperscan
+      - name: Move SQLite
+        run: |
+          mv sqlite-autoconf-3310100 sqlite3
+        shell: cmd
+        working-directory: ${{env.working-directory}}\hyperscan
       - name: Set MSBuild ENV
         run: |
           echo '::add-path::C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin'
@@ -76,7 +80,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          CMake -G "Visual Studio 15 2017 Win64" -D BOOST_ROOT=%cd%/../boost_1_72_0/ ..
+          CMake -G "Visual Studio 15 2017 Win64" -D BOOST_ROOT=%cd%/../boost_1_72_0/ -DHAVE_AVX2=true ..
           MsBuild.exe ALL_BUILD.vcxproj /t:build /p:Configuration=Release
         shell: cmd
         working-directory: ${{env.working-directory}}\hyperscan
