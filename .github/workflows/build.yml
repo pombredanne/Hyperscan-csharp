@@ -23,7 +23,7 @@ jobs:
         run: |
           choco config get cacheLocation
           choco install --no-progress cygwin
-          choco install --no-progress cmake
+          choco install --no-progress cmake --installargs 'ADD_CMAKE_TO_PATH=System'
       - name: Install cygwin additional packages
         run: |
           C:\tools\cygwin\cygwinsetup.exe -qgnNdO -R C:/tools/cygwin -s http://mirrors.kernel.org/sourceware/cygwin/ -P gcc-core,gcc-g++,wget,make
@@ -75,6 +75,7 @@ jobs:
         working-directory: ${{env.working-directory}}\hyperscan
       - name: Set MSBuild ENV
         run: |
+          echo '::set-env name=PATH::C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin'
           echo '::add-path::C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin'
       - name: Build Hyperscan
         run: |
