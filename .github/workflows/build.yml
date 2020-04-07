@@ -29,13 +29,14 @@ jobs:
       - name: Ragel
         run: |
           cd hyperscan
+          C:\cygwin64\bin\bash.exe
           wget http://www.colm.net/files/ragel/ragel-6.10.tar.gz
           tar xzvf ragel-6.10.tar.gz && rm ragel-6.10.tar.gz
           cd ragel-6.10
           ./configure
           make
           make install
-        shell: C:\tools\cygwin\bin\bash.exe
+        shell: cmd
       - name: Microsoft Build tools
         run: |
           choco install microsoft-build-tools
