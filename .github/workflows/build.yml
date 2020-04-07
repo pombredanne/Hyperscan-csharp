@@ -1,7 +1,12 @@
 name: Build & Test
-
-on: [push]
-
+on:
+  push:
+    branches:
+      - master
+      - develop
+  pull_request:
+    branches:
+      - '*'
 jobs:
   build:
     strategy:
@@ -19,6 +24,7 @@ jobs:
         run: |
           choco config get cacheLocation
           choco install --no-progress cygwin
+          choco install --no-progress cmake
       - name: Install cygwin additional packages
         run: |
           C:\tools\cygwin\cygwinsetup.exe -qgnNdO -R C:/tools/cygwin -s http://mirrors.kernel.org/sourceware/cygwin/ -P gcc-core,gcc-g++,wget,make
@@ -45,9 +51,6 @@ jobs:
           make install | tr -d '\r'
         shell: bash
         working-directory: ${{env.working-directory}}\ragel-6.10
-      - name: Install CMake
-        run: |
-          choco install cmake
       - name: Download Boost
         run: |
           wget https://dl.bintray.com/boostorg/release/1.72.0/source/boost_1_72_0.tar.gz | tr -d '\r'
