@@ -13,13 +13,6 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[ci skip]')" 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/cache@v1
-        with:
-          path: C:\Users\runneradmin\AppData\Local\Temp\chocolatey
-          key: ${{ runner.os }}-chocolatey-${{ matrix.os }}-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-chocolatey-${{ matrix.os }}-
-            ${{ runner.os }}-chocolatey-
       - name: Install cygwin base packages with chocolatey
         run: |
           choco config get cacheLocation
@@ -34,12 +27,12 @@ jobs:
       - name: Ragel
         run: |
           cd hyperscan
-          bash.exe -c wget http://www.colm.net/files/ragel/ragel-6.10.tar.gz
-          bash.exe -c tar xzvf ragel-6.10.tar.gz && rm ragel-6.10.tar.gz
+          bash.exe -c "wget http://www.colm.net/files/ragel/ragel-6.10.tar.gz"
+          bash.exe -c "tar xzvf ragel-6.10.tar.gz && rm ragel-6.10.tar.gz"
           cd ragel-6.10
           bash.exe -c ./configure
           bash.exe -c make
-          bash.exe -c make install
+          bash.exe -c "make install"
         shell: cmd
       - name: Microsoft Build tools
         run: |
