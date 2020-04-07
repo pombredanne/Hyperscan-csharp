@@ -39,6 +39,7 @@ jobs:
           bash.exe -c ./configure
           bash.exe -c make
           bash.exe -c make install
+        shell: cmd
       - name: Microsoft Build tools
         run: |
           choco install microsoft-build-tools
