@@ -73,6 +73,10 @@ jobs:
           mv sqlite-autoconf-3310100 sqlite3
         shell: cmd
         working-directory: ${{env.working-directory}}\hyperscan
+      - name: Set Ragel ENV
+        run: |
+          echo '::set-env name=PATH::${{env.working-directory}}\ragel-6.10\ragel'
+          echo '::add-path::${{env.working-directory}}\ragel-6.10\ragel'
       - name: Make Hyperscan
         run: |
           mkdir build
@@ -80,13 +84,9 @@ jobs:
           "C:\Program Files\CMake\bin\cmake.exe" -G "Visual Studio 15 2017 Win64" -D BOOST_ROOT=%cd%/../boost_1_72_0/ -DHAVE_AVX2=true ..
         shell: cmd
         working-directory: ${{env.working-directory}}\hyperscan
-      - name: Set MSBuild ENV
-        run: |
-          echo '::set-env name=PATH::C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin'
-          echo '::add-path::C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin'
       - name: Build Hyperscan
         run: |
-          MsBuild.exe ALL_BUILD.vcxproj /t:build /p:Configuration=Release
+          "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin\MsBuild.exe" ALL_BUILD.vcxproj /t:build /p:Configuration=Release
         shell: cmd
         working-directory: ${{env.working-directory}}\hyperscan\build
       - name: Setup .NET Core
