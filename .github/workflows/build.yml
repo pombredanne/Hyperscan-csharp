@@ -10,6 +10,8 @@ jobs:
         vs: [2019]
       fail-fast: false
     runs-on: ${{ matrix.os }}
+    env:
+      working-directory: d:\a\Hyperscan-csharp\Hyperscan-csharp
     if: "!contains(github.event.head_commit.message, '[ci skip]')" 
     steps:
       - uses: actions/checkout@v2
@@ -28,7 +30,6 @@ jobs:
         shell: bash
       - name: Ragel
         run: |
-          cd hyperscan | tr -d '\r'
           wget http://www.colm.net/files/ragel/ragel-6.10.tar.gz | tr -d '\r'
           tar xzvf ragel-6.10.tar.gz && rm ragel-6.10.tar.gz | tr -d '\r'
           cd ragel-6.10 | tr -d '\r'
