@@ -35,7 +35,7 @@ jobs:
           ./configure
           make
           make install
-        shell: bash
+        shell: C:\tools\cygwin\bin\bash.exe
       - name: Microsoft Build tools
         run: |
           choco install microsoft-build-tools
