@@ -12,6 +12,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     if: "!contains(github.event.head_commit.message, '[ci skip]')" 
     steps:
+      - uses: actions/checkout@v2
       - uses: actions/cache@v1
         with:
           path: C:\Users\runneradmin\AppData\Local\Temp\chocolatey
@@ -30,7 +31,6 @@ jobs:
       - name: Set ENV
         run: |
           echo '::set-env name=PATH::C:\tools\cygwin\bin;C:\tools\cygwin\usr\bin'
-      - uses: actions/checkout@v2
       - name: Ragel
         run: |
           cd hyperscan
