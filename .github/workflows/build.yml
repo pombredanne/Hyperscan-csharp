@@ -29,7 +29,7 @@ jobs:
         shell: bash
       - name: Ragel
         run: |
-          wget http://www.colm.net/files/ragel/ragel-6.10.tar.gz -O- | tr -d '\r'
+          wget http://www.colm.net/files/ragel/ragel-6.10.tar.gz | tr -d '\r'
           tar xzvf ragel-6.10.tar.gz && rm ragel-6.10.tar.gz
           cd ragel-6.10
           ./configure
