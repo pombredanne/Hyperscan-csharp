@@ -350,3 +350,12 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# Ragel
+ragel-6.10/
+
+# Hyperscan
+hyperscan/build/
+hyperscan/boost_1_72_0/
+hyperscan/pcre-8.44/
+hyperscan/sqlite3/
