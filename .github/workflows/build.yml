@@ -89,7 +89,7 @@ jobs:
         working-directory: ${{env.src-directory}}
       - name: Build Hyperscan
         run: |
-          "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\15.0\Bin\MsBuild.exe" ALL_BUILD.vcxproj /t:build /p:Configuration=Release
+          "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MsBuild.exe" ALL_BUILD.vcxproj /t:build /p:Configuration=Release
         shell: cmd
         working-directory: ${{env.build-directory}}
       - name: Setup .NET Core
