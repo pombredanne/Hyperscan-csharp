@@ -78,8 +78,8 @@ jobs:
         working-directory: ${{env.src-directory}}
       - name: Set Ragel ENV
         run: |
-          echo '::set-env name=PATH::${{env.working-directory}}\ragel-6.10\ragel'
-          echo '::add-path::${{env.working-directory}}\ragel-6.10\ragel'
+          echo '::set-env name=PATH::${{env.ragel-directory}}\ragel'
+          echo '::add-path::${{env.ragel-directory}}\ragel'
       - name: Make Hyperscan
         run: |
           mkdir build
