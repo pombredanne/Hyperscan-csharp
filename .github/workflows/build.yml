@@ -10,8 +10,8 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [windows-2016]
-        vs: [2016]
+        os: [windows-2019]
+        vs: [2019]
       fail-fast: false
     runs-on: ${{ matrix.os }}
     env:
