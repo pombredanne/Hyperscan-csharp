@@ -14,8 +14,6 @@ jobs:
         vs: [2016]
       fail-fast: false
     runs-on: ${{ matrix.os }}
-    env:
-      working-directory: d:\a\Hyperscan-csharp\Hyperscan-csharp
     if: "!contains(github.event.head_commit.message, '[ci skip]')" 
     steps:
       - uses: actions/checkout@v2
@@ -38,41 +36,41 @@ jobs:
           wget http://www.colm.net/files/ragel/ragel-6.10.tar.gz | tr -d '\r'
           tar xzvf ragel-6.10.tar.gz && rm ragel-6.10.tar.gz | tr -d '\r'
         shell: bash
-        working-directory: ${{env.working-directory}}
+        working-directory: ./
       - name: Configure Ragel
         run: |
           bash -c ./configure
         shell: cmd
-        working-directory: ${{env.working-directory}}\ragel-6.10
+        working-directory: ./ragel-6.10
       - name: Build Ragel
         run: |
           make | tr -d '\r'
           make install | tr -d '\r'
         shell: bash
-        working-directory: ${{env.working-directory}}\ragel-6.10
+        working-directory: ./ragel-6.10
       - name: Download Boost
         run: |
           wget https://dl.bintray.com/boostorg/release/1.72.0/source/boost_1_72_0.tar.gz | tr -d '\r'
           tar xzvf boost_1_72_0.tar.gz && rm boost_1_72_0.tar.gz | tr -d '\r'
         shell: bash
-        working-directory: ${{env.working-directory}}\hyperscan
+        working-directory: ./hyperscan
       - name: Download PCRE
         run: |
           wget ftp://ftp.pcre.org/pub/pcre/pcre-8.41.tar.gz | tr -d '\r'
           tar xzvf pcre-8.41.tar.gz && rm pcre-8.41.tar.gz | tr -d '\r'
         shell: bash
-        working-directory: ${{env.working-directory}}\hyperscan
+        working-directory: ./hyperscan
       - name: Download SQLite
         run: |
           wget https://www.sqlite.org/2020/sqlite-autoconf-3310100.tar.gz | tr -d '\r'
           tar xzvf sqlite-autoconf-3310100.tar.gz && rm sqlite-autoconf-3310100.tar.gz | tr -d '\r'
         shell: bash
-        working-directory: ${{env.working-directory}}\hyperscan
+        working-directory: ./hyperscan
       - name: Move SQLite
         run: |
           mv sqlite-autoconf-3310100 sqlite3
         shell: cmd
-        working-directory: ${{env.working-directory}}\hyperscan
+        working-directory: ./hyperscan
       - name: Set Ragel ENV
         run: |
           echo '::set-env name=PATH::${{env.working-directory}}\ragel-6.10\ragel'
@@ -83,12 +81,12 @@ jobs:
           cd build
           "C:\Program Files\CMake\bin\cmake.exe" -G "Visual Studio 15 2017 Win64" -D BOOST_ROOT=%cd%/../boost_1_72_0/ -DHAVE_AVX2=true ..
         shell: cmd
-        working-directory: ${{env.working-directory}}\hyperscan
+        working-directory: ./hyperscan
       - name: Build Hyperscan
         run: |
-          "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin\MsBuild.exe" ALL_BUILD.vcxproj /t:build /p:Configuration=Release
+          "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\BuildTools\MSBuild\15.0\Bin\MsBuild.exe" ALL_BUILD.vcxproj /t:build /p:Configuration=Release
         shell: cmd
-        working-directory: ${{env.working-directory}}\hyperscan\build
+        working-directory: ./hyperscan/build
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
