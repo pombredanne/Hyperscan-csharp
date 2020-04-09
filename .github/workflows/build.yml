@@ -97,6 +97,11 @@ jobs:
           source-url: https://api.nuget.org/v3/index.json
         env:
           NUGET_AUTH_TOKEN: ${{secrets.NUGET_AUTH_TOKEN}}
+      - name: Restore
+        run: |
+          dotnet restore src/Hyperscan.sln
+        shell: cmd
+        working-directory: ${{env.root-directory}}
       - name: Build
         run: |
           "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MsBuild.exe" src/Hyperscan.sln /p:Configuration=Release
