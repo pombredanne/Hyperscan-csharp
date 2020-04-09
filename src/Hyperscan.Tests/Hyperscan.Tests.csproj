@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <IsPackable>false</IsPackable>
     <Platforms>x64</Platforms>
+    <DebugType>full</DebugType>
   </PropertyGroup>
 
   <ItemGroup>

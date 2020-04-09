@@ -27,6 +27,8 @@ jobs:
           choco config get cacheLocation
           choco install --no-progress cygwin
           choco install --no-progress cmake --installargs 'ADD_CMAKE_TO_PATH=System'
+          choco install --no-progress opencover.portable
+          choco install --no-progress codecov
       - name: Install cygwin additional packages
         run: |
           C:\tools\cygwin\cygwinsetup.exe -qgnNdO -R C:/tools/cygwin -s http://mirrors.kernel.org/sourceware/cygwin/ -P gcc-core,gcc-g++,wget,make
@@ -107,6 +109,12 @@ jobs:
       - name: Test
         run: |
           dotnet test src/Hyperscan.Tests/bin/x64/Release/netcoreapp3.1/Hyperscan.Tests.dll
+        shell: cmd
+        working-directory: ${{env.root-directory}}
+      - name: Coverage
+        run: |
+          OpenCover.Console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:".\src\Hyperscan.Tests\bin\x64\Release\netcoreapp3.1\Hyperscan.Tests.dll -noshadow" -filter:"+[Hyperscan*]* -[Hyperscan.Tests*]*" -output:".\coverage.xml"
+          codecov -f "coverage.xml" -t ${{secrets.CODECOV_TOKEN}}
         shell: cmd
         working-directory: ${{env.root-directory}}
       - name: Pack

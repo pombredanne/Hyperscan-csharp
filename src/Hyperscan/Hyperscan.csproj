@@ -5,6 +5,7 @@
     <Platforms>x64</Platforms>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <PackProject>true</PackProject>
+    <DebugType>full</DebugType>
     <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);CreatePackNupkg</TargetsForTfmSpecificContentInPackage>
     <PackageId>Hyperscan</PackageId>
     <Authors>bbougot</Authors>
