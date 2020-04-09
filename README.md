@@ -36,6 +36,12 @@ Those requirements are driven by the following statements:
 * C++/CLI does support .NET Core only targeting >= 3.1 and only on Windows, as stated [here](https://devblogs.microsoft.com/cppblog/the-future-of-cpp-cli-and-dotnet-core-3/).
 * 32-bit platform-only usage is marginal, especially on memory-intensive environment such as servers.
 
+## Contributing
+Feel free to raise issues or submit a pull request.
+
+## Credits
+Original project implementation comes from Intel®.
+
 ## Legal and Licensing
 
 Hyperscan - C# is licensed under the [MIT license][].
