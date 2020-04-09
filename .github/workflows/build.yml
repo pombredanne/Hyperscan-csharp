@@ -98,10 +98,19 @@ jobs:
         env:
           NUGET_AUTH_TOKEN: ${{secrets.NUGET_AUTH_TOKEN}}
       - name: Build
-        run: dotnet build src/Hyperscan.sln --configuration Release
+        run: |
+          "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MsBuild.exe" src/Hyperscan.sln /p:Configuration=Release
+        shell: cmd
+        working-directory: ${{env.root-directory}}
       - name: Test
-        run: dotnet test src/Hyperscan.sln --configuration Release
+        run: |
+          dotnet test src/Hyperscan.Tests/bin/x64/Release/netcoreapp3.1/Hyperscan.Tests.dll
+        shell: cmd
+        working-directory: ${{env.root-directory}}
       - name: Pack
-        run: dotnet pack src/Hyperscan.sln --configuration Release
+        run: |
+          "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MsBuild.exe" -t:pack src/Hyperscan/Hyperscan.csproj /p:Configuration=Release /p:Platform=x64
+        shell: cmd
+        working-directory: ${{env.root-directory}}
       - name: Publish the package to NuGet
         run: dotnet nuget push src/hyperscan/Hyperscan/bin/x64/Release/*.nupkg
