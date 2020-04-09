@@ -29,11 +29,11 @@ This project is a third-party developed using C++/CLI for the [hyperscan](https:
 ## Supported platforms
 Hyperscan - C# supports only Windows 8/8.1/10/Server 2016/2019 x64 with .NET Core >= 3.1, while support for 32-bit platform-only is **not** provided.
 
-Using Hyperscan - C# is only available through .NET Core 3.1 applications, hence referencing `<TargetFramework>netcoreapp3.1</TargetFramework>` within your *csproj*. The chosen platform must also be *x64* exclusively, x86 or AnyCPU targets are not supported due to native bindings from hyperscan being x64.
+Using Hyperscan - C# is only available through .NET Core 3.1 applications, hence referencing `netcoreapp3.1` within your *csproj*. The chosen platform must also be *x64* exclusively, x86 or AnyCPU targets are not supported due to native bindings from hyperscan being x64.
 
 Those requirements are driven by the following statements:
 * [hyperscan](https://github.com/intel/hyperscan) supports Windows 8+ as explained [here](http://intel.github.io/hyperscan/dev-reference/getting_started.html#software).
-* C++/CLI does support .NET Core only targeting >= 3.1 and only on Windows, as stated [here](https://devblogs.microsoft.com/cppblog/the-future-of-cpp-cli-and-dotnet-core-3/).
+* C++/CLI does support .NET Core >= 3.1 and only on Windows, as stated [here](https://devblogs.microsoft.com/cppblog/the-future-of-cpp-cli-and-dotnet-core-3/).
 * 32-bit platform-only usage is marginal, especially on memory-intensive environment such as servers.
 
 ## Contributing
