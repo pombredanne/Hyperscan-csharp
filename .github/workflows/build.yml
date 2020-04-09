@@ -115,4 +115,4 @@ jobs:
         shell: cmd
         working-directory: ${{env.root-directory}}
       - name: Publish the package to NuGet
-        run: dotnet nuget push src/Hyperscan/bin/x64/Release/*.nupkg -s https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_AUTH_TOKEN}}
+        run: dotnet nuget push **/*.nupkg -s https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_AUTH_TOKEN}} --no-symbols --skip-duplicate
