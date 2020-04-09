@@ -33,8 +33,7 @@ jobs:
         shell: cmd
       - name: Set Cygwin ENV
         run: |
-          echo '::set-env name=PATH::C:\tools\cygwin\bin;C:\tools\cygwin\usr\bin'
-          echo '::add-path::C:\tools\cygwin\bin'
+          echo '::add-path::C:\tools\cygwin\bin;C:\tools\cygwin\usr\bin'
         shell: bash
       - name: Download Ragel
         run: |
@@ -78,7 +77,6 @@ jobs:
         working-directory: ${{env.src-directory}}
       - name: Set Ragel ENV
         run: |
-          echo '::set-env name=PATH::${{env.ragel-directory}}\ragel'
           echo '::add-path::${{env.ragel-directory}}\ragel'
       - name: Make Hyperscan
         run: |
