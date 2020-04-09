@@ -1,6 +1,10 @@
 # Hyperscan - C#
 
-Match tens of thousands of regular expressions within milliseconds - .NET Core bindings for Intel's Hyperscan
+[hyperscan](https://github.com/intel/hyperscan) is a high-performance multiple regex matching library.
+
+It uses hybrid automata techniques to allow simultaneous matching of large numbers (up to tens of thousands) of regular expressions and for the matching of regular expressions across streams of data.
+
+This project is a third-party developed using C++/CLI for the [hyperscan](https://github.com/intel/hyperscan) project to enable developers to integrate hyperscan in their .NET Core based projects.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/bbougot/Hyperscan-csharp/blob/master/LICENSE)
 
