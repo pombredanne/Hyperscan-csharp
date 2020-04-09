@@ -1,4 +1,5 @@
 # Hyperscan - C#
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/bbougot/Hyperscan-csharp/blob/master/LICENSE) [![Nuget](https://img.shields.io/nuget/v/Hyperscan)](https://www.nuget.org/packages/Hyperscan/) [![Nuget](https://img.shields.io/nuget/dt/Hyperscan)](https://www.nuget.org/packages/Hyperscan/)
 
 [hyperscan](https://github.com/intel/hyperscan) is a high-performance multiple regex matching library.
 
@@ -6,11 +7,7 @@ It uses hybrid automata techniques to allow simultaneous matching of large numbe
 
 This project is a third-party developed using C++/CLI for the [hyperscan](https://github.com/intel/hyperscan) project to enable developers to integrate hyperscan in their .NET Core based projects.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/bbougot/Hyperscan-csharp/blob/master/LICENSE)
-
-[![Nuget](https://img.shields.io/nuget/v/Hyperscan)](https://www.nuget.org/packages/Hyperscan/) [![Nuget](https://img.shields.io/nuget/dt/Hyperscan)](https://www.nuget.org/packages/Hyperscan/)
-
-### Build status
+## Build status
 
 | Github CI (Windows)                                | Code Coverage Status     |
 | :------------------------------------------------- | :----------------------- |
