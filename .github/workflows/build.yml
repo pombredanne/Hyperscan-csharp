@@ -94,9 +94,6 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.100
-          source-url: https://api.nuget.org/v3/index.json
-        env:
-          NUGET_AUTH_TOKEN: ${{secrets.NUGET_AUTH_TOKEN}}
       - name: Restore
         run: |
           dotnet restore src/Hyperscan.sln
@@ -118,4 +115,4 @@ jobs:
         shell: cmd
         working-directory: ${{env.root-directory}}
       - name: Publish the package to NuGet
-        run: dotnet nuget push src/hyperscan/Hyperscan/bin/x64/Release/*.nupkg
+        run: dotnet nuget push **/*.nupkg -s https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_AUTH_TOKEN}}
