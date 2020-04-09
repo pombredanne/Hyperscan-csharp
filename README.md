@@ -10,10 +10,12 @@ Match tens of thousands of regular expressions within milliseconds - .NET Core b
 
 | Github CI (Windows)                                | Code Coverage Status     |
 | :------------------------------------------------- | :----------------------- |
-| [![github-image][]][github-site]                   | [![cc-image][]][cc-site] |
+| [![ci-image][]][ci-site]                   | [![cc-image][]][cc-site] |
 
-[github-image]: https://github.com/bbougot/Hyperscan-csharp/workflows/Build%20%26%20Test/badge.svg
+[ci-image]: https://github.com/bbougot/Hyperscan-csharp/workflows/Build%20%26%20Test/badge.svg
+[ci-site]: https://github.com/bbougot/Hyperscan-csharp/actions?query=workflow%3A%22Build+%26+Test%22
 [cc-image]: https://codecov.io/gh/bbougot/Hyperscan-csharp/branch/master/graph/badge.svg
+[cc-site]: https://codecov.io/gh/bbougot/Hyperscan-csharp
 
 ## Building the Repository
 
