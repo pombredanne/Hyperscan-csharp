@@ -18,6 +18,15 @@ This project is a third-party developed using C++/CLI for the [hyperscan](https:
 [cc-image]: https://codecov.io/gh/bbougot/Hyperscan-csharp/branch/master/graph/badge.svg
 [cc-site]: https://codecov.io/gh/bbougot/Hyperscan-csharp
 
+## Structure
+* **hyperscan** is a git *subtree* taken from master branch of https://github.com/intel/hyperscan. It is used by the C++/CLI wrapper located in src/hyperscan-bridge.
+* **src** is the root folder of the Hyperscan - C# project which contains:
+  * hyperscan-bridge: C++/CLI wrapper targeting .NET Core 3.1 which exposes the hyperscan API to the .NET world.
+  * Hyperscan: .NET Core 3.1 layer on top of hyperscan-bridge which provides utilities, helpers and extension methods to easier the usage of the hyperscan API.
+  * Hyperscan.Sample: .NET Core 3.1 console application to demonstrate simple usage of the API.
+  * Hyperscan.Tests: Unit tests powered by xUnit.
+  * Hyperscan.Benchmarks: Benchmark powered by BenchmarkDotNet.
+
 ## Building the Repository
 
 | Windows                    |
