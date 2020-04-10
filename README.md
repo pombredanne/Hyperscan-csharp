@@ -18,6 +18,20 @@ This project is a third-party developed using C++/CLI for the [hyperscan](https:
 [cc-image]: https://codecov.io/gh/bbougot/Hyperscan-csharp/branch/master/graph/badge.svg
 [cc-site]: https://codecov.io/gh/bbougot/Hyperscan-csharp
 
+## Installing from NuGet
+
+To install **Hyperscan**, run the following command in the **Package Manager Console**
+
+```
+Install-Package Hyperscan
+```
+
+More details available [here](https://www.nuget.org/packages/Hyperscan/).
+
+## Usage
+
+*More to come.*
+
 ## Structure
 * **hyperscan** is a git *subtree* taken from master branch of https://github.com/intel/hyperscan. It is used by the C++/CLI wrapper located in src/hyperscan-bridge.
 * **src** is the root folder of the Hyperscan - C# project which contains:
@@ -38,7 +52,7 @@ This project is a third-party developed using C++/CLI for the [hyperscan](https:
 ## Supported platforms
 Hyperscan - C# supports only Windows 8/8.1/10/Server 2016/2019 x64 with .NET Core >= 3.1, while support for 32-bit platform-only is **not** provided.
 
-Using Hyperscan - C# is only available through .NET Core 3.1 applications, hence referencing `netcoreapp3.1` within your *csproj*. The chosen platform must also be *x64* exclusively, x86 or AnyCPU targets are not supported due to native bindings from hyperscan being x64.
+Using Hyperscan - C# is only available through .NET Core 3.1 applications, hence referencing `netcoreapp3.1` within your csproj. The chosen platform must also be **x64** exclusively, x86 or AnyCPU targets are not supported due to native bindings from hyperscan being x64.
 
 Those requirements are driven by the following statements:
 * [hyperscan](https://github.com/intel/hyperscan) supports Windows 8+ as explained [here](http://intel.github.io/hyperscan/dev-reference/getting_started.html#software).
