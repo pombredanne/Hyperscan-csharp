@@ -37,6 +37,7 @@ To easier the installation of the dependencies, get [chocolatey](https://chocola
 Then, install the following requirements:
 
 `choco install cygwin`
+
 `choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System'`
 
 Add Cygwin to **PATH** environment variable: `C:\cygwin64\bin`
@@ -46,33 +47,43 @@ Once it's done, launch cygwin and get the following packages:
 Go to Hyperscan-csharp root folder, where you cloned the repository, and using Cygwin bash:
 * Download Ragel
 `wget http://www.colm.net/files/ragel/ragel-6.10.tar.gz`
+
 `tar xzvf ragel-6.10.tar.gz && rm ragel-6.10.tar.gz`
 * Configure and build Ragel
 `cd ragel-6.10`
+
 `bash -c ./configure`
+
 `make`
+
 `make install`
 
  In the hyperscan folder (`cd hyperscan`), and using Cygwin bash:
  * Download Boost
 `wget https://dl.bintray.com/boostorg/release/1.72.0/source/boost_1_72_0.tar.gz`
+
 `tar xzvf boost_1_72_0.tar.gz && rm boost_1_72_0.tar.gz`
 
 In the hyperscan folder (`cd hyperscan`), and using Cygwin bash:
 * Download PCRE
 `wget ftp://ftp.pcre.org/pub/pcre/pcre-8.41.tar.gz`
+
 `tar xzvf pcre-8.41.tar.gz && rm pcre-8.41.tar.gz`
 
 In the hyperscan folder (`cd hyperscan`), and using Cygwin bash:
 * Download SQLite
 `wget https://www.sqlite.org/2020/sqlite-autoconf-3310100.tar.gz`
+
 `tar xzvf sqlite-autoconf-3310100.tar.gz && rm sqlite-autoconf-3310100.tar.gz`
+
 `mv sqlite-autoconf-3310100 sqlite3`
 
 In the hyperscan folder (`cd hyperscan`), and using CMD:
 * Make hyperscan
 `mkdir build`
+
 `cd build`
+
 `cmake -G "Visual Studio 16 2019" -D BOOST_ROOT=%cd%/../boost_1_72_0/ -DHAVE_AVX2=true ..` 
 
 In the hyperscan build folder (`cd hyperscan\build`), and using CMD:
