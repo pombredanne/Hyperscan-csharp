@@ -24,6 +24,7 @@
 #include "hyperscan_exception.h"
 #include "hyperscan_database.h"
 #include "hyperscan_platform_info.h"
+#include "hyperscan_expression_flag.h"
 #include "hyperscan_compiler_flag.h"
 
 using namespace System;
@@ -41,7 +42,7 @@ namespace Hyperscan {
 		/// </summary>
 		public ref class Compiler sealed {
 		public:
-			Compiler(String^ pattern, CompilerFlag flags);
+			Compiler(String^ pattern, ExpressionFlag expressionFlag, CompilerFlag compilerFlag);
 		internal:
 			void Compile(Database^ database, PlatformInfo^ platform_info);
 
@@ -51,6 +52,7 @@ namespace Hyperscan {
 			}
 		private:
 			String^ m_pattern_;
+			ExpressionFlag m_expression_flag_;
 			CompilerFlag m_compiler_flag_;
 		};
 	}

@@ -25,24 +25,26 @@
 
 using namespace Hyperscan::Compilation;
 
-Compiler::Compiler(String^ pattern, CompilerFlag flags) {
+Compiler::Compiler(String^ pattern, ExpressionFlag expressionFlag, CompilerFlag compilerFlag) {
     this->m_pattern_ = pattern;
-    this->m_compiler_flag_ = flags;
+    this->m_expression_flag_ = expressionFlag;
+    this->m_compiler_flag_ = compilerFlag;
 }
 
 void Compiler::Compile(Database^ database, PlatformInfo^ platform_info)
 {
     auto native_pattern = Marshal::StringToHGlobalAnsi(m_pattern_);
     const auto pattern_ptr = static_cast<char*>(native_pattern.ToPointer());
-
     hs_compile_error_t* compile_err;
-    try {
+    try
+    {
         const pin_ptr<hs_database_t*> hs_database = &database->m_database;
-        if (hs_compile(pattern_ptr, static_cast<unsigned int>(this->m_compiler_flag_), HS_MODE_BLOCK, platform_info->m_platform_info, hs_database, &compile_err) != HS_SUCCESS) {
+        if (hs_compile(pattern_ptr, static_cast<unsigned int>(this->m_compiler_flag_), static_cast<unsigned int>(this->m_compiler_flag_), platform_info->m_platform_info, hs_database, &compile_err) != HS_SUCCESS) {
             throw gcnew HyperscanException(String::Format("Unable to compile pattern ""{0}"": {1}", m_pattern_, gcnew String(compile_err->message)));
         }
     }
-    finally {
+    finally
+	{
         hs_free_compile_error(compile_err);
         Marshal::FreeHGlobal(native_pattern);
     }

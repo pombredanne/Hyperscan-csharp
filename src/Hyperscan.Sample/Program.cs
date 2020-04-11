@@ -18,7 +18,7 @@ namespace Hyperscan.Sample
             var engineBuilder = new EngineBuilder();
             //engineBuilder.WithDatabase(() => new Database(@"PATH_TO_SERIALIZED_DB"));
             engineBuilder.WithDatabase(() => new Database());
-            engineBuilder.WithCompiler(() => new Compiler("foo(?i)bar(?-i)baz", CompilerFlag.HsFlagUtf8 | CompilerFlag.HsFlagDotall));
+            engineBuilder.WithCompiler(() => new Compiler("foo(?i)bar(?-i)baz", ExpressionFlag.HsFlagUtf8 | ExpressionFlag.HsFlagDotall, CompilerFlag.HsModeBlock));
             await using var engine = engineBuilder.Build();
             using var matchSubscription = engine.OnMatch
                 .ObserveOn(new EventLoopScheduler())
