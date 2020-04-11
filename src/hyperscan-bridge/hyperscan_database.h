@@ -34,6 +34,8 @@ namespace Hyperscan {
 		public ref class Database sealed {
 		public:
 			Database();
+			explicit Database(String^ path);
+			explicit Database(array<Byte>^ serializedDatabase);
 			~Database();
 			!Database();
 			property int Size

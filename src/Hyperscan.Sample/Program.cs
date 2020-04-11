@@ -16,6 +16,7 @@ namespace Hyperscan.Sample
         static async Task Main(string[] args)
         {
             var engineBuilder = new EngineBuilder();
+            //engineBuilder.WithDatabase(() => new Database(@"PATH_TO_SERIALIZED_DB"));
             engineBuilder.WithDatabase(() => new Database());
             engineBuilder.WithCompiler(() => new Compiler("foo(?i)bar(?-i)baz"));
             await using var engine = engineBuilder.Build();
@@ -52,12 +53,9 @@ namespace Hyperscan.Sample
                 .Subscribe(match => { },
                     ex => Console.WriteLine("Error: {0}", ex.Message),
                     () => Console.WriteLine("Scan completed."));
-            var output = engine.Database.Serialize();
-            while (true)
-            {
-                await engine.ScanAsync("foobarbazbazbaz", CancellationToken.None);
-                await Task.Delay(1);
-            }
+            //await engine.Database.SerializeToFileAsync(@"PATH_TO_SERIALIZED_DB");
+            await engine.ScanAsync("foobarbazbazbaz", CancellationToken.None);
+            await Task.Delay(-1);
         }
     }
 }
