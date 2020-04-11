@@ -42,16 +42,13 @@ Scanner::!Scanner()
     hs_free_scratch(this->m_scratch_);
 }
 
-
 void Scanner::Scan(String^ input) {
     const auto input_ptr = StringUtils::to_unmanaged(input);
     const auto match_attr = new MatchAttribute();
     match_attr->pattern = StringUtils::to_unmanaged(this->m_pattern_);
     match_attr->source = input_ptr;
     match_attr->source_len = input->Length;
-    const pin_ptr<hs_database_t*> database = &this->m_database_;
-    const pin_ptr<hs_scratch_t*> scratch = &this->m_scratch_;
-    const auto scan_err = hs_scan(*database, input_ptr, input->Length, 0, *scratch, this->m_match_event_handler_->m_handler, match_attr);
+    const auto scan_err = hs_scan(this->m_database_, input_ptr, input->Length, 0, this->m_scratch_, this->m_match_event_handler_->m_handler, match_attr);
     if (scan_err != HS_SUCCESS) {
         throw gcnew HyperscanException(String::Format("ERROR {0}: Unable to scan input buffer. Exiting.", scan_err));
     }

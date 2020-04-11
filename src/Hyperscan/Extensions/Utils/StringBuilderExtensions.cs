@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Hyperscan.Extensions
+namespace Hyperscan.Extensions.Utils
 {
     internal static class StringBuilderExtensions
     {

@@ -55,6 +55,7 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\hyperscan\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
+      <AdditionalUsingDirectories>..\..\src\Hyperscan\bin\x64\Debug\netcoreapp3.1;%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>chimera.lib;corpusomatic.lib;crosscompileutil.lib;databaseutil.lib;expressionutil.lib;hs.lib;hs_runtime.lib;pcred.lib;sqlite3_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -69,6 +70,7 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\hyperscan\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
+      <AdditionalUsingDirectories>..\..\src\Hyperscan\bin\x64\Release\netcoreapp3.1;%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>chimera.lib;corpusomatic.lib;crosscompileutil.lib;databaseutil.lib;expressionutil.lib;hs.lib;hs_runtime.lib;pcre.lib;sqlite3_static.lib;%(AdditionalDependencies)</AdditionalDependencies>

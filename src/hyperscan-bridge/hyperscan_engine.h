@@ -44,21 +44,6 @@ namespace Hyperscan {
 		public ref class HyperscanEngine {
 		public:
 			/// <summary>
-			/// Instanciate the Hyperscan engine
-			/// </summary>
-			/// <param name="compilerFactory">The factory used to configure the Hyperscan compiler</param>
-			HyperscanEngine(Func<Database^>^ databaseFactory, Func<Compiler^>^ compilerFactory);
-
-			~HyperscanEngine();
-
-			!HyperscanEngine();
-
-			/// <summary>
-			/// Trigger a scan on the configured compiler with the given input
-			/// </summary>
-			void Scan(String^ input);
-
-			/// <summary>
 			/// Get the database
 			/// </summary>
 			property Database^ Database {
@@ -71,9 +56,18 @@ namespace Hyperscan {
 			property IObservable<Match^>^ OnMatch {
 				IObservable<Match^>^ get();
 			}
+		internal:
+			/// <summary>
+			/// Instanciate the Hyperscan engine
+			/// </summary>
+			/// <param name="databaseFactory">The factory used to configure the Hyperscan database</param>
+			/// <param name="compilerFactory">The factory used to configure the Hyperscan compiler</param>
+			HyperscanEngine(Func<Databases::Database^>^ databaseFactory, Func<Compiler^>^ compilerFactory);
+			~HyperscanEngine();
+			!HyperscanEngine();
+			Scanner^ CreateScanner();
 		private:
 			Compiler^ m_compiler_;
-			Scanner^ m_scanner_;
 			Databases::Database^ m_database_;
 			MatchObservable^ m_match_observable_;
 			PlatformInfo^ m_platform_info_;

@@ -1,7 +1,7 @@
 ﻿using System.Buffers;
 using System.Text;
 
-namespace Hyperscan.Extensions
+namespace Hyperscan.Extensions.Utils
 {
     public static class ReadOnlySequenceExtensions
     {

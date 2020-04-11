@@ -1,19 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reactive.Concurrency;
 using System.Reactive.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Hyperscan.Compilation;
 using Hyperscan.Core;
 using Hyperscan.Databases;
-using Hyperscan.Extensions;
+using Hyperscan.Extensions.Utils;
 
 namespace Hyperscan.Sample
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            using var engine = new HyperscanEngine(() => new Database(), () => new Compiler("foo(?i)bar(?-i)baz"));
+            var engineBuilder = new EngineBuilder();
+            engineBuilder.WithDatabase(() => new Database());
+            engineBuilder.WithCompiler(() => new Compiler("foo(?i)bar(?-i)baz"));
+            await using var engine = engineBuilder.Build();
             using var matchSubscription = engine.OnMatch
+                .ObserveOn(new EventLoopScheduler())
                 .Do(match =>
                 {
                     var input = match.Input.Read();
@@ -45,8 +52,11 @@ namespace Hyperscan.Sample
                 .Subscribe(match => { },
                     ex => Console.WriteLine("Error: {0}", ex.Message),
                     () => Console.WriteLine("Scan completed."));
-
-            engine.Scan("foobarbazbazbaz");
+            while (true)
+            {
+                await engine.ScanAsync("foobarbazbazbaz", CancellationToken.None);
+                await Task.Delay(1);
+            }
         }
     }
 }

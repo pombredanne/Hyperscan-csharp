@@ -22,6 +22,7 @@
 #include "pch.h"
 
 #include "hyperscan_engine.h"
+#using <Hyperscan.dll> as_friend
 
 HyperscanEngine::HyperscanEngine(Func<Databases::Database^>^ databaseFactory, Func<Compiler^>^ compilerFactory) {
 	this->m_database_ = databaseFactory();
@@ -33,22 +34,6 @@ HyperscanEngine::HyperscanEngine(Func<Databases::Database^>^ databaseFactory, Fu
 
 	const auto match_observable = gcnew MatchObservable();
 	this->m_match_observable_ = match_observable;
-
-	hs_scratch_t* scratch_prototype = nullptr;
-	try {
-		const auto scratch_error = hs_alloc_scratch(this->m_database_->m_database, &scratch_prototype);
-		if (scratch_error != HS_SUCCESS) {
-			throw gcnew HyperscanException(String::Format("Unable to allocate scratch prototype: {0}", scratch_error));
-		}
-
-		const auto scanner = gcnew Scanner(this->m_database_, this->m_compiler_->Pattern, this->m_match_observable_);
-		scanner->CreateScratch(scratch_prototype);
-		this->m_scanner_ = scanner;
-	}
-	finally
-	{
-		hs_free_scratch(scratch_prototype);
-	}
 }
 
 HyperscanEngine::~HyperscanEngine() {
@@ -59,14 +44,29 @@ HyperscanEngine::!HyperscanEngine() {
 
 }
 
-void HyperscanEngine::Scan(String^ input) {
-	this->m_scanner_->Scan(input);
-}
-
 Database^ HyperscanEngine::Database::get() {
 	return this->m_database_;
 }
 
 IObservable<Match^>^ HyperscanEngine::OnMatch::get() {
 	return this->m_match_observable_;
+}
+
+Scanner^ HyperscanEngine::CreateScanner()
+{
+	hs_scratch_t* scratch_prototype = nullptr;
+	try {
+		const auto scratch_error = hs_alloc_scratch(this->m_database_->m_database, &scratch_prototype);
+		if (scratch_error != HS_SUCCESS) {
+			throw gcnew HyperscanException(String::Format("Unable to allocate scratch prototype: {0}", scratch_error));
+		}
+
+		const auto scanner = gcnew Scanner(this->m_database_, this->m_compiler_->Pattern, this->m_match_observable_);
+		scanner->CreateScratch(scratch_prototype);
+		return scanner;
+	}
+	finally
+	{
+		hs_free_scratch(scratch_prototype);
+	}
 }
