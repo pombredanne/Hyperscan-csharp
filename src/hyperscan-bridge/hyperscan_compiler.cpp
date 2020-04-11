@@ -25,8 +25,9 @@
 
 using namespace Hyperscan::Compilation;
 
-Compiler::Compiler(String^ pattern) {
+Compiler::Compiler(String^ pattern, CompilerFlag flags) {
     this->m_pattern_ = pattern;
+    this->m_compiler_flag_ = flags;
 }
 
 void Compiler::Compile(Database^ database, PlatformInfo^ platform_info)
@@ -37,7 +38,7 @@ void Compiler::Compile(Database^ database, PlatformInfo^ platform_info)
     hs_compile_error_t* compile_err;
     try {
         const pin_ptr<hs_database_t*> hs_database = &database->m_database;
-        if (hs_compile(pattern_ptr, HS_FLAG_UTF8, HS_MODE_BLOCK, platform_info->m_platform_info, hs_database, &compile_err) != HS_SUCCESS) {
+        if (hs_compile(pattern_ptr, static_cast<unsigned int>(this->m_compiler_flag_), HS_MODE_BLOCK, platform_info->m_platform_info, hs_database, &compile_err) != HS_SUCCESS) {
             throw gcnew HyperscanException(String::Format("Unable to compile pattern ""{0}"": {1}", m_pattern_, gcnew String(compile_err->message)));
         }
     }

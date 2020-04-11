@@ -93,6 +93,9 @@
     <ClInclude Include="hyperscan_platform_info.h">
       <Filter>Header Files\Platform</Filter>
     </ClInclude>
+    <ClInclude Include="hyperscan_compiler_flag.h">
+      <Filter>Header Files\Compilation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
