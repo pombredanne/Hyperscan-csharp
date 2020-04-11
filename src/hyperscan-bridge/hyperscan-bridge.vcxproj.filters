@@ -96,7 +96,7 @@
     <ClInclude Include="hyperscan_expression_flag.h">
       <Filter>Header Files\Compilation</Filter>
     </ClInclude>
-    <ClInclude Include="hyperscan_compiler_flag.h">
+    <ClInclude Include="hyperscan_mode.h">
       <Filter>Header Files\Compilation</Filter>
     </ClInclude>
   </ItemGroup>

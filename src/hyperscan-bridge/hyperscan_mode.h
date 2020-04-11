@@ -27,7 +27,7 @@ namespace Hyperscan {
         /// Compiler mode flags that affect the database as a whole
         /// </summary>
         [System::Flags]
-        public enum class CompilerFlag {
+        public enum class CompilerMode {
             /// <summary>
             /// Block scan (non-streaming) database
             /// </summary>
