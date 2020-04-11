@@ -21,7 +21,13 @@
 
 #pragma once
 
+#include "hyperscan_exception.h"
+#include "hyperscan_utils.h"
+
 using namespace System;
+
+using namespace Hyperscan::Core::Exceptions;
+using namespace Hyperscan::Utils;
 
 namespace Hyperscan {
 	namespace Databases {
@@ -30,7 +36,12 @@ namespace Hyperscan {
 			Database();
 			~Database();
 			!Database();
+			property int Size
+			{
+				int get();
+			}
 
+			array<Byte>^ Serialize();
 		internal:
 			hs_database_t* m_database;
 		};

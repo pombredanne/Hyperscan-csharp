@@ -52,6 +52,7 @@ namespace Hyperscan.Sample
                 .Subscribe(match => { },
                     ex => Console.WriteLine("Error: {0}", ex.Message),
                     () => Console.WriteLine("Scan completed."));
+            var output = engine.Database.Serialize();
             while (true)
             {
                 await engine.ScanAsync("foobarbazbazbaz", CancellationToken.None);

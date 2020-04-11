@@ -23,6 +23,8 @@
 
 #include "hyperscan_database.h"
 
+#include "hyperscan_exception.h"
+
 using namespace Hyperscan::Databases;
 
 Database::Database()
@@ -40,4 +42,34 @@ Database::!Database()
 	hs_free_database(this->m_database);
 }
 
+int Database::Size::get()
+{
+	size_t database_size = 0;
+	const auto database_size_error = hs_database_size(this->m_database, &database_size);
+	if(database_size_error != HS_SUCCESS)
+	{
+		throw gcnew HyperscanException(String::Format("Unable to get database size: {0}", database_size_error));
+	}
 
+	return static_cast<int>(database_size);
+}
+
+array<Byte>^ Database::Serialize()
+{
+	size_t* database_size = nullptr;
+	char* serialized_database = new char[0];
+	try
+	{
+		const auto database_serialize_error = hs_serialize_database(this->m_database, &serialized_database, database_size);
+		if (database_serialize_error != HS_SUCCESS)
+		{
+			throw gcnew HyperscanException(String::Format("Unable to serialize database: {0}", database_serialize_error));
+		}
+
+		return StringUtils::to_managed_array(serialized_database, static_cast<int>(*database_size));
+	}
+	finally
+	{
+		delete[] serialized_database;
+	}
+}
