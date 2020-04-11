@@ -25,21 +25,43 @@
 
 using namespace Hyperscan::Scanning;
 
-Scanner::Scanner(HyperscanContext^ context, MatchObservable^ matchObservable) {
-    this->m_context_ = context;
-    this->m_match_event_handler_ = gcnew MatchEventHandler(matchObservable);
+Scanner::Scanner(Database^ database, String^ pattern, MatchObservable^ match_observable) {
+    this->m_scratch_ = nullptr;
+    this->m_database_ = database;
+    this->m_match_event_handler_ = gcnew MatchEventHandler(match_observable);
+    this->m_pattern_ = pattern;
 }
+
+Scanner::~Scanner()
+{
+    this->!Scanner();
+}
+
+Scanner::!Scanner()
+{
+    hs_free_scratch(this->m_scratch_);
+}
+
 
 void Scanner::Scan(String^ input) {
     const auto input_ptr = StringUtils::to_unmanaged(input);
     const auto match_attr = new MatchAttribute();
-    match_attr->pattern = StringUtils::to_unmanaged(this->m_context_->m_pattern);
+    match_attr->pattern = StringUtils::to_unmanaged(this->m_pattern_);
     match_attr->source = input_ptr;
     match_attr->source_len = input->Length;
-    const pin_ptr<hs_database_t*> database = &this->m_context_->m_database;
-    const pin_ptr<hs_scratch_t*> scratch = &this->m_context_->m_scratch;
+    const pin_ptr<hs_database_t*> database = &this->m_database_->m_database;
+    const pin_ptr<hs_scratch_t*> scratch = &this->m_scratch_;
     const auto scan_err = hs_scan(*database, input_ptr, input->Length, 0, *scratch, this->m_match_event_handler_->m_handler, match_attr);
     if (scan_err != HS_SUCCESS) {
         throw gcnew HyperscanException(String::Format("ERROR {0}: Unable to scan input buffer. Exiting.", scan_err));
+    }
+}
+
+void Scanner::CreateScratch()
+{
+    const pin_ptr<hs_scratch_t*> scratch = &this->m_scratch_;
+    const auto alloc_scratch_err = hs_alloc_scratch(this->m_database_->m_database, scratch);
+    if (alloc_scratch_err != HS_SUCCESS) {
+        throw gcnew HyperscanException(String::Format("ERROR {0}: Unable to allocate scratch space. Exiting.", alloc_scratch_err));
     }
 }

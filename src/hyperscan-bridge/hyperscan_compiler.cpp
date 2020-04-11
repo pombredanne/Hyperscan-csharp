@@ -25,38 +25,29 @@
 
 using namespace Hyperscan::Compilation;
 
-Compiler::Compiler(HyperscanContext^ context, String^ pattern) {
-    this->m_context_ = context;
-    this->m_context_->m_pattern = pattern;
-    auto native_pattern = Marshal::StringToHGlobalAnsi(pattern);
+Compiler::Compiler(String^ pattern) {
+    this->m_pattern_ = pattern;
+}
+
+void Compiler::Compile(Database^ database, PlatformInfo^ platform_info)
+{
+    auto native_pattern = Marshal::StringToHGlobalAnsi(m_pattern_);
     const auto pattern_ptr = static_cast<char*>(native_pattern.ToPointer());
 
     hs_compile_error_t* compile_err;
-    const auto info = new hs_platform_info();
     try {
-        const pin_ptr<hs_database_t*> database = &this->m_context_->m_database;
-        const auto populate_platform_err = hs_populate_platform(info);
-        if (populate_platform_err != HS_SUCCESS) {
-            throw gcnew HyperscanException(String::Format("ERROR {0}: Unable to populate platform infos. Exiting.", populate_platform_err));
-        }
-
-        if (Runtime::Intrinsics::X86::Avx2::IsSupported)
-        {
-            info->cpu_features &= HS_CPU_FEATURES_AVX2;
-        }
-
-        if (hs_compile(pattern_ptr, HS_FLAG_UTF8, HS_MODE_BLOCK, info, database, &compile_err) != HS_SUCCESS) {
-            throw gcnew HyperscanException(String::Format("Unable to compile pattern ""{0}"": {1}", pattern, gcnew String(compile_err->message)));
-        }
-
-        const pin_ptr<hs_scratch_t*> scratch = &this->m_context_->m_scratch;
-        const auto alloc_scratch_err = hs_alloc_scratch(*database, scratch);
-        if (alloc_scratch_err != HS_SUCCESS) {
-            throw gcnew HyperscanException(String::Format("ERROR {0}: Unable to allocate scratch space. Exiting.", alloc_scratch_err));
+        const pin_ptr<hs_database_t*> hs_database = &database->m_database;
+        if (hs_compile(pattern_ptr, HS_FLAG_UTF8, HS_MODE_BLOCK, platform_info->m_platform_info, hs_database, &compile_err) != HS_SUCCESS) {
+            throw gcnew HyperscanException(String::Format("Unable to compile pattern ""{0}"": {1}", m_pattern_, gcnew String(compile_err->message)));
         }
     }
     finally {
         hs_free_compile_error(compile_err);
         Marshal::FreeHGlobal(native_pattern);
     }
+}
+
+String^ Compiler::Pattern::get()
+{
+    return this->m_pattern_;
 }

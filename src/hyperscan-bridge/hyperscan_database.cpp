@@ -19,34 +19,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#pragma once
+#include "pch.h"
 
 #include "hyperscan_database.h"
-#include "hyperscan_exception.h"
-#include "hyperscan_match_event_handler.h"
-#include "hyperscan_match_observable.h"
 
-using namespace System;
-
-using namespace Hyperscan::Core;
 using namespace Hyperscan::Databases;
-using namespace Exceptions;
-using namespace Event;
 
-namespace Hyperscan {
-	namespace Scanning {
-		private ref class Scanner sealed {
-		internal:
-			Scanner(Database^ database, String^ pattern, MatchObservable^ match_observable);
-			~Scanner();
-			!Scanner();
-			void Scan(String^ input);
-			void CreateScratch();
-		private:
-			Database^ m_database_;
-			String^ m_pattern_;
-			MatchEventHandler^ m_match_event_handler_;
-			hs_scratch_t* m_scratch_;
-		};
-	}
+Database::Database()
+{
+	this->m_database = nullptr;
 }
+
+Database::~Database()
+{
+
+}
+
+Database::!Database()
+{
+	hs_free_database(this->m_database);
+}
+
+

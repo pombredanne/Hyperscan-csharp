@@ -77,12 +77,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="hyperscan_compiler.h" />
-    <ClInclude Include="hyperscan_context.h" />
+    <ClInclude Include="hyperscan_database.h" />
     <ClInclude Include="hyperscan_engine.h" />
     <ClInclude Include="hyperscan_match.h" />
     <ClInclude Include="hyperscan_match_event_handler.h" />
     <ClInclude Include="hyperscan_exception.h" />
     <ClInclude Include="hyperscan_match_observable.h" />
+    <ClInclude Include="hyperscan_platform_info.h" />
     <ClInclude Include="hyperscan_scanner.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
@@ -91,11 +92,12 @@
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="hyperscan_compiler.cpp" />
-    <ClCompile Include="hyperscan_context.cpp" />
+    <ClCompile Include="hyperscan_database.cpp" />
     <ClCompile Include="hyperscan_engine.cpp" />
     <ClCompile Include="hyperscan_match.cpp" />
     <ClCompile Include="hyperscan_match_event_handler.cpp" />
     <ClCompile Include="hyperscan_match_observable.cpp" />
+    <ClCompile Include="hyperscan_platform_info.cpp" />
     <ClCompile Include="hyperscan_scanner.cpp" />
     <ClCompile Include="hyperscan_utils.cpp" />
     <ClCompile Include="pch.cpp">

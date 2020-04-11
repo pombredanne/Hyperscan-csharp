@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reactive.Linq;
 using Hyperscan.Compilation;
 using Hyperscan.Core;
+using Hyperscan.Databases;
 using Hyperscan.Extensions;
 
 namespace Hyperscan.Sample
@@ -11,7 +12,7 @@ namespace Hyperscan.Sample
     {
         static void Main(string[] args)
         {
-            using var engine = new HyperscanEngine(_ => new Compiler(_, "foo(?i)bar(?-i)baz"));
+            using var engine = new HyperscanEngine(() => new Database(), () => new Compiler("foo(?i)bar(?-i)baz"));
             using var matchSubscription = engine.OnMatch
                 .Do(match =>
                 {

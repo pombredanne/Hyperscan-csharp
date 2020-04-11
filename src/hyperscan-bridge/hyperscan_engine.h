@@ -21,16 +21,20 @@
 
 #pragma once
 
-#include "hyperscan_context.h"
 #include "hyperscan_compiler.h"
 #include "hyperscan_scanner.h"
+#include "hyperscan_database.h"
 #include "hyperscan_match_observable.h"
+#include "hyperscan_match.h"
+#include "hyperscan_platform_info.h"
 
 using namespace System;
 
 using namespace Hyperscan;
+using namespace Databases;
 using namespace Compilation;
 using namespace Scanning;
+using namespace Platform;
 
 namespace Hyperscan {
 	namespace Core {
@@ -43,7 +47,7 @@ namespace Hyperscan {
 			/// Instanciate the Hyperscan engine
 			/// </summary>
 			/// <param name="compilerFactory">The factory used to configure the Hyperscan compiler</param>
-			HyperscanEngine(Func<HyperscanContext^, ICompiler^>^ compilerFactory);
+			HyperscanEngine(Func<Database^>^ databaseFactory, Func<Compiler^>^ compilerFactory);
 
 			~HyperscanEngine();
 
@@ -55,17 +59,10 @@ namespace Hyperscan {
 			void Scan(String^ input);
 
 			/// <summary>
-			/// Get the configured compiler
+			/// Get the database
 			/// </summary>
-			property ICompiler^ Compiler {
-				ICompiler^ get();
-			}
-
-			/// <summary>
-			/// Get the configured scanner
-			/// </summary>
-			property IScanner^ Scanner {
-				IScanner^ get();
+			property Database^ Database {
+				Databases::Database^ get();
 			}
 
 			/// <summary>
@@ -75,12 +72,11 @@ namespace Hyperscan {
 				IObservable<Match^>^ get();
 			}
 		private:
-			HyperscanContext^ m_context_;
-			ICompiler^ m_compiler_;
-			IScanner^ m_scanner_;
-			IScan^ m_scan_;
+			Compiler^ m_compiler_;
+			Scanner^ m_scanner_;
+			Databases::Database^ m_database_;
 			MatchObservable^ m_match_observable_;
-			IObservable<Match^>^ m_on_match_;
+			PlatformInfo^ m_platform_info_;
 		};
 	}
 }

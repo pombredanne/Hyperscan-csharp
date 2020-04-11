@@ -21,32 +21,35 @@
 
 #pragma once
 
-#include "hyperscan_context.h"
 #include "hyperscan_exception.h"
+#include "hyperscan_database.h"
+#include "hyperscan_platform_info.h"
 
 using namespace System;
 using namespace Runtime::InteropServices;
 
 using namespace Hyperscan::Core;
+using namespace Hyperscan::Platform;
+using namespace Hyperscan::Databases;
 using namespace Exceptions;
 
 namespace Hyperscan {
 	namespace Compilation {
 		/// <summary>
-		/// Contains functions for compiling regular expressions into Hyperscan databases that can be used by the Hyperscan runtime.
-		/// </summary>
-		public interface class ICompiler {
-
-		};
-
-		/// <summary>
 		/// Compiler which supports compiling only one regular expression pattern into Hyperscan database
 		/// </summary>
-		public ref class Compiler sealed : public ICompiler {
+		public ref class Compiler sealed {
 		public:
-			Compiler(HyperscanContext^ context, String^ pattern);
+			Compiler(String^ pattern);
+		internal:
+			void Compile(Database^ database, PlatformInfo^ platform_info);
+
+			property String^ Pattern
+			{
+				String^ get();
+			}
 		private:
-			HyperscanContext^ m_context_;
+			String^ m_pattern_;
 		};
 	}
 }

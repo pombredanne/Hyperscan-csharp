@@ -21,32 +21,21 @@
 
 #pragma once
 
-#include "hyperscan_database.h"
 #include "hyperscan_exception.h"
-#include "hyperscan_match_event_handler.h"
-#include "hyperscan_match_observable.h"
 
 using namespace System;
 
-using namespace Hyperscan::Core;
-using namespace Hyperscan::Databases;
-using namespace Exceptions;
-using namespace Event;
+using namespace Hyperscan::Core::Exceptions;
 
 namespace Hyperscan {
-	namespace Scanning {
-		private ref class Scanner sealed {
+	namespace Platform {
+		private ref class PlatformInfo sealed {
+		public:
+			PlatformInfo();
+			~PlatformInfo();
+			!PlatformInfo();
 		internal:
-			Scanner(Database^ database, String^ pattern, MatchObservable^ match_observable);
-			~Scanner();
-			!Scanner();
-			void Scan(String^ input);
-			void CreateScratch();
-		private:
-			Database^ m_database_;
-			String^ m_pattern_;
-			MatchEventHandler^ m_match_event_handler_;
-			hs_scratch_t* m_scratch_;
+			hs_platform_info* m_platform_info;
 		};
 	}
 }

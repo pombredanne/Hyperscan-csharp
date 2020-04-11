@@ -43,6 +43,18 @@
     <Filter Include="Source Files\Scanning\Event">
       <UniqueIdentifier>{4e831f20-20a8-484b-bbe8-e75f0fd38c40}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Database">
+      <UniqueIdentifier>{4a0aad4e-37cc-45e7-91ae-7696fa9c33ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Database">
+      <UniqueIdentifier>{07bcaa59-80ca-434a-bf4b-6ad2c9ffa7ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Platform">
+      <UniqueIdentifier>{71e336c0-aeda-4cdd-97fb-6df00e61a4e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platform">
+      <UniqueIdentifier>{c0ffe544-b9c8-4afb-a640-f56dd6a76fe6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -53,9 +65,6 @@
     </ClInclude>
     <ClInclude Include="hyperscan_compiler.h">
       <Filter>Header Files\Compilation</Filter>
-    </ClInclude>
-    <ClInclude Include="hyperscan_context.h">
-      <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="hyperscan_engine.h">
       <Filter>Header Files\Core</Filter>
@@ -78,6 +87,12 @@
     <ClInclude Include="hyperscan_match_event_handler.h">
       <Filter>Header Files\Scanning\Event</Filter>
     </ClInclude>
+    <ClInclude Include="hyperscan_database.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="hyperscan_platform_info.h">
+      <Filter>Header Files\Platform</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
@@ -88,9 +103,6 @@
     </ClCompile>
     <ClCompile Include="hyperscan_compiler.cpp">
       <Filter>Source Files\Compilation</Filter>
-    </ClCompile>
-    <ClCompile Include="hyperscan_context.cpp">
-      <Filter>Source Files\Core</Filter>
     </ClCompile>
     <ClCompile Include="hyperscan_engine.cpp">
       <Filter>Source Files\Core</Filter>
@@ -109,6 +121,12 @@
     </ClCompile>
     <ClCompile Include="hyperscan_match_event_handler.cpp">
       <Filter>Source Files\Scanning\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="hyperscan_database.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="hyperscan_platform_info.cpp">
+      <Filter>Source Files\Platform</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

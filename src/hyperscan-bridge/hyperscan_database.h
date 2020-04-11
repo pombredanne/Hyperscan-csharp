@@ -19,23 +19,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "pch.h"
+#pragma once
 
-#include "hyperscan_context.h"
+using namespace System;
 
-using namespace Runtime::InteropServices;
-using namespace Hyperscan::Core;
+namespace Hyperscan {
+	namespace Databases {
+		public ref class Database sealed {
+		public:
+			Database();
+			~Database();
+			!Database();
 
-HyperscanContext::HyperscanContext() {
-	this->m_database = nullptr;
-	this->m_scratch = nullptr;
-}
-
-HyperscanContext::~HyperscanContext() {
-	this->!HyperscanContext();
-}
-
-HyperscanContext::!HyperscanContext() {
-	hs_free_scratch(this->m_scratch);
-	hs_free_database(this->m_database);
+		internal:
+			hs_database_t* m_database;
+		};
+	}
 }

@@ -22,17 +22,21 @@
 #include "pch.h"
 
 #include "hyperscan_engine.h"
-#include "hyperscan_match.h"
 
-HyperscanEngine::HyperscanEngine(Func<HyperscanContext^, ICompiler^>^ compilerFactory) {
-	this->m_context_ = gcnew HyperscanContext();
+HyperscanEngine::HyperscanEngine(Func<Databases::Database^>^ databaseFactory, Func<Compiler^>^ compilerFactory) {
+	this->m_database_ = databaseFactory();
+
+	const auto compiler = compilerFactory();
+	this->m_platform_info_ = gcnew PlatformInfo();
+	compiler->Compile(this->m_database_, this->m_platform_info_);
+	this->m_compiler_ = compiler;
+
 	const auto match_observable = gcnew MatchObservable();
-	this->m_on_match_ = match_observable;
 	this->m_match_observable_ = match_observable;
-	const auto scanner = gcnew Scanning::Scanner(this->m_context_, this->m_match_observable_);
-	this->m_scan_ = scanner;
+
+	const auto scanner = gcnew Scanner(this->m_database_, this->m_compiler_->Pattern, this->m_match_observable_);
+	scanner->CreateScratch();
 	this->m_scanner_ = scanner;
-	this->m_compiler_ = compilerFactory(this->m_context_);
 }
 
 HyperscanEngine::~HyperscanEngine() {
@@ -44,17 +48,13 @@ HyperscanEngine::!HyperscanEngine() {
 }
 
 void HyperscanEngine::Scan(String^ input) {
-	this->m_scan_->Scan(input);
+	this->m_scanner_->Scan(input);
 }
 
-ICompiler^ HyperscanEngine::Compiler::get() {
-	return this->m_compiler_;
-}
-
-IScanner^ HyperscanEngine::Scanner::get(){
-	return this->m_scanner_;
+Database^ HyperscanEngine::Database::get() {
+	return this->m_database_;
 }
 
 IObservable<Match^>^ HyperscanEngine::OnMatch::get() {
-	return this->m_on_match_;
+	return this->m_match_observable_;
 }

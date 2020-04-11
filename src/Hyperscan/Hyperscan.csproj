@@ -11,9 +11,10 @@
     <Authors>bbougot</Authors>
     <Company>bbougot</Company>
     <PackageDescription>Match tens of thousands of regular expressions within milliseconds</PackageDescription>
-    <RepositoryUrl>https://github.com/bbougot/hyperscan-csharp</RepositoryUrl>
+    <PackageRepositoryUrl>https://github.com/bbougot/hyperscan-csharp</PackageRepositoryUrl>
+    <PackageLicenseExpression>https://opensource.org/licenses/MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/bbougot/hyperscan-csharp</PackageProjectUrl>
     <PackageTags>Hyperscan, Regex</PackageTags>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup>
