@@ -34,9 +34,21 @@ HyperscanEngine::HyperscanEngine(Func<Databases::Database^>^ databaseFactory, Fu
 	const auto match_observable = gcnew MatchObservable();
 	this->m_match_observable_ = match_observable;
 
-	const auto scanner = gcnew Scanner(this->m_database_, this->m_compiler_->Pattern, this->m_match_observable_);
-	scanner->CreateScratch();
-	this->m_scanner_ = scanner;
+	hs_scratch_t* scratch_prototype = nullptr;
+	try {
+		const auto scratch_error = hs_alloc_scratch(this->m_database_->m_database, &scratch_prototype);
+		if (scratch_error != HS_SUCCESS) {
+			throw gcnew HyperscanException(String::Format("Unable to allocate scratch prototype: {0}", scratch_error));
+		}
+
+		const auto scanner = gcnew Scanner(this->m_database_, this->m_compiler_->Pattern, this->m_match_observable_);
+		scanner->CreateScratch(scratch_prototype);
+		this->m_scanner_ = scanner;
+	}
+	finally
+	{
+		hs_free_scratch(scratch_prototype);
+	}
 }
 
 HyperscanEngine::~HyperscanEngine() {

@@ -357,5 +357,5 @@ ragel-6.10/
 # Hyperscan
 hyperscan/build/
 hyperscan/boost_1_72_0/
-hyperscan/pcre-8.44/
+hyperscan/pcre-8.41/
 hyperscan/sqlite3/

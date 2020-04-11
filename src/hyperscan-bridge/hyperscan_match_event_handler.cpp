@@ -45,8 +45,8 @@ int MatchEventHandler::on_match(const unsigned int id, const unsigned long long 
 	const auto match_attr = static_cast<MatchAttribute*>(context);
 	const auto input_token = gcnew ReadOnlySequence<Byte>(StringUtils::to_managed_array(match_attr->source, match_attr->source_len), 0, match_attr->source_len);
 	this->m_match_observable_->OnMatch(gcnew Match(id, gcnew String(match_attr->source, static_cast<int>(from), static_cast<int>(to - from)), gcnew String(match_attr->pattern), *input_token));
-	free(match_attr->source);
-	free(match_attr->pattern);
-	free(match_attr);
+	delete match_attr->source;
+	delete match_attr->pattern;
+	delete match_attr;
 	return 0;
 }

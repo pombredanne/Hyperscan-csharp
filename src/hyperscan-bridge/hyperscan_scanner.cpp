@@ -27,7 +27,7 @@ using namespace Hyperscan::Scanning;
 
 Scanner::Scanner(Database^ database, String^ pattern, MatchObservable^ match_observable) {
     this->m_scratch_ = nullptr;
-    this->m_database_ = database;
+    this->m_database_ = database->m_database;
     this->m_match_event_handler_ = gcnew MatchEventHandler(match_observable);
     this->m_pattern_ = pattern;
 }
@@ -49,7 +49,7 @@ void Scanner::Scan(String^ input) {
     match_attr->pattern = StringUtils::to_unmanaged(this->m_pattern_);
     match_attr->source = input_ptr;
     match_attr->source_len = input->Length;
-    const pin_ptr<hs_database_t*> database = &this->m_database_->m_database;
+    const pin_ptr<hs_database_t*> database = &this->m_database_;
     const pin_ptr<hs_scratch_t*> scratch = &this->m_scratch_;
     const auto scan_err = hs_scan(*database, input_ptr, input->Length, 0, *scratch, this->m_match_event_handler_->m_handler, match_attr);
     if (scan_err != HS_SUCCESS) {
@@ -57,10 +57,10 @@ void Scanner::Scan(String^ input) {
     }
 }
 
-void Scanner::CreateScratch()
+void Scanner::CreateScratch(hs_scratch_t* scratch_prototype)
 {
     const pin_ptr<hs_scratch_t*> scratch = &this->m_scratch_;
-    const auto alloc_scratch_err = hs_alloc_scratch(this->m_database_->m_database, scratch);
+    const auto alloc_scratch_err = hs_clone_scratch(scratch_prototype, scratch);
     if (alloc_scratch_err != HS_SUCCESS) {
         throw gcnew HyperscanException(String::Format("ERROR {0}: Unable to allocate scratch space. Exiting.", alloc_scratch_err));
     }

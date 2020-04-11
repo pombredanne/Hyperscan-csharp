@@ -41,12 +41,12 @@ namespace Hyperscan {
 			~Scanner();
 			!Scanner();
 			void Scan(String^ input);
-			void CreateScratch();
+			void CreateScratch(hs_scratch_t* scratch_prototype);
 		private:
-			Database^ m_database_;
 			String^ m_pattern_;
 			MatchEventHandler^ m_match_event_handler_;
 			hs_scratch_t* m_scratch_;
+			hs_database_t* m_database_;
 		};
 	}
 }
