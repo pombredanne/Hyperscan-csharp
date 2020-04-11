@@ -22,7 +22,6 @@
 #include "pch.h"
 
 #include "hyperscan_engine.h"
-#using <Hyperscan.dll> as_friend
 
 HyperscanEngine::HyperscanEngine(Func<Databases::Database^>^ databaseFactory, Func<Compiler^>^ compilerFactory) {
 	this->m_database_ = databaseFactory();
