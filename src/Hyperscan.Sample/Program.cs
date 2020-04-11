@@ -18,14 +18,14 @@ namespace Hyperscan.Sample
             var engineBuilder = new EngineBuilder();
             //engineBuilder.WithDatabase(() => new Database(@"PATH_TO_SERIALIZED_DB"));
             engineBuilder.WithDatabase(() => new Database());
-            engineBuilder.WithCompiler(() => new Compiler("foo(?i)bar(?-i)baz", ExpressionFlag.HsFlagUtf8 | ExpressionFlag.HsFlagDotall, CompilerMode.HsModeBlock));
+            engineBuilder.WithCompiler(() => new SimpleCompiler(new Expression(0, "foo(?i)bar(?-i)baz", ExpressionFlag.HsFlagUtf8 | ExpressionFlag.HsFlagDotall), CompilerMode.HsModeBlock));
             await using var engine = engineBuilder.Build();
             using var matchSubscription = engine.OnMatch
                 .ObserveOn(new EventLoopScheduler())
                 .Do(match =>
                 {
                     var input = match.Input.Read();
-                    Console.Write($"New match for input \"{input}\" with pattern \"{match.Pattern}\": ");
+                    Console.Write($"New match for input \"{input}\" with pattern \"{match.Expression.Pattern}\": ");
                     var matchQueue = new Queue<char>();
                     Console.BackgroundColor = ConsoleColor.Green;
                     foreach (var c in match.FullMatch)
@@ -54,8 +54,11 @@ namespace Hyperscan.Sample
                     ex => Console.WriteLine("Error: {0}", ex.Message),
                     () => Console.WriteLine("Scan completed."));
             //await engine.Database.SerializeToFileAsync(@"PATH_TO_SERIALIZED_DB");
-            await engine.ScanAsync("foobarbazbazbaz", CancellationToken.None);
-            await Task.Delay(-1);
+            while (true)
+            {
+                await engine.ScanAsync("foobarbazbazbaz", CancellationToken.None);
+                await Task.Delay(1);
+            }
         }
     }
 }

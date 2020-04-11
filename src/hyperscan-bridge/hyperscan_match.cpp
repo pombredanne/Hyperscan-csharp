@@ -25,10 +25,10 @@
 
 using namespace Hyperscan::Scanning;
 
-Match::Match(int id, String^ full_match, String^ pattern, ReadOnlySequence<Byte> input) {
+Match::Match(int id, String^ fullMatch, Compilation::Expression^ expression, ReadOnlySequence<Byte> input) {
 	this->m_id_ = id;
-	this->m_full_match_ = full_match;
-	this->m_pattern_ = pattern;
+	this->m_full_match_ = fullMatch;
+	this->m_expression_ = expression;
 	this->m_input_ = input;
 }
 
@@ -40,8 +40,8 @@ String^ Match::FullMatch::get() {
 	return this->m_full_match_;
 }
 
-String^ Match::Pattern::get() {
-	return this->m_pattern_;
+Expression^ Match::Expression::get() {
+	return this->m_expression_;
 }
 
 ReadOnlySequence<Byte> Match::Input::get() {

@@ -60,7 +60,7 @@ Scanner^ HyperscanEngine::CreateScanner()
 			throw gcnew HyperscanException(String::Format("Unable to allocate scratch prototype: {0}", scratch_error));
 		}
 
-		const auto scanner = gcnew Scanner(this->m_database_, this->m_compiler_->Pattern, this->m_match_observable_);
+		const auto scanner = gcnew Scanner(this->m_database_, this->m_compiler_->ExpressionsById, this->m_match_observable_);
 		scanner->CreateScratch(scratch_prototype);
 		return scanner;
 	}

@@ -25,11 +25,16 @@
 #include "hyperscan_exception.h"
 #include "hyperscan_match_event_handler.h"
 #include "hyperscan_match_observable.h"
+#include "hyperscan_expression.h"
+
+#include <msclr/gcroot.h>
 
 using namespace System;
+using namespace msclr;
 
 using namespace Hyperscan::Core;
 using namespace Hyperscan::Databases;
+using namespace Hyperscan::Compilation;
 using namespace Exceptions;
 using namespace Event;
 
@@ -37,14 +42,14 @@ namespace Hyperscan {
 	namespace Scanning {
 		private ref class Scanner sealed {
 		internal:
-			Scanner(Database^ database, String^ pattern, MatchObservable^ match_observable);
+			Scanner(Database^ database, IDictionary<int, Expression^>^ expressionsById, MatchObservable^ matchObservable);
 			~Scanner();
 			!Scanner();
 			void Scan(String^ input);
-			void CreateScratch(hs_scratch_t* scratch_prototype);
+			void CreateScratch(hs_scratch_t* scratchPrototype);
 		private:
-			String^ m_pattern_;
 			MatchEventHandler^ m_match_event_handler_;
+			gcroot<IDictionary<int, Expression^>^>* m_expressions_by_id_handle_;
 			hs_scratch_t* m_scratch_;
 			hs_database_t* m_database_;
 		};

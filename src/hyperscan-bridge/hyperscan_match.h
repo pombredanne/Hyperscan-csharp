@@ -21,13 +21,17 @@
 
 #pragma once
 
+#include "hyperscan_expression.h"
+
 using namespace System;
 using namespace Buffers;
+
+using namespace Hyperscan::Compilation;
 
 namespace Hyperscan {
 	namespace Scanning {
 		public struct MatchAttribute {
-			char* pattern;
+			void* expressions_by_id_handle;
 			char* source;
 			int source_len;
 		};
@@ -42,19 +46,19 @@ namespace Hyperscan {
 				String^ get();
 			}
 
-			property String^ Pattern {
-				String^ get();
+			property Expression^ Expression {
+				Compilation::Expression^ get();
 			}
 
 			property ReadOnlySequence<Byte> Input {
 				ReadOnlySequence<Byte> get();
 			}
 		internal:
-			Match(int id, String^ full_match, String^ pattern, ReadOnlySequence<Byte> input);
+			Match(int id, String^ fullMatch, Compilation::Expression^ expression, ReadOnlySequence<Byte> input);
 		private:
 			int m_id_;
 			String^ m_full_match_;
-			String^ m_pattern_;
+			Compilation::Expression^ m_expression_;
 			ReadOnlySequence<Byte> m_input_;
 		};
 	}

@@ -25,32 +25,12 @@
 
 using namespace Hyperscan::Compilation;
 
-Compiler::Compiler(String^ pattern, ExpressionFlag expressionFlag, CompilerMode compilerMode) {
-    this->m_pattern_ = pattern;
-    this->m_expression_flag_ = expressionFlag;
-    this->m_compiler_mode_ = compilerMode;
+void Compiler::Compile(Database^ database, PlatformInfo^ platformInfo)
+{
+
 }
 
-void Compiler::Compile(Database^ database, PlatformInfo^ platform_info)
+IDictionary<int, Expression^>^ Compiler::ExpressionsById::get()
 {
-    auto native_pattern = Marshal::StringToHGlobalAnsi(m_pattern_);
-    const auto pattern_ptr = static_cast<char*>(native_pattern.ToPointer());
-    hs_compile_error_t* compile_err;
-    try
-    {
-        const pin_ptr<hs_database_t*> hs_database = &database->m_database;
-        if (hs_compile(pattern_ptr, static_cast<unsigned int>(this->m_expression_flag_), static_cast<unsigned int>(this->m_compiler_mode_), platform_info->m_platform_info, hs_database, &compile_err) != HS_SUCCESS) {
-            throw gcnew HyperscanException(String::Format("Unable to compile pattern ""{0}"": {1}", m_pattern_, gcnew String(compile_err->message)));
-        }
-    }
-    finally
-    {
-        hs_free_compile_error(compile_err);
-        Marshal::FreeHGlobal(native_pattern);
-    }
-}
-
-String^ Compiler::Pattern::get()
-{
-    return this->m_pattern_;
+	return nullptr;
 }

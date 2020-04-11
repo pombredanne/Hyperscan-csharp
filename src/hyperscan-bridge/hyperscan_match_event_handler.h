@@ -23,11 +23,16 @@
 
 #include "hyperscan_match_observable.h"
 #include "hyperscan_utils.h"
+#include "hyperscan_expression.h"
+
+#include <msclr/gcroot.h>
 
 using namespace System;
+using namespace msclr;
 using namespace Buffers;
 using namespace Runtime::InteropServices;
 
+using namespace Hyperscan::Compilation;
 using namespace Hyperscan::Scanning;
 using namespace Hyperscan::Utils;
 

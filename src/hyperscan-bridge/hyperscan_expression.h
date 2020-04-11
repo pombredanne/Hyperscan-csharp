@@ -21,27 +21,36 @@
 
 #pragma once
 
-#include "hyperscan_database.h"
-#include "hyperscan_platform_info.h"
-#include "hyperscan_expression.h"
+#include "hyperscan_expression_flag.h"
 
 using namespace System;
-using namespace Collections::Generic;
-
-using namespace Hyperscan::Databases;
-using namespace Hyperscan::Platform;
 
 namespace Hyperscan {
 	namespace Compilation {
 		/// <summary>
-		/// Compiler
+		/// Expression to be matched
 		/// </summary>
-		public ref class Compiler abstract {
-		internal:
-			virtual void Compile(Database^ database, PlatformInfo^ platformInfo);
-			virtual property IDictionary<int, Expression^>^ ExpressionsById {
-				IDictionary<int, Expression^>^ get();
+		public ref class Expression sealed {
+		public:
+			Expression(int id, String^ pattern, ExpressionFlag expressionFlag);
+			property int Id
+			{
+				int get();
 			}
+
+			property String^ Pattern
+			{
+				String^ get();
+			}
+
+			property ExpressionFlag Flag
+			{
+				ExpressionFlag get();
+			}
+		private:
+			int m_id_;
+			String^ m_pattern_;
+			ExpressionFlag m_expression_flag_;
 		};
 	}
 }

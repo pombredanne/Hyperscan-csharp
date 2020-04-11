@@ -25,11 +25,11 @@
 
 using namespace Hyperscan::Scanning;
 
-Scanner::Scanner(Database^ database, String^ pattern, MatchObservable^ match_observable) {
+Scanner::Scanner(Database^ database, IDictionary<int, Expression^>^ expressionsById, MatchObservable^ matchObservable) {
     this->m_scratch_ = nullptr;
     this->m_database_ = database->m_database;
-    this->m_match_event_handler_ = gcnew MatchEventHandler(match_observable);
-    this->m_pattern_ = pattern;
+    this->m_match_event_handler_ = gcnew MatchEventHandler(matchObservable);
+    this->m_expressions_by_id_handle_ = new gcroot<IDictionary<int, Expression^>^>(expressionsById);
 }
 
 Scanner::~Scanner()
@@ -39,13 +39,14 @@ Scanner::~Scanner()
 
 Scanner::!Scanner()
 {
+    delete this->m_expressions_by_id_handle_;
     hs_free_scratch(this->m_scratch_);
 }
 
 void Scanner::Scan(String^ input) {
     const auto input_ptr = StringUtils::to_unmanaged(input);
     const auto match_attr = new MatchAttribute();
-    match_attr->pattern = StringUtils::to_unmanaged(this->m_pattern_);
+    match_attr->expressions_by_id_handle = static_cast<void*>(this->m_expressions_by_id_handle_);
     match_attr->source = input_ptr;
     match_attr->source_len = input->Length;
     const auto scan_err = hs_scan(this->m_database_, input_ptr, input->Length, 0, this->m_scratch_, this->m_match_event_handler_->m_handler, match_attr);
@@ -54,10 +55,10 @@ void Scanner::Scan(String^ input) {
     }
 }
 
-void Scanner::CreateScratch(hs_scratch_t* scratch_prototype)
+void Scanner::CreateScratch(hs_scratch_t* scratchPrototype)
 {
     const pin_ptr<hs_scratch_t*> scratch = &this->m_scratch_;
-    const auto alloc_scratch_err = hs_clone_scratch(scratch_prototype, scratch);
+    const auto alloc_scratch_err = hs_clone_scratch(scratchPrototype, scratch);
     if (alloc_scratch_err != HS_SUCCESS) {
         throw gcnew HyperscanException(String::Format("ERROR {0}: Unable to allocate scratch space. Exiting.", alloc_scratch_err));
     }

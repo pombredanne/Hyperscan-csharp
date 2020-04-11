@@ -17,31 +17,28 @@
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE.
+// SOFTWARE
 
-#pragma once
+#include "pch.h"
 
-#include "hyperscan_database.h"
-#include "hyperscan_platform_info.h"
 #include "hyperscan_expression.h"
 
-using namespace System;
-using namespace Collections::Generic;
+using namespace Hyperscan::Compilation;
 
-using namespace Hyperscan::Databases;
-using namespace Hyperscan::Platform;
+Expression::Expression(const int id, String^ pattern, const ExpressionFlag expressionFlag) {
+	this->m_id_ = id;
+	this->m_pattern_ = pattern;
+	this->m_expression_flag_ = expressionFlag;
+}
 
-namespace Hyperscan {
-	namespace Compilation {
-		/// <summary>
-		/// Compiler
-		/// </summary>
-		public ref class Compiler abstract {
-		internal:
-			virtual void Compile(Database^ database, PlatformInfo^ platformInfo);
-			virtual property IDictionary<int, Expression^>^ ExpressionsById {
-				IDictionary<int, Expression^>^ get();
-			}
-		};
-	}
+int Expression::Id::get() {
+	return this->m_id_;
+}
+
+String^ Expression::Pattern::get() {
+	return this->m_pattern_;
+}
+
+ExpressionFlag Expression::Flag::get() {
+	return this->m_expression_flag_;
 }

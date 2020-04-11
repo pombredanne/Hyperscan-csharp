@@ -63,9 +63,6 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hyperscan_compiler.h">
-      <Filter>Header Files\Compilation</Filter>
-    </ClInclude>
     <ClInclude Include="hyperscan_engine.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
@@ -99,6 +96,15 @@
     <ClInclude Include="hyperscan_mode.h">
       <Filter>Header Files\Compilation</Filter>
     </ClInclude>
+    <ClInclude Include="hyperscan_expression.h">
+      <Filter>Header Files\Compilation</Filter>
+    </ClInclude>
+    <ClInclude Include="hyperscan_simple_compiler.h">
+      <Filter>Header Files\Compilation</Filter>
+    </ClInclude>
+    <ClInclude Include="hyperscan_compiler.h">
+      <Filter>Header Files\Compilation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
@@ -106,9 +112,6 @@
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="hyperscan_compiler.cpp">
-      <Filter>Source Files\Compilation</Filter>
     </ClCompile>
     <ClCompile Include="hyperscan_engine.cpp">
       <Filter>Source Files\Core</Filter>
@@ -133,6 +136,15 @@
     </ClCompile>
     <ClCompile Include="hyperscan_platform_info.cpp">
       <Filter>Source Files\Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="hyperscan_expression.cpp">
+      <Filter>Source Files\Compilation</Filter>
+    </ClCompile>
+    <ClCompile Include="hyperscan_simple_compiler.cpp">
+      <Filter>Source Files\Compilation</Filter>
+    </ClCompile>
+    <ClCompile Include="hyperscan_compiler.cpp">
+      <Filter>Source Files\Compilation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -21,27 +21,38 @@
 
 #pragma once
 
+#include "hyperscan_exception.h"
 #include "hyperscan_database.h"
 #include "hyperscan_platform_info.h"
-#include "hyperscan_expression.h"
+#include "hyperscan_mode.h"
+#include "hyperscan_compiler.h"
 
 using namespace System;
-using namespace Collections::Generic;
+using namespace Runtime::InteropServices;
 
-using namespace Hyperscan::Databases;
+using namespace Hyperscan::Core;
 using namespace Hyperscan::Platform;
+using namespace Hyperscan::Databases;
+using namespace Exceptions;
 
 namespace Hyperscan {
 	namespace Compilation {
 		/// <summary>
-		/// Compiler
+		/// Compiler which supports compiling only one regular expression pattern into Hyperscan database
 		/// </summary>
-		public ref class Compiler abstract {
+		public ref class SimpleCompiler sealed : Compiler {
+		public:
+			SimpleCompiler(Expression^ expression, CompilerMode compilerFlag);
 		internal:
-			virtual void Compile(Database^ database, PlatformInfo^ platformInfo);
-			virtual property IDictionary<int, Expression^>^ ExpressionsById {
-				IDictionary<int, Expression^>^ get();
+			void Compile(Database^ database, PlatformInfo^ platformInfo) override;
+
+			property IDictionary<int, Expression^>^ ExpressionsById
+			{
+				IDictionary<int, Expression^>^ get() override;
 			}
+		private:
+			Expression^ m_expression_;
+			CompilerMode m_compiler_mode_;
 		};
 	}
 }
