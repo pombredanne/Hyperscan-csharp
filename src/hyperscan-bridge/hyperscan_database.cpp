@@ -58,7 +58,7 @@ Database::Database(array<Byte>^ serializedDatabase)
 	const auto deserialize_database_error = hs_deserialize_database(serialized_database_ptr, serializedDatabase->Length, database);
 	if (deserialize_database_error != HS_SUCCESS)
 	{
-		throw gcnew HyperscanException(String::Format("Unable to deserialize database: {0}", deserialize_database_error));
+		throw gcnew HyperscanException(String::Format("ERROR {0}: Unable to deserialize database.", deserialize_database_error));
 	}
 }
 
@@ -78,7 +78,7 @@ int Database::Size::get()
 	const auto database_size_error = hs_database_size(this->m_database, &database_size);
 	if(database_size_error != HS_SUCCESS)
 	{
-		throw gcnew HyperscanException(String::Format("Unable to get database size: {0}", database_size_error));
+		throw gcnew HyperscanException(String::Format("ERROR {0}: Unable to get database size.", database_size_error));
 	}
 
 	return static_cast<int>(database_size);
@@ -93,7 +93,7 @@ array<Byte>^ Database::Serialize()
 		const auto database_serialize_error = hs_serialize_database(this->m_database, &serialized_database, database_size);
 		if (database_serialize_error != HS_SUCCESS)
 		{
-			throw gcnew HyperscanException(String::Format("Unable to serialize database: {0}", database_serialize_error));
+			throw gcnew HyperscanException(String::Format("ERROR {0}: Unable to serialize database.", database_serialize_error));
 		}
 
 		return StringUtils::to_managed_array(serialized_database, static_cast<int>(*database_size));

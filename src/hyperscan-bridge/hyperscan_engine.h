@@ -51,17 +51,17 @@ namespace Hyperscan {
 			}
 
 			/// <summary>
-			/// Subscribe to observe matches
+			/// Get the compiler
 			/// </summary>
-			property IObservable<Match^>^ OnMatch {
-				IObservable<Match^>^ get();
+			property Compiler^ Compiler {
+				Compilation::Compiler^ get();
 			}
 
 			/// <summary>
-			/// Check if the hardware platform is supported
+			/// Get the platform info
 			/// </summary>
-			property bool IsPlatformValid {
-				bool get();
+			property PlatformInfo^ PlatformInfo {
+				Platform::PlatformInfo^ get();
 			}
 
 			/// <summary>
@@ -70,21 +70,28 @@ namespace Hyperscan {
 			property String^ Version {
 				String^ get();
 			}
+
+			/// <summary>
+			/// Subscribe to observe matches
+			/// </summary>
+			property IObservable<Match^>^ OnMatch {
+				IObservable<Match^>^ get();
+			}
 		internal:
 			/// <summary>
 			/// Instanciate the Hyperscan engine
 			/// </summary>
 			/// <param name="databaseFactory">The factory used to configure the Hyperscan database</param>
 			/// <param name="compilerFactory">The factory used to configure the Hyperscan compiler</param>
-			HyperscanEngine(Func<Databases::Database^>^ databaseFactory, Func<Compiler^>^ compilerFactory);
+			HyperscanEngine(Func<Databases::Database^>^ databaseFactory, Func<Compilation::Compiler^>^ compilerFactory);
 			~HyperscanEngine();
 			!HyperscanEngine();
 			Scanner^ CreateScanner();
 		private:
-			Compiler^ m_compiler_;
+			Compilation::Compiler^ m_compiler_;
 			Databases::Database^ m_database_;
+			Platform::PlatformInfo^ m_platform_info_;
 			MatchObservable^ m_match_observable_;
-			PlatformInfo^ m_platform_info_;
 		};
 	}
 }

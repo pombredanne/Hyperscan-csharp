@@ -39,7 +39,7 @@ void SimpleCompiler::Compile(Database^ database, PlatformInfo^ platformInfo)
     {
         const pin_ptr<hs_database_t*> hs_database = &database->m_database;
         if (hs_compile(pattern_ptr, static_cast<unsigned int>(this->m_expression_->Flag), static_cast<unsigned int>(this->m_compiler_mode_), platformInfo->m_platform_info, hs_database, &compile_err) != HS_SUCCESS) {
-            throw gcnew HyperscanException(String::Format("Unable to compile pattern ""{0}"": {1}", this->m_expression_->Pattern, gcnew String(compile_err->message)));
+            throw gcnew HyperscanException(String::Format("ERROR: Unable to compile pattern ""{0}"": {1}", this->m_expression_->Pattern, gcnew String(compile_err->message)));
         }
     }
     finally
@@ -54,4 +54,9 @@ IDictionary<int, Expression^>^ SimpleCompiler::ExpressionsById::get()
     const auto expressions_by_id =  gcnew Dictionary<int, Expression^>();
     expressions_by_id->Add(0, this->m_expression_);
     return expressions_by_id;
+}
+
+CompilerMode SimpleCompiler::Mode::get()
+{
+    return this->m_compiler_mode_;
 }

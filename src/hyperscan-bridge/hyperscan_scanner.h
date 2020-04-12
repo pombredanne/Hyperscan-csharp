@@ -47,6 +47,10 @@ namespace Hyperscan {
 			!Scanner();
 			void Scan(String^ input);
 			void CreateScratch(hs_scratch_t* scratchPrototype);
+			property int ScratchSize
+			{
+				int get();
+			}
 		private:
 			MatchEventHandler^ m_match_event_handler_;
 			gcroot<IDictionary<int, Expression^>^>* m_expressions_by_id_handle_;

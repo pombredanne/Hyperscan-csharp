@@ -21,42 +21,21 @@
 
 #pragma once
 
-#include "hyperscan_exception.h"
-#include "hyperscan_database.h"
-#include "hyperscan_platform_info.h"
-#include "hyperscan_compiler_mode.h"
-#include "hyperscan_compiler.h"
-
-using namespace System;
-using namespace Runtime::InteropServices;
-
-using namespace Hyperscan::Core;
-using namespace Hyperscan::Platform;
-using namespace Hyperscan::Databases;
-using namespace Exceptions;
-
 namespace Hyperscan {
-	namespace Compilation {
-		/// <summary>
-		/// Compiler which supports compiling only one regular expression pattern into Hyperscan database
-		/// </summary>
-		public ref class SimpleCompiler sealed : Compiler {
-		public:
-			SimpleCompiler(Expression^ expression, CompilerMode compilerFlag);
-			property CompilerMode Mode
-			{
-				CompilerMode get() override;
-			}
-		internal:
-			void Compile(Database^ database, PlatformInfo^ platformInfo) override;
-
-			property IDictionary<int, Expression^>^ ExpressionsById
-			{
-				IDictionary<int, Expression^>^ get() override;
-			}
-		private:
-			Expression^ m_expression_;
-			CompilerMode m_compiler_mode_;
-		};
-	}
+    namespace Platform {
+        /// <summary>
+        /// HS_CPU_FEATURES_FLAG CPU feature support flags
+        /// </summary>
+        [System::Flags]
+        public enum class CpuFeature {
+            /// <summary>
+            /// Intel(R) Advanced Vector Extensions 2 (Intel(R) AVX2)
+            /// </summary>
+            HsCpuFeatureAvx2 = 1ULL << 2,
+            /// <summary>
+			/// Intel(R) Advanced Vector Extensions 512 (Intel(R) AVX512)
+			/// </summary>
+            HsCpuFeatureAvx512 = 1ULL << 3
+        };
+    }
 }

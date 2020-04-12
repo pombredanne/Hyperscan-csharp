@@ -22,6 +22,7 @@
 #pragma once
 
 #include "hyperscan_exception.h"
+#include "hyperscan_platform_cpu_feature.h"
 
 using namespace System;
 
@@ -29,11 +30,25 @@ using namespace Hyperscan::Core::Exceptions;
 
 namespace Hyperscan {
 	namespace Platform {
-		private ref class PlatformInfo sealed {
+		public ref class PlatformInfo sealed {
 		public:
 			PlatformInfo();
 			~PlatformInfo();
 			!PlatformInfo();
+
+			/// <summary>
+			/// Check if the hardware platform is supported
+			/// </summary>
+			property bool IsPlatformValid {
+				bool get();
+			}
+
+			/// <summary>
+			/// Get the CPU features
+			/// </summary>
+			property CpuFeature CpuFeature {
+				Platform::CpuFeature get();
+			}
 		internal:
 			hs_platform_info* m_platform_info;
 		};

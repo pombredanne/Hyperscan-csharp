@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reactive.Concurrency;
-using System.Reactive.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Hyperscan.Compilation;
-using Hyperscan.Core;
-using Hyperscan.Databases;
-using Hyperscan.Extensions.Utils;
+﻿using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Hyperscan.Sample
 {
@@ -15,66 +9,12 @@ namespace Hyperscan.Sample
     {
         static async Task Main(string[] args)
         {
-            Console.WriteLine(@"
-    __  __                                          
-   / / / /_  ______  ___  ___________________ _____ 
-  / /_/ / / / / __ \/ _ \/ ___/ ___/ ___/ __ `/ __ \
- / __  / /_/ / /_/ /  __/ /  (__  ) /__/ /_/ / / / /
-/_/ /_/\__, / .___/\___/_/  /____/\___/\__,_/_/ /_/ 
-      /____/_/                                      
-
-");
-            var expression = new Expression(0, "foo(?i)bar(?-i)baz", ExpressionFlag.HsFlagUtf8 | ExpressionFlag.HsFlagDotall);
-            if (!expression.TryGetInfo(out var info))
-            {
-                throw new Exception(info.CompilationErrorMessage);
-            }
-
-            var engineBuilder = new EngineBuilder();
-            //engineBuilder.WithDatabase(() => new Database(@"PATH_TO_SERIALIZED_DB"));
-            engineBuilder.WithDatabase(() => new Database());
-            engineBuilder.WithCompiler(() => new SimpleCompiler(expression, CompilerMode.HsModeBlock));
-            await using var engine = engineBuilder.Build();
-            var platformValid = engine.IsPlatformValid;
-            var hyperscanVersion = engine.Version;
-            Console.WriteLine($"Version {hyperscanVersion}");
-            Console.WriteLine("========================");
-            using var matchSubscription = engine.OnMatch
-                .ObserveOn(new EventLoopScheduler())
-                .Do(match =>
-                {
-                    var input = match.Input.Read();
-                    Console.Write($"New match for input \"{input}\" with pattern \"{match.Expression.Pattern}\": ");
-                    var matchQueue = new Queue<char>();
-                    Console.BackgroundColor = ConsoleColor.Green;
-                    foreach (var c in match.FullMatch)
-                    {
-                        matchQueue.Enqueue(c);
-                        Console.Write(c);
-                    }
-
-                    Console.BackgroundColor = ConsoleColor.Red;
-                    foreach (var current in input)
-                    {
-                        if (matchQueue.TryPeek(out var matched) && matched == current)
-                        {
-                            matchQueue.Dequeue();
-                            continue;
-                        }
-
-                        Console.Write(current);
-                    }
-
-                    matchQueue.Clear();
-                    Console.ResetColor();
-                    Console.Write(Environment.NewLine);
-                })
-                .Subscribe(match => { },
-                    ex => Console.WriteLine("Error: {0}", ex.Message),
-                    () => Console.WriteLine("Scan completed."));
-            //await engine.Database.SerializeToFileAsync(@"PATH_TO_SERIALIZED_DB");
-            await engine.ScanAsync("foobarbazbazbaz", CancellationToken.None);
-            await Task.Delay(-1);
+            using var host = Host.CreateDefaultBuilder(args)
+                .ConfigureLogging(config => { config.AddConsole(); })
+                .ConfigureServices((hostBuilderContext, services) => { services.AddHostedService<HyperscanService>(); })
+                .UseConsoleLifetime(opt => opt.SuppressStatusMessages = true)
+                .Build();
+            await host.RunAsync();
         }
     }
 }

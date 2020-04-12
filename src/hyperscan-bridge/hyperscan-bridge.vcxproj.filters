@@ -93,9 +93,6 @@
     <ClInclude Include="hyperscan_expression_flag.h">
       <Filter>Header Files\Compilation</Filter>
     </ClInclude>
-    <ClInclude Include="hyperscan_mode.h">
-      <Filter>Header Files\Compilation</Filter>
-    </ClInclude>
     <ClInclude Include="hyperscan_expression.h">
       <Filter>Header Files\Compilation</Filter>
     </ClInclude>
@@ -107,6 +104,12 @@
     </ClInclude>
     <ClInclude Include="hyperscan_expression_info.h">
       <Filter>Header Files\Compilation</Filter>
+    </ClInclude>
+    <ClInclude Include="hyperscan_compiler_mode.h">
+      <Filter>Header Files\Compilation</Filter>
+    </ClInclude>
+    <ClInclude Include="hyperscan_platform_cpu_feature.h">
+      <Filter>Header Files\Platform</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

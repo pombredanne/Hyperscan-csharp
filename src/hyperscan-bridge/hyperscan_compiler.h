@@ -24,12 +24,14 @@
 #include "hyperscan_database.h"
 #include "hyperscan_platform_info.h"
 #include "hyperscan_expression.h"
+#include "hyperscan_compiler_mode.h"
 
 using namespace System;
 using namespace Collections::Generic;
 
 using namespace Hyperscan::Databases;
 using namespace Hyperscan::Platform;
+using namespace Hyperscan::Compilation;
 
 namespace Hyperscan {
 	namespace Compilation {
@@ -37,6 +39,11 @@ namespace Hyperscan {
 		/// Compiler
 		/// </summary>
 		public ref class Compiler abstract {
+		public:
+			virtual property CompilerMode Mode
+			{
+				CompilerMode get();
+			}
 		internal:
 			virtual void Compile(Database^ database, PlatformInfo^ platformInfo);
 			virtual property IDictionary<int, Expression^>^ ExpressionsById {

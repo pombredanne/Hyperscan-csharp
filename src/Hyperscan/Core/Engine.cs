@@ -17,21 +17,23 @@ namespace Hyperscan.Core
         private bool _disposed;
         private readonly ChannelQueuing<string> _queuing;
         private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
-        private readonly ISet<InputConsumer> _inputConsumers = new HashSet<InputConsumer>();
         private readonly ILogger _logger;
 
         internal Engine(ILogger logger, Func<Database> databaseFactory, Func<Compiler> compilerFactory) : base(databaseFactory, compilerFactory)
         {
             _logger = logger;
+            InputConsumers = new HashSet<InputConsumer>();
             _queuing = new ChannelQueuing<string>(new BoundedChannelOptions(Environment.ProcessorCount));
             foreach (var _ in Enumerable.Range(0, Environment.ProcessorCount))
             {
                 var scanner = CreateScanner();
                 var inputConsumer = new InputConsumer(_logger, _queuing.Consumer, scanner);
                 inputConsumer.Consume(_cancellationTokenSource.Token);
-                _inputConsumers.Add(inputConsumer);
+                InputConsumers.Add(inputConsumer);
             }
         }
+
+        internal ISet<InputConsumer> InputConsumers { get; }
 
         public ValueTask ScanAsync(string input, CancellationToken cancellationToken)
         {
@@ -51,7 +53,7 @@ namespace Hyperscan.Core
             if (disposing)
             {
                 _cancellationTokenSource.Cancel();
-                foreach (var inputConsumer in _inputConsumers)
+                foreach (var inputConsumer in InputConsumers)
                 {
                     inputConsumer.Dispose();
                 }

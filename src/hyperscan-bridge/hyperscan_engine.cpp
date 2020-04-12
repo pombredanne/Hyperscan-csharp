@@ -23,11 +23,11 @@
 
 #include "hyperscan_engine.h"
 
-HyperscanEngine::HyperscanEngine(Func<Databases::Database^>^ databaseFactory, Func<Compiler^>^ compilerFactory) {
+HyperscanEngine::HyperscanEngine(Func<Databases::Database^>^ databaseFactory, Func<Compilation::Compiler^>^ compilerFactory) {
 	this->m_database_ = databaseFactory();
 
 	const auto compiler = compilerFactory();
-	this->m_platform_info_ = gcnew PlatformInfo();
+	this->m_platform_info_ = gcnew Platform::PlatformInfo();
 	compiler->Compile(this->m_database_, this->m_platform_info_);
 	this->m_compiler_ = compiler;
 
@@ -47,18 +47,22 @@ Database^ HyperscanEngine::Database::get() {
 	return this->m_database_;
 }
 
-IObservable<Match^>^ HyperscanEngine::OnMatch::get() {
-	return this->m_match_observable_;
+Compiler^ HyperscanEngine::Compiler::get() {
+	return this->m_compiler_;
 }
 
-bool HyperscanEngine::IsPlatformValid::get()
+PlatformInfo^ HyperscanEngine::PlatformInfo::get()
 {
-	return HS_SUCCESS == hs_valid_platform();
+	return this->m_platform_info_;
 }
 
 String^ HyperscanEngine::Version::get()
 {
 	return gcnew String(hs_version());
+}
+
+IObservable<Match^>^ HyperscanEngine::OnMatch::get() {
+	return this->m_match_observable_;
 }
 
 Scanner^ HyperscanEngine::CreateScanner()
@@ -67,7 +71,7 @@ Scanner^ HyperscanEngine::CreateScanner()
 	try {
 		const auto scratch_error = hs_alloc_scratch(this->m_database_->m_database, &scratch_prototype);
 		if (scratch_error != HS_SUCCESS) {
-			throw gcnew HyperscanException(String::Format("Unable to allocate scratch prototype: {0}", scratch_error));
+			throw gcnew HyperscanException(String::Format("ERROR {0}: Unable to allocate scratch prototype.", scratch_error));
 		}
 
 		const auto scanner = gcnew Scanner(this->m_database_, this->m_compiler_->ExpressionsById, this->m_match_observable_);

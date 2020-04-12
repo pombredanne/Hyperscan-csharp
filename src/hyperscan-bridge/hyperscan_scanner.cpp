@@ -51,7 +51,7 @@ void Scanner::Scan(String^ input) {
     match_attr->source_len = input->Length;
     const auto scan_err = hs_scan(this->m_database_, input_ptr, input->Length, 0, this->m_scratch_, this->m_match_event_handler_->m_handler, match_attr);
     if (scan_err != HS_SUCCESS) {
-        throw gcnew HyperscanException(String::Format("ERROR {0}: Unable to scan input buffer. Exiting.", scan_err));
+        throw gcnew HyperscanException(String::Format("ERROR {0}: Unable to scan input buffer.", scan_err));
     }
 }
 
@@ -60,6 +60,23 @@ void Scanner::CreateScratch(hs_scratch_t* scratchPrototype)
     const pin_ptr<hs_scratch_t*> scratch = &this->m_scratch_;
     const auto alloc_scratch_err = hs_clone_scratch(scratchPrototype, scratch);
     if (alloc_scratch_err != HS_SUCCESS) {
-        throw gcnew HyperscanException(String::Format("ERROR {0}: Unable to allocate scratch space. Exiting.", alloc_scratch_err));
+        throw gcnew HyperscanException(String::Format("ERROR {0}: Unable to allocate scratch space.", alloc_scratch_err));
+    }
+}
+
+int Scanner::ScratchSize::get()
+{
+    const auto size = new size_t[1];
+    try {
+        const auto scratch_size_error = hs_scratch_size(this->m_scratch_, size);
+        if (scratch_size_error != HS_SUCCESS) {
+            throw gcnew HyperscanException(String::Format("ERROR {0}: Unable to get scratch size.", scratch_size_error));
+        }
+
+        return static_cast<int>(*size);
+    }
+    finally
+    {
+        delete[] size;
     }
 }

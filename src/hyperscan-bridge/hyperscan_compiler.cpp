@@ -34,3 +34,8 @@ IDictionary<int, Expression^>^ Compiler::ExpressionsById::get()
 {
 	return nullptr;
 }
+
+CompilerMode Compiler::Mode::get()
+{
+	return CompilerMode::HsModeBlock;
+}

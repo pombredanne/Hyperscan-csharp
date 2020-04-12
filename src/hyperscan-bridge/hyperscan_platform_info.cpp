@@ -30,12 +30,12 @@ PlatformInfo::PlatformInfo()
 	const auto info = new hs_platform_info();
     const auto populate_platform_err = hs_populate_platform(info);
     if (populate_platform_err != HS_SUCCESS) {
-        throw gcnew HyperscanException(String::Format("ERROR {0}: Unable to populate platform infos. Exiting.", populate_platform_err));
+        throw gcnew HyperscanException(String::Format("ERROR {0}: Unable to populate platform infos.", populate_platform_err));
     }
 
     if (Runtime::Intrinsics::X86::Avx2::IsSupported)
     {
-        info->cpu_features &= HS_CPU_FEATURES_AVX2;
+        info->cpu_features = HS_CPU_FEATURES_AVX2;
     }
 
     this->m_platform_info = info;
@@ -49,4 +49,14 @@ PlatformInfo::~PlatformInfo()
 PlatformInfo::!PlatformInfo()
 {
     delete this->m_platform_info;
+}
+
+bool PlatformInfo::IsPlatformValid::get()
+{
+    return HS_SUCCESS == hs_valid_platform();
+}
+
+CpuFeature PlatformInfo::CpuFeature::get()
+{
+    return static_cast<Platform::CpuFeature>(this->m_platform_info->cpu_features);
 }

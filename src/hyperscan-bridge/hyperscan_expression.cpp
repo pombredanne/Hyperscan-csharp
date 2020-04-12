@@ -40,18 +40,15 @@ bool Expression::TryGetInfo([Out] ExpressionInfo^% info)
 		if (expression_error != HS_SUCCESS) {
 			const auto compilation_error_message = gcnew String(compilation_error->message);
 			info = gcnew ExpressionInfo(0, 0, false, false, false, compilation_error_message);
-			throw gcnew HyperscanException(String::Format("Unable to compile expression: {0}.", compilation_error_message));
+			return false;
 		}
 
 		info = gcnew ExpressionInfo(expr_info->min_width, expr_info->max_width, expr_info->unordered_matches, expr_info->matches_at_eod, expr_info->matches_only_at_eod, gcnew String(""));
 		return true;
 	}
-	catch(Exception^)
-	{
-		return false;
-	}
 	finally
 	{
+		free(expr_info);
 		hs_free_compile_error(compilation_error);
 	}
 }

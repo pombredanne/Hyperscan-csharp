@@ -10,13 +10,12 @@ namespace Hyperscan.Scanning
     {
         private readonly ILogger _logger;
         private readonly Consumer<string> _consumer;
-        private readonly Scanner _scanner;
 
         public InputConsumer(ILogger logger, Consumer<string> consumer, Scanner scanner)
         {
             _logger = logger;
             _consumer = consumer;
-            _scanner = scanner;
+            Scanner = scanner;
         }
 
         public void Consume(CancellationToken cancellationToken)
@@ -27,7 +26,7 @@ namespace Hyperscan.Scanning
                 {
                     await foreach (var message in _consumer.ReadMessagesAsync(cancellationToken))
                     {
-                        _scanner.Scan(message);
+                        Scanner.Scan(message);
                     }
                 }
                 catch (OperationCanceledException)
@@ -41,9 +40,11 @@ namespace Hyperscan.Scanning
                 TaskContinuationOptions.OnlyOnFaulted);
         }
 
+        internal Scanner Scanner { get; }
+
         public void Dispose()
         {
-            _scanner?.Dispose();
+            Scanner?.Dispose();
         }
     }
 }
