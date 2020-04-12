@@ -30,7 +30,8 @@ More details available [here](https://www.nuget.org/packages/Hyperscan/).
 
 ## Usage
 
-[<img src="assets/sample.png" width="350"/>](sample.png)
+[<img src="assets/sample.png" width="650"/>](sample.png)
+
 *More to come.*
 
 ## Structure
