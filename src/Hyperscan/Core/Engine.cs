@@ -22,8 +22,8 @@ namespace Hyperscan.Core
         internal Engine(ILogger logger, Func<Database> databaseFactory, Func<Compiler> compilerFactory) : base(databaseFactory, compilerFactory)
         {
             _logger = logger;
-            InputConsumers = new HashSet<InputConsumer>();
             _queuing = new ChannelQueuing<string>(new BoundedChannelOptions(Environment.ProcessorCount));
+            InputConsumers = new HashSet<InputConsumer>();
             foreach (var _ in Enumerable.Range(0, Environment.ProcessorCount))
             {
                 var scanner = CreateScanner();

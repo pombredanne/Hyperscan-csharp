@@ -27,15 +27,15 @@ using namespace Hyperscan::Compilation;
 
 void Compiler::Compile(Database^ database, PlatformInfo^ platformInfo)
 {
-
+	throw gcnew NotImplementedException();
 }
 
 IDictionary<int, Expression^>^ Compiler::ExpressionsById::get()
 {
-	return nullptr;
+	throw gcnew NotImplementedException();
 }
 
 CompilerMode Compiler::Mode::get()
 {
-	return CompilerMode::HsModeBlock;
+	throw gcnew NotImplementedException();
 }
