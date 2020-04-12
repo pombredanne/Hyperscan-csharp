@@ -38,7 +38,8 @@ void MultipleCompiler::Compile(Database^ database, PlatformInfo^ platformInfo)
     for (auto i = 0; i < this->m_expressions_->Count; i++)
     {
         expressions[i] = static_cast<char*>(Marshal::StringToHGlobalAnsi(this->m_expressions_[i]->Pattern).ToPointer());
-        expression_ids[i] = this->m_expressions_[i]->Id;
+        this->m_expressions_[i]->Id = i;
+        expression_ids[i] = i;
         expression_flags[i] = static_cast<unsigned int>(this->m_expressions_[i]->Flag);
     }
 
@@ -74,6 +75,7 @@ IDictionary<int, Expression^>^ MultipleCompiler::ExpressionsById::get()
 
     return expressions_by_id;
 }
+
 CompilerMode MultipleCompiler::Mode::get()
 {
     return this->m_compiler_mode_;

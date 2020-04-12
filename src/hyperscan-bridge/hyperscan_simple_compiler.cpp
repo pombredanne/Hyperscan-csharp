@@ -52,7 +52,7 @@ void SimpleCompiler::Compile(Database^ database, PlatformInfo^ platformInfo)
 IDictionary<int, Expression^>^ SimpleCompiler::ExpressionsById::get()
 {
     const auto expressions_by_id =  gcnew Dictionary<int, Expression^>();
-    expressions_by_id->Add(this->m_expression_->Id, this->m_expression_);
+    expressions_by_id->Add(0, this->m_expression_);
     return expressions_by_id;
 }
 

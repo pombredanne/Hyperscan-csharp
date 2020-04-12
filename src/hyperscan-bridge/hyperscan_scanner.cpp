@@ -23,8 +23,6 @@
 
 #include "hyperscan_scanner.h"
 
-#include <vcclr.h>
-
 using namespace Hyperscan::Scanning;
 
 Scanner::Scanner(Database^ database, IDictionary<int, Expression^>^ expressionsById, MatchObservable^ matchObservable) {

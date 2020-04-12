@@ -30,28 +30,6 @@ using namespace Runtime::InteropServices;
 
 using namespace Hyperscan::Utils;
 
-char* StringUtils::substring(const char* src, const long long start_index, const long long end_index) {
-	const auto length = end_index - start_index;
-	if (length < 0)
-		return nullptr;
-
-	const auto dest = new char[length + 1];
-
-	std::copy(src + start_index, src + end_index, dest);
-	dest[length] = '\0';
-
-	return dest;
-}
-
-char* StringUtils::to_unmanaged(String^ string) {
-	const pin_ptr<const wchar_t> pinned_input = PtrToStringChars(string);
-	const size_t input_size = string->Length + 1;
-	const auto input_ptr = new char[input_size];
-	size_t chars_converted = 0;
-	wcstombs_s(&chars_converted, input_ptr, input_size, pinned_input, string->Length);
-	return input_ptr;
-}
-
 array<Byte>^ StringUtils::to_managed_array(char* input, const int len)
 {
 	const auto managed_array = gcnew array<Byte>(len);

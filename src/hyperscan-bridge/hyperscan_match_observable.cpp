@@ -38,7 +38,7 @@ IDisposable^ MatchObservable::Subscribe(IObserver<Match^>^ observer) {
 }
 
 void MatchObservable::OnMatch(Match^ match) {
-	for each (IObserver<Match^>^ observer in this->m_observers_)
+	for each (IObserver<Match^>^ observer in gcnew List<IObserver<Match^>^>(this->m_observers_))
 	{
 		observer->OnNext(match);
 	}

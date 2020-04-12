@@ -26,8 +26,7 @@
 using namespace Hyperscan::Compilation;
 
 Expression::Expression(String^ pattern, const ExpressionFlag expressionFlag) {
-	const auto rand_string_generator = gcnew Random();
-	this->m_id_ = rand_string_generator->Next();
+	this->m_id_ = 0;
 	this->m_pattern_ = pattern;
 	this->m_expression_flag_ = expressionFlag;
 }
@@ -36,8 +35,9 @@ bool Expression::TryGetInfo([Out] ExpressionInfo^% info)
 {
 	hs_expr_info_t* expr_info = nullptr;
 	hs_compile_error_t* compilation_error = nullptr;
+	auto input_ptr = Marshal::StringToHGlobalAnsi(this->Pattern);
 	try {
-		const auto expression_error = hs_expression_info(StringUtils::to_unmanaged(this->Pattern), static_cast<unsigned int>(this->Flag), &expr_info, &compilation_error);
+		const auto expression_error = hs_expression_info(static_cast<const char*>(input_ptr.ToPointer()), static_cast<unsigned int>(this->Flag), &expr_info, &compilation_error);
 		if (expression_error != HS_SUCCESS) {
 			const auto compilation_error_message = gcnew String(compilation_error->message);
 			info = gcnew ExpressionInfo(0, 0, false, false, false, compilation_error_message);
@@ -49,6 +49,7 @@ bool Expression::TryGetInfo([Out] ExpressionInfo^% info)
 	}
 	finally
 	{
+		Marshal::FreeHGlobal(input_ptr);
 		free(expr_info);
 		hs_free_compile_error(compilation_error);
 	}
@@ -56,6 +57,10 @@ bool Expression::TryGetInfo([Out] ExpressionInfo^% info)
 
 int Expression::Id::get() {
 	return this->m_id_;
+}
+
+void Expression::Id::set(int id) {
+	this->m_id_ = id;
 }
 
 String^ Expression::Pattern::get() {

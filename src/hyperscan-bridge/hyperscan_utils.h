@@ -27,8 +27,6 @@ namespace Hyperscan {
 	namespace Utils {
 		public ref class StringUtils sealed {
 		public:
-			static char* substring(const char* src, long long start_index, long long end_index);
-			static char* to_unmanaged(String^ string);
 			static array<Byte>^ to_managed_array(char* input, int len);
 		};
 	}

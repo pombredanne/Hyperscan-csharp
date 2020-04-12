@@ -42,7 +42,10 @@ namespace Hyperscan {
 			bool TryGetInfo([Out] ExpressionInfo^% info);
 			property int Id
 			{
+			public:
 				int get();
+			internal:
+				void set(int);
 			}
 
 			property String^ Pattern

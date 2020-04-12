@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Hyperscan.Compilation;
+using Hyperscan.Core.Exceptions;
 using Hyperscan.Databases;
 using Hyperscan.Extensions.Expressions;
 using Hyperscan.Platform;
@@ -14,6 +15,11 @@ namespace Hyperscan.Core
         private Func<Database> _databaseFactory;
         private Func<Compiler> _compilerFactory;
         private ILogger _logger;
+
+        public EngineBuilder()
+        {
+            _logger = NullLogger.Instance;
+        }
 
         public void WithDatabase(Func<Database> databaseFactory)
         {
@@ -32,7 +38,17 @@ namespace Hyperscan.Core
 
         public IEngine Build()
         {
-            var engine = new Engine(_logger ?? NullLogger.Instance, _databaseFactory, _compilerFactory);
+            if (_databaseFactory == default)
+            {
+                throw new HyperscanException($"{nameof(WithDatabase)} should be called.");
+            }
+
+            if (_compilerFactory == default)
+            {
+                throw new HyperscanException($"{nameof(WithCompiler)} should be called.");
+            }
+
+            var engine = new Engine(_logger, _databaseFactory, _compilerFactory);
             if (!engine.PlatformInfo.IsPlatformValid)
             {
                 _logger.LogWarning("Platform not supported, Hyperscan may not run properly.");

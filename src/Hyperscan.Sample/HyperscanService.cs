@@ -67,7 +67,7 @@ namespace Hyperscan.Sample
                 .Subscribe(match => { },
                     ex => { },
                     () => { });
-            await engine.ScanAsync("foobarbazbazbaz", stoppingToken);
+            await engine.ScanAsync("foofoobarbazbazbaz", stoppingToken);
             await Task.Delay(-1, stoppingToken);
         }
     }
