@@ -20,7 +20,7 @@ namespace Hyperscan.Core
         private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         private readonly ILogger _logger;
 
-        internal Engine(ILogger logger, Func<Database> databaseFactory, Func<Compiler> compilerFactory) : base(new Logger(trace => logger.LogTrace(trace), debug => logger.LogDebug(debug), info => logger.LogInformation(info), warning => logger.LogWarning(warning), error => logger.LogError(error), fatal => logger.LogCritical(fatal)), databaseFactory, compilerFactory)
+        internal Engine(ILogger logger, Func<Database> databaseFactory, Func<Compiler> compilerFactory) : base(new Logger(trace => logger.LogTrace(trace), debug => logger.LogDebug(debug), info => logger.LogInformation(info), warning => logger.LogWarning(warning), error => logger.LogError(error), critical => logger.LogCritical(critical)), databaseFactory, compilerFactory)
         {
             _logger = logger;
             _queuing = new ChannelQueuing<string>(new BoundedChannelOptions(Environment.ProcessorCount));

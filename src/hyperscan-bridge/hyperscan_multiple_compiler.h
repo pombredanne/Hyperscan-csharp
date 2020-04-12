@@ -21,48 +21,42 @@
 
 #pragma once
 
-#include <msclr/gcroot.h>
+#include "hyperscan_exception.h"
+#include "hyperscan_database.h"
+#include "hyperscan_platform_info.h"
+#include "hyperscan_compiler_mode.h"
+#include "hyperscan_compiler.h"
 
-#include "hyperscan_expression.h"
-
-using namespace msclr;
 using namespace System;
-using namespace Collections::Generic;
-using namespace Buffers;
+using namespace Runtime::InteropServices;
 
-using namespace Hyperscan::Compilation;
+using namespace Hyperscan::Core;
+using namespace Hyperscan::Platform;
+using namespace Hyperscan::Databases;
+using namespace Exceptions;
 
 namespace Hyperscan {
-	namespace Scanning {
-		public struct MatchAttribute {
-			gcroot<IDictionary<int, Expression^>^>* expressions_by_id_handle;
-			gcroot<String^>* source;
-		};
-
-		public ref class Match {
+	namespace Compilation {
+		/// <summary>
+		/// Compiler which supports compiling several regular expressions into Hyperscan database
+		/// </summary>
+		public ref class MultipleCompiler sealed : Compiler {
 		public:
-			property int Id {
-				int get();
-			}
-
-			property String^ FullMatch {
-				String^ get();
-			}
-
-			property Expression^ Expression {
-				Compilation::Expression^ get();
-			}
-
-			property ReadOnlySequence<Byte> Input {
-				ReadOnlySequence<Byte> get();
+			MultipleCompiler(List<Expression^>^ expressions, CompilerMode compilerFlag);
+			property CompilerMode Mode
+			{
+				CompilerMode get() override;
 			}
 		internal:
-			Match(int id, String^ fullMatch, Compilation::Expression^ expression, ReadOnlySequence<Byte> input);
+			void Compile(Database^ database, PlatformInfo^ platformInfo) override;
+
+			property IDictionary<int, Expression^>^ ExpressionsById
+			{
+				IDictionary<int, Expression^>^ get() override;
+			}
 		private:
-			int m_id_;
-			String^ m_full_match_;
-			Compilation::Expression^ m_expression_;
-			ReadOnlySequence<Byte> m_input_;
+			List<Expression^>^ m_expressions_;
+			CompilerMode m_compiler_mode_;
 		};
 	}
 }

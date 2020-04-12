@@ -27,7 +27,12 @@ namespace Hyperscan.Sample
             var engineBuilder = new EngineBuilder();
             engineBuilder.WithLogger(_loggerFactory.CreateLogger("Hyperscan"));
             engineBuilder.WithDatabase(() => new Database());
-            engineBuilder.WithCompiler(() => new SimpleCompiler(new Expression("foo(?i)bar(?-i)baz", ExpressionFlag.HsFlagUtf8 | ExpressionFlag.HsFlagDotall), CompilerMode.HsModeBlock));
+            engineBuilder.WithCompiler(() => new MultipleCompiler(new List<Expression>
+            {
+                new Expression("foo(?i)bar(?-i)baz", ExpressionFlag.HsFlagCaseless),
+                new Expression("foo", ExpressionFlag.HsFlagCaseless | ExpressionFlag.HsFlagUtf8),
+                new Expression("foo(?i)bar", ExpressionFlag.HsFlagCaseless | ExpressionFlag.HsFlagDotall)
+            }, CompilerMode.HsModeBlock));
             await using var engine = engineBuilder.Build();
             using var matchSubscription = engine.OnMatch
                 .ObserveOn(new EventLoopScheduler())

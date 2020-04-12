@@ -2,6 +2,7 @@
 using System.Linq;
 using Hyperscan.Compilation;
 using Hyperscan.Databases;
+using Hyperscan.Extensions.Expressions;
 using Hyperscan.Platform;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -71,6 +72,14 @@ CPU-enabled intrinsics: {(engine.PlatformInfo.CpuFeature == CpuFeature.HsCpuFeat
 Database size is {engine.Database.Size} bytes.
 Engine compiler running in {mode}...
 ");
+            if (engine.Compiler.ExpressionsById.Any(expression => !expression.Value.IsValid()))
+            {
+                foreach (var (_, value) in engine.Compiler.ExpressionsById.Where(expression => !expression.Value.IsValid()))
+                {
+                    _logger.LogWarning($"Expression Id='{value.Id}' (Pattern='{value.Pattern}') is not valid.");
+                }
+            }
+
             return engine;
         }
     }

@@ -23,6 +23,8 @@
 
 #include "hyperscan_match_event_handler.h"
 
+#include <vcclr.h>
+
 using namespace Event;
 
 MatchEventHandler::MatchEventHandler(MatchObservable^ matchObservable) {
@@ -31,6 +33,7 @@ MatchEventHandler::MatchEventHandler(MatchObservable^ matchObservable) {
 	this->m_callback_handle_ = GCHandle::Alloc(this->m_callback_);
 	this->m_callback_ptr_ = Marshal::GetFunctionPointerForDelegate(this->m_callback_);
 	this->m_handler = static_cast<match_event_handler>(this->m_callback_ptr_.ToPointer());
+	this->m_utf8_encoding_ = Encoding::UTF8;
 }
 
 MatchEventHandler::~MatchEventHandler() {
@@ -43,11 +46,11 @@ MatchEventHandler::!MatchEventHandler() {
 
 int MatchEventHandler::on_match(const unsigned int id, const unsigned long long from, const unsigned long long to, unsigned int flags, void* context) {
 	const auto match_attr = static_cast<MatchAttribute*>(context);
-	const auto input_token = gcnew ReadOnlySequence<Byte>(StringUtils::to_managed_array(match_attr->source, match_attr->source_len), 0, match_attr->source_len);
-	const auto expressions_by_id_handle = static_cast<gcroot<IDictionary<int, Expression^>^>*>(match_attr->expressions_by_id_handle);
+	const auto source = *match_attr->source;
+	const auto input = gcnew ReadOnlySequence<Byte>(this->m_utf8_encoding_->GetBytes(source), 0, source->Length);
+	const auto expressions_by_id_handle = match_attr->expressions_by_id_handle;
 	Expression^ expression;
-	this->m_match_observable_->OnMatch(gcnew Match(id, gcnew String(match_attr->source, static_cast<int>(from), static_cast<int>(to - from)), (*expressions_by_id_handle)->TryGetValue(id, expression) ? expression : nullptr, *input_token));
-	delete match_attr->source;
-	delete match_attr;
+	const pin_ptr<const wchar_t> pinned_input = PtrToStringChars(source);
+	this->m_match_observable_->OnMatch(gcnew Match(id, gcnew String(pinned_input, static_cast<int>(from), static_cast<int>(to - from)), (*expressions_by_id_handle)->TryGetValue(id, expression) ? expression : nullptr, *input));
 	return 0;
 }

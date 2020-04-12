@@ -28,6 +28,7 @@
 #include <msclr/gcroot.h>
 
 using namespace System;
+using namespace System::Text;
 using namespace msclr;
 using namespace Buffers;
 using namespace Runtime::InteropServices;
@@ -53,6 +54,7 @@ namespace Hyperscan {
 				GCHandle m_callback_handle_;
 				IntPtr m_callback_ptr_;
 				MatchObservable^ m_match_observable_;
+				Encoding^ m_utf8_encoding_;
 			};
 		}
 	}
