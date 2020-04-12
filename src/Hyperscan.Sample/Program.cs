@@ -10,7 +10,11 @@ namespace Hyperscan.Sample
         static async Task Main(string[] args)
         {
             using var host = Host.CreateDefaultBuilder(args)
-                .ConfigureLogging(config => { config.AddConsole(); })
+                .ConfigureLogging(config =>
+                {
+                    config.AddConsole();
+                    config.SetMinimumLevel(LogLevel.Information);
+                })
                 .ConfigureServices((hostBuilderContext, services) => { services.AddHostedService<HyperscanService>(); })
                 .UseConsoleLifetime(opt => opt.SuppressStatusMessages = true)
                 .Build();

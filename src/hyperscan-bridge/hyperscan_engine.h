@@ -27,6 +27,7 @@
 #include "hyperscan_match_observable.h"
 #include "hyperscan_match.h"
 #include "hyperscan_platform_info.h"
+#include "hyperscan_logger.h"
 
 using namespace System;
 
@@ -35,6 +36,7 @@ using namespace Databases;
 using namespace Compilation;
 using namespace Scanning;
 using namespace Platform;
+using namespace Logging;
 
 namespace Hyperscan {
 	namespace Core {
@@ -81,9 +83,10 @@ namespace Hyperscan {
 			/// <summary>
 			/// Instanciate the Hyperscan engine
 			/// </summary>
+			/// <param name="logger">The logger</param>
 			/// <param name="databaseFactory">The factory used to configure the Hyperscan database</param>
 			/// <param name="compilerFactory">The factory used to configure the Hyperscan compiler</param>
-			HyperscanEngine(Func<Databases::Database^>^ databaseFactory, Func<Compilation::Compiler^>^ compilerFactory);
+			HyperscanEngine(Logger^ logger, Func<Databases::Database^>^ databaseFactory, Func<Compilation::Compiler^>^ compilerFactory);
 			~HyperscanEngine();
 			!HyperscanEngine();
 			Scanner^ CreateScanner();
@@ -91,6 +94,7 @@ namespace Hyperscan {
 			Compilation::Compiler^ m_compiler_;
 			Databases::Database^ m_database_;
 			Platform::PlatformInfo^ m_platform_info_;
+			Logger^ m_logger_;
 			MatchObservable^ m_match_observable_;
 		};
 	}

@@ -19,45 +19,51 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#pragma once
+#include "pch.h"
 
-#include "hyperscan_expression_flag.h"
-#include "hyperscan_expression_info.h"
-#include "hyperscan_utils.h"
-#include "hyperscan_exception.h"
+#include "hyperscan_logger.h"
 
-using namespace System;
-using namespace Hyperscan::Utils;
-using namespace Hyperscan::Core::Exceptions;
-using namespace Runtime::InteropServices;
+using namespace Hyperscan::Logging;
 
-namespace Hyperscan {
-	namespace Compilation {
-		/// <summary>
-		/// Expression to be matched
-		/// </summary>
-		public ref class Expression sealed {
-		public:
-			Expression(String^ pattern, ExpressionFlag expressionFlag);
-			bool TryGetInfo([Out] ExpressionInfo^% info);
-			property int Id
-			{
-				int get();
-			}
-
-			property String^ Pattern
-			{
-				String^ get();
-			}
-
-			property ExpressionFlag Flag
-			{
-				ExpressionFlag get();
-			}
-		private:
-			int m_id_;
-			String^ m_pattern_;
-			ExpressionFlag m_expression_flag_;
-		};
-	}
+Logger::Logger(Action<String^>^ onTrace, Action<String^>^ onDebug, Action<String^>^ onInfo, Action<String^>^ onWarning, Action<String^>^ onError, Action<String^>^ onCritical)
+{
+	this->m_on_trace_ = onTrace;
+	this->m_on_debug_ = onDebug;
+	this->m_on_info_ = onInfo;
+	this->m_on_warning_ = onWarning;
+	this->m_on_error_ = onError;
+	this->m_on_critical_ = onCritical;
 }
+
+
+void Logger::Trace(String^ message)
+{
+	this->m_on_trace_(message);
+}
+
+void Logger::Debug(String^ message)
+{
+	this->m_on_debug_(message);
+}
+
+void Logger::Info(String^ message)
+{
+	this->m_on_info_(message);
+}
+
+
+void Logger::Warning(String^ message)
+{
+	this->m_on_warning_(message);
+}
+
+void Logger::Error(String^ message)
+{
+	this->m_on_error_(message);
+}
+
+void Logger::Critical(String^ message)
+{
+	this->m_on_critical_(message);
+}
+

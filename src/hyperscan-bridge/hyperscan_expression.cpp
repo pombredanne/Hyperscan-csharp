@@ -25,8 +25,9 @@
 
 using namespace Hyperscan::Compilation;
 
-Expression::Expression(const int id, String^ pattern, const ExpressionFlag expressionFlag) {
-	this->m_id_ = id;
+Expression::Expression(String^ pattern, const ExpressionFlag expressionFlag) {
+	const auto rand_string_generator = gcnew Random();
+	this->m_id_ = rand_string_generator->Next();
 	this->m_pattern_ = pattern;
 	this->m_expression_flag_ = expressionFlag;
 }

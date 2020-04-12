@@ -23,12 +23,17 @@
 
 #include "hyperscan_engine.h"
 
-HyperscanEngine::HyperscanEngine(Func<Databases::Database^>^ databaseFactory, Func<Compilation::Compiler^>^ compilerFactory) {
+HyperscanEngine::HyperscanEngine(Logger^ logger, Func<Databases::Database^>^ databaseFactory, Func<Compilation::Compiler^>^ compilerFactory) {
+	this->m_logger_ = logger;
 	this->m_database_ = databaseFactory();
 
 	const auto compiler = compilerFactory();
 	this->m_platform_info_ = gcnew Platform::PlatformInfo();
+	const auto stopwatch = gcnew Diagnostics::Stopwatch();
+	stopwatch->Start();
 	compiler->Compile(this->m_database_, this->m_platform_info_);
+	stopwatch->Stop();
+	this->m_logger_->Trace(compiler->ExpressionsById->Count + " expression(s) compiled in " + stopwatch->ElapsedMilliseconds.ToString() + "ms.");
 	this->m_compiler_ = compiler;
 
 	const auto match_observable = gcnew MatchObservable();

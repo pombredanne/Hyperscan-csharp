@@ -21,43 +21,27 @@
 
 #pragma once
 
-#include "hyperscan_expression_flag.h"
-#include "hyperscan_expression_info.h"
-#include "hyperscan_utils.h"
-#include "hyperscan_exception.h"
-
 using namespace System;
-using namespace Hyperscan::Utils;
-using namespace Hyperscan::Core::Exceptions;
-using namespace Runtime::InteropServices;
 
 namespace Hyperscan {
-	namespace Compilation {
-		/// <summary>
-		/// Expression to be matched
-		/// </summary>
-		public ref class Expression sealed {
+	namespace Logging {
+		public ref class Logger sealed {
 		public:
-			Expression(String^ pattern, ExpressionFlag expressionFlag);
-			bool TryGetInfo([Out] ExpressionInfo^% info);
-			property int Id
-			{
-				int get();
-			}
+			Logger(Action<String^>^ onTrace, Action<String^>^ onDebug, Action<String^>^ onInfo, Action<String^>^ onWarning, Action<String^>^ onError, Action<String^>^ onCritical);
 
-			property String^ Pattern
-			{
-				String^ get();
-			}
-
-			property ExpressionFlag Flag
-			{
-				ExpressionFlag get();
-			}
+			void Trace(String^ message);
+			void Debug(String^ message);
+			void Info(String^ message);
+			void Warning(String^ message);
+			void Error(String^ message);
+			void Critical(String^ message);
 		private:
-			int m_id_;
-			String^ m_pattern_;
-			ExpressionFlag m_expression_flag_;
+			Action<String^>^ m_on_trace_;
+			Action<String^>^ m_on_debug_;
+			Action<String^>^ m_on_info_;
+			Action<String^>^ m_on_warning_;
+			Action<String^>^ m_on_error_;
+			Action<String^>^ m_on_critical_;
 		};
 	}
 }

@@ -6,6 +6,7 @@ using System.Threading.Channels;
 using System.Threading.Tasks;
 using Hyperscan.Compilation;
 using Hyperscan.Databases;
+using Hyperscan.Logging;
 using Hyperscan.Queuing;
 using Hyperscan.Scanning;
 using Microsoft.Extensions.Logging;
@@ -19,7 +20,7 @@ namespace Hyperscan.Core
         private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         private readonly ILogger _logger;
 
-        internal Engine(ILogger logger, Func<Database> databaseFactory, Func<Compiler> compilerFactory) : base(databaseFactory, compilerFactory)
+        internal Engine(ILogger logger, Func<Database> databaseFactory, Func<Compiler> compilerFactory) : base(new Logger(trace => logger.LogTrace(trace), debug => logger.LogDebug(debug), info => logger.LogInformation(info), warning => logger.LogWarning(warning), error => logger.LogError(error), fatal => logger.LogCritical(fatal)), databaseFactory, compilerFactory)
         {
             _logger = logger;
             _queuing = new ChannelQueuing<string>(new BoundedChannelOptions(Environment.ProcessorCount));
