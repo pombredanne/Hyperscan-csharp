@@ -105,6 +105,9 @@
     <ClInclude Include="hyperscan_compiler.h">
       <Filter>Header Files\Compilation</Filter>
     </ClInclude>
+    <ClInclude Include="hyperscan_expression_info.h">
+      <Filter>Header Files\Compilation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
@@ -144,6 +147,9 @@
       <Filter>Source Files\Compilation</Filter>
     </ClCompile>
     <ClCompile Include="hyperscan_compiler.cpp">
+      <Filter>Source Files\Compilation</Filter>
+    </ClCompile>
+    <ClCompile Include="hyperscan_expression_info.cpp">
       <Filter>Source Files\Compilation</Filter>
     </ClCompile>
   </ItemGroup>

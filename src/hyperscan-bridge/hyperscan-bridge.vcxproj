@@ -79,6 +79,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="hyperscan_compiler.h" />
+    <ClInclude Include="hyperscan_expression_info.h" />
     <ClInclude Include="hyperscan_simple_compiler.h" />
     <ClInclude Include="hyperscan_expression.h" />
     <ClInclude Include="hyperscan_mode.h" />
@@ -98,6 +99,7 @@
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="hyperscan_compiler.cpp" />
+    <ClCompile Include="hyperscan_expression_info.cpp" />
     <ClCompile Include="hyperscan_simple_compiler.cpp" />
     <ClCompile Include="hyperscan_database.cpp" />
     <ClCompile Include="hyperscan_engine.cpp" />

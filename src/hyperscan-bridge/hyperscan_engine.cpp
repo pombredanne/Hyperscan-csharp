@@ -51,6 +51,16 @@ IObservable<Match^>^ HyperscanEngine::OnMatch::get() {
 	return this->m_match_observable_;
 }
 
+bool HyperscanEngine::IsPlatformValid::get()
+{
+	return HS_SUCCESS == hs_valid_platform();
+}
+
+String^ HyperscanEngine::Version::get()
+{
+	return gcnew String(hs_version());
+}
+
 Scanner^ HyperscanEngine::CreateScanner()
 {
 	hs_scratch_t* scratch_prototype = nullptr;

@@ -34,7 +34,7 @@ namespace Hyperscan {
 		public ref class Database sealed {
 		public:
 			Database();
-			explicit Database(String^ path);
+			explicit Database(String^ filePath);
 			explicit Database(array<Byte>^ serializedDatabase);
 			~Database();
 			!Database();

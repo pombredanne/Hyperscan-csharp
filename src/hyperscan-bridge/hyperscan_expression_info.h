@@ -21,70 +21,72 @@
 
 #pragma once
 
-#include "hyperscan_compiler.h"
-#include "hyperscan_scanner.h"
-#include "hyperscan_database.h"
-#include "hyperscan_match_observable.h"
-#include "hyperscan_match.h"
-#include "hyperscan_platform_info.h"
-
 using namespace System;
 
-using namespace Hyperscan;
-using namespace Databases;
-using namespace Compilation;
-using namespace Scanning;
-using namespace Platform;
-
 namespace Hyperscan {
-	namespace Core {
+	namespace Compilation {
 		/// <summary>
-		/// Hyperscan core component which defines the compilers and expose scanning abilities
+		/// A type containing information related to an expression
 		/// </summary>
-		public ref class HyperscanEngine {
+		public ref class ExpressionInfo sealed {
 		public:
+			ExpressionInfo(unsigned int minWidth, unsigned int maxWidth, bool unorderedMatches, bool matchesAtEod, bool matchesOnlyAtEod, String^ compilationErrorMessage);
+
 			/// <summary>
-			/// Get the database
+			/// The minimum length in bytes of a match for the pattern.
 			/// </summary>
-			property Database^ Database {
-				Databases::Database^ get();
+			property unsigned int MinWidth
+			{
+				unsigned int get();
 			}
 
 			/// <summary>
-			/// Subscribe to observe matches
+			/// The maximum length in bytes of a match for the pattern. If the pattern has an unbounded maximum length, this will be set to the maximum value of an unsigned int (UINT_MAX).
 			/// </summary>
-			property IObservable<Match^>^ OnMatch {
-				IObservable<Match^>^ get();
+			property unsigned int MaxWidth
+			{
+				unsigned int get();
 			}
 
 			/// <summary>
-			/// Check if the hardware platform is supported
+			/// Whether this expression can produce matches that are not returned in order, such as those produced by assertions.
 			/// </summary>
-			property bool IsPlatformValid {
+			property bool UnorderedMatches
+			{
 				bool get();
 			}
 
 			/// <summary>
-			/// Get the version information for the underlying hyperscan library
+			/// Whether this expression can produce matches at end of data (EOD)
 			/// </summary>
-			property String^ Version {
+			property bool MatchesAtEod
+			{
+				bool get();
+			}
+
+			/// <summary>
+			/// Whether this expression can *only* produce matches at end of data (EOD).
+			/// </summary>
+			property bool MatchesOnlyAtEod
+			{
+				bool get();
+			}
+
+			/// <summary>
+			/// Error message if this expression can't be compiled
+			/// </summary>
+			property String^ CompilationErrorMessage
+			{
 				String^ get();
 			}
-		internal:
-			/// <summary>
-			/// Instanciate the Hyperscan engine
-			/// </summary>
-			/// <param name="databaseFactory">The factory used to configure the Hyperscan database</param>
-			/// <param name="compilerFactory">The factory used to configure the Hyperscan compiler</param>
-			HyperscanEngine(Func<Databases::Database^>^ databaseFactory, Func<Compiler^>^ compilerFactory);
-			~HyperscanEngine();
-			!HyperscanEngine();
-			Scanner^ CreateScanner();
+
 		private:
-			Compiler^ m_compiler_;
-			Databases::Database^ m_database_;
-			MatchObservable^ m_match_observable_;
-			PlatformInfo^ m_platform_info_;
+			unsigned int m_min_width_;
+			unsigned int m_max_width_;
+			bool m_unordered_matches_;
+			bool m_matches_at_eod_width_;
+			bool m_matches_only_at_eod_;
+			String^ m_compilation_error_message_;
 		};
 	}
 }

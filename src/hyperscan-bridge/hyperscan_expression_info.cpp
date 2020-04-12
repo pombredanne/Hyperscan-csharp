@@ -17,47 +17,43 @@
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE.
+// SOFTWARE
 
-#pragma once
+#include "pch.h"
 
-#include "hyperscan_expression_flag.h"
 #include "hyperscan_expression_info.h"
-#include "hyperscan_utils.h"
-#include "hyperscan_exception.h"
 
-using namespace System;
-using namespace Hyperscan::Utils;
-using namespace Hyperscan::Core::Exceptions;
-using namespace Runtime::InteropServices;
+using namespace Hyperscan::Compilation;
 
-namespace Hyperscan {
-	namespace Compilation {
-		/// <summary>
-		/// Expression to be matched
-		/// </summary>
-		public ref class Expression sealed {
-		public:
-			Expression(int id, String^ pattern, ExpressionFlag expressionFlag);
-			bool TryGetInfo([Out] ExpressionInfo^% info);
-			property int Id
-			{
-				int get();
-			}
+ExpressionInfo::ExpressionInfo(unsigned int minWidth, unsigned int maxWidth, bool unorderedMatches, bool matchesAtEod, bool matchesOnlyAtEod, String^ compilationErrorMessage) {
+	this->m_min_width_ = minWidth;
+	this->m_max_width_ = maxWidth;
+	this->m_unordered_matches_ = unorderedMatches;
+	this->m_matches_at_eod_width_ = matchesAtEod;
+	this->m_matches_only_at_eod_ = matchesOnlyAtEod;
+	this->m_compilation_error_message_ = compilationErrorMessage;
+}
 
-			property String^ Pattern
-			{
-				String^ get();
-			}
+unsigned int ExpressionInfo::MinWidth::get() {
+	return this->m_min_width_;
+}
 
-			property ExpressionFlag Flag
-			{
-				ExpressionFlag get();
-			}
-		private:
-			int m_id_;
-			String^ m_pattern_;
-			ExpressionFlag m_expression_flag_;
-		};
-	}
+unsigned int ExpressionInfo::MaxWidth::get() {
+	return this->m_max_width_;
+}
+
+bool ExpressionInfo::UnorderedMatches::get() {
+	return this->m_unordered_matches_;
+}
+
+bool ExpressionInfo::MatchesAtEod::get() {
+	return this->m_matches_at_eod_width_;
+}
+
+bool ExpressionInfo::MatchesOnlyAtEod::get() {
+	return this->m_matches_only_at_eod_;
+}
+
+String^ ExpressionInfo::CompilationErrorMessage::get() {
+	return this->m_compilation_error_message_;
 }

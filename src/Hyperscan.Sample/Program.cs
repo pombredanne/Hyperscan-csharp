@@ -15,11 +15,30 @@ namespace Hyperscan.Sample
     {
         static async Task Main(string[] args)
         {
+            Console.WriteLine(@"
+    __  __                                          
+   / / / /_  ______  ___  ___________________ _____ 
+  / /_/ / / / / __ \/ _ \/ ___/ ___/ ___/ __ `/ __ \
+ / __  / /_/ / /_/ /  __/ /  (__  ) /__/ /_/ / / / /
+/_/ /_/\__, / .___/\___/_/  /____/\___/\__,_/_/ /_/ 
+      /____/_/                                      
+
+");
+            var expression = new Expression(0, "foo(?i)bar(?-i)baz", ExpressionFlag.HsFlagUtf8 | ExpressionFlag.HsFlagDotall);
+            if (!expression.TryGetInfo(out var info))
+            {
+                throw new Exception(info.CompilationErrorMessage);
+            }
+
             var engineBuilder = new EngineBuilder();
             //engineBuilder.WithDatabase(() => new Database(@"PATH_TO_SERIALIZED_DB"));
             engineBuilder.WithDatabase(() => new Database());
-            engineBuilder.WithCompiler(() => new SimpleCompiler(new Expression(0, "foo(?i)bar(?-i)baz", ExpressionFlag.HsFlagUtf8 | ExpressionFlag.HsFlagDotall), CompilerMode.HsModeBlock));
+            engineBuilder.WithCompiler(() => new SimpleCompiler(expression, CompilerMode.HsModeBlock));
             await using var engine = engineBuilder.Build();
+            var platformValid = engine.IsPlatformValid;
+            var hyperscanVersion = engine.Version;
+            Console.WriteLine($"Version {hyperscanVersion}");
+            Console.WriteLine("========================");
             using var matchSubscription = engine.OnMatch
                 .ObserveOn(new EventLoopScheduler())
                 .Do(match =>
@@ -54,11 +73,8 @@ namespace Hyperscan.Sample
                     ex => Console.WriteLine("Error: {0}", ex.Message),
                     () => Console.WriteLine("Scan completed."));
             //await engine.Database.SerializeToFileAsync(@"PATH_TO_SERIALIZED_DB");
-            while (true)
-            {
-                await engine.ScanAsync("foobarbazbazbaz", CancellationToken.None);
-                await Task.Delay(1);
-            }
+            await engine.ScanAsync("foobarbazbazbaz", CancellationToken.None);
+            await Task.Delay(-1);
         }
     }
 }

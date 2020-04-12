@@ -31,6 +31,31 @@ Expression::Expression(const int id, String^ pattern, const ExpressionFlag expre
 	this->m_expression_flag_ = expressionFlag;
 }
 
+bool Expression::TryGetInfo([Out] ExpressionInfo^% info)
+{
+	hs_expr_info_t* expr_info = nullptr;
+	hs_compile_error_t* compilation_error = nullptr;
+	try {
+		const auto expression_error = hs_expression_info(StringUtils::to_unmanaged(this->Pattern), static_cast<unsigned int>(this->Flag), &expr_info, &compilation_error);
+		if (expression_error != HS_SUCCESS) {
+			const auto compilation_error_message = gcnew String(compilation_error->message);
+			info = gcnew ExpressionInfo(0, 0, false, false, false, compilation_error_message);
+			throw gcnew HyperscanException(String::Format("Unable to compile expression: {0}.", compilation_error_message));
+		}
+
+		info = gcnew ExpressionInfo(expr_info->min_width, expr_info->max_width, expr_info->unordered_matches, expr_info->matches_at_eod, expr_info->matches_only_at_eod, gcnew String(""));
+		return true;
+	}
+	catch(Exception^)
+	{
+		return false;
+	}
+	finally
+	{
+		hs_free_compile_error(compilation_error);
+	}
+}
+
 int Expression::Id::get() {
 	return this->m_id_;
 }

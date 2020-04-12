@@ -31,13 +31,13 @@ Database::Database()
 	this->m_database = nullptr;
 }
 
-Database::Database(String^ path)
+Database::Database(String^ filePath)
 {
-	const auto file_stream = gcnew IO::FileStream(path, IO::FileMode::Open, IO::FileAccess::Read, IO::FileShare::Read);
+	const auto file_stream = gcnew IO::FileStream(filePath, IO::FileMode::Open, IO::FileAccess::Read, IO::FileShare::Read);
 	const auto binary_reader = gcnew IO::BinaryReader(file_stream);
 	try
 	{
-		const auto file_info = gcnew IO::FileInfo(path);
+		const auto file_info = gcnew IO::FileInfo(filePath);
 		const auto total_bytes = file_info->Length;
 		const auto buffer = binary_reader->ReadBytes(safe_cast<Int32>(total_bytes));
 		this->Database::Database(buffer);
@@ -61,7 +61,6 @@ Database::Database(array<Byte>^ serializedDatabase)
 		throw gcnew HyperscanException(String::Format("Unable to deserialize database: {0}", deserialize_database_error));
 	}
 }
-
 
 Database::~Database()
 {
