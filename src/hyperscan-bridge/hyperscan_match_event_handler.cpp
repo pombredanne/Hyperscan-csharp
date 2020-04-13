@@ -46,7 +46,7 @@ MatchEventHandler::!MatchEventHandler() {
 
 int MatchEventHandler::on_match(const unsigned int id, const unsigned long long from, const unsigned long long to, unsigned int flags, void* context) {
 	const auto match_attr = static_cast<MatchAttribute*>(context);
-	const auto source = *match_attr->source;
+	const auto source = *match_attr->source_handle;
 	const auto input = gcnew ReadOnlySequence<Byte>(this->m_utf8_encoding_->GetBytes(source), 0, source->Length);
 	const auto expressions_by_id_handle = match_attr->expressions_by_id_handle;
 	Expression^ expression;

@@ -5,6 +5,9 @@
     <Platforms>x64</Platforms>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <PackProject>true</PackProject>
+    <EmbedAllSources>True</EmbedAllSources>
+    <Deterministic>False</Deterministic>
+    <ContinuousIntegrationBuild>True</ContinuousIntegrationBuild>
     <DebugType>full</DebugType>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
@@ -32,7 +35,13 @@
       <TfmSpecificPackageFile Include="$(OutputPath)\hyperscan-bridge.dll">
           <PackagePath>lib/netcoreapp3.1</PackagePath>
       </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="$(OutputPath)\hyperscan-bridge.pdb">
+        <PackagePath>lib/netcoreapp3.1</PackagePath>
+      </TfmSpecificPackageFile>
       <TfmSpecificPackageFile Include="$(OutputPath)\Hyperscan.dll">
+        <PackagePath>lib/netcoreapp3.1</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="$(OutputPath)\Hyperscan.pdb">
         <PackagePath>lib/netcoreapp3.1</PackagePath>
       </TfmSpecificPackageFile>
       <TfmSpecificPackageFile Include="$(OutputPath)\Ijwhost.dll">

@@ -46,7 +46,7 @@ Scanner::!Scanner()
 bool Scanner::Scan(String^ input) {
     const auto match_attr = new MatchAttribute();
     match_attr->expressions_by_id_handle = this->m_expressions_by_id_handle_;
-    match_attr->source = new gcroot<String^>(input);
+    match_attr->source_handle = new gcroot<String^>(input);
     auto input_ptr = Marshal::StringToHGlobalAnsi(input);
     try {
         const auto data = static_cast<const char*>(input_ptr.ToPointer());

@@ -34,9 +34,9 @@ using namespace Hyperscan::Compilation;
 
 namespace Hyperscan {
 	namespace Scanning {
-		public struct MatchAttribute {
+		private struct MatchAttribute {
 			gcroot<IDictionary<int, Expression^>^>* expressions_by_id_handle;
-			gcroot<String^>* source;
+			gcroot<String^>* source_handle;
 		};
 
 		/// <summary>
