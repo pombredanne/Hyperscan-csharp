@@ -39,24 +39,46 @@ namespace Hyperscan {
 			gcroot<String^>* source;
 		};
 
+		/// <summary>
+		/// Represents a match from a successful scan
+		/// </summary>
 		public ref class Match {
 		public:
+			/// <summary>
+			/// Represents the expression Id of the match
+			/// </summary>
 			property int Id {
 				int get();
 			}
 
+			/// <summary>
+			/// Represents the match of the successful expression
+			/// </summary>
 			property String^ FullMatch {
 				String^ get();
 			}
 
+			/// <summary>
+			/// Represents the expression associated to the successful match
+			/// </summary>
 			property Expression^ Expression {
 				Compilation::Expression^ get();
 			}
 
+			/// <summary>
+			/// The input to which the expression has matched against
+			/// </summary>
 			property ReadOnlySequence<Byte> Input {
 				ReadOnlySequence<Byte> get();
 			}
 		internal:
+			/// <summary>
+			/// Construct a match
+			/// </summary>
+			/// <param name="id">The expression Id</param>
+			/// <param name="fullMatch">The match</param>
+			/// <param name="expression">The expression</param>
+			/// <param name="input">The input</param>
 			Match(int id, String^ fullMatch, Compilation::Expression^ expression, ReadOnlySequence<Byte> input);
 		private:
 			int m_id_;

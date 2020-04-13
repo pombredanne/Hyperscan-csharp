@@ -40,6 +40,9 @@ namespace Hyperscan {
 		/// </summary>
 		public ref class Compiler abstract {
 		public:
+			/// <summary>
+			/// The compiler mode
+			/// </summary>
 			virtual property CompilerMode Mode
 			{
 				CompilerMode get();

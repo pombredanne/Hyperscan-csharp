@@ -10,6 +10,7 @@
     <PackageId>Hyperscan</PackageId>
     <Authors>bbougot</Authors>
     <Company>bbougot</Company>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageDescription>Match tens of thousands of regular expressions within milliseconds</PackageDescription>
     <PackageRepositoryUrl>https://github.com/bbougot/hyperscan-csharp</PackageRepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>

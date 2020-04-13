@@ -42,8 +42,20 @@ namespace Hyperscan {
 		namespace Event {
 			public ref class MatchEventHandler {
 			public:
+				/// <summary>
+				/// Create a match event handler
+				/// </summary>
+				/// <param name="matchObservable">The match observable</param>
 				MatchEventHandler(MatchObservable^ matchObservable);
+
+				/// <summary>
+				/// Finalizer
+				/// </summary>
 				~MatchEventHandler();
+
+				/// <summary>
+				/// Destructor
+				/// </summary>
 				!MatchEventHandler();
 			internal:
 				match_event_handler m_handler;

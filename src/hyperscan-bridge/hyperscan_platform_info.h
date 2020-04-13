@@ -30,10 +30,24 @@ using namespace Hyperscan::Core::Exceptions;
 
 namespace Hyperscan {
 	namespace Platform {
+		/// <summary>
+		/// Exposes platform information such as CPU features, ...
+		/// </summary>
 		public ref class PlatformInfo sealed {
 		public:
+			/// <summary>
+			/// Construct a platform info
+			/// </summary>
 			PlatformInfo();
+
+			/// <summary>
+			/// Finalizer
+			/// </summary>
 			~PlatformInfo();
+
+			/// <summary>
+			/// Destructor
+			/// </summary>
 			!PlatformInfo();
 
 			/// <summary>

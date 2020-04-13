@@ -10,32 +10,54 @@ using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Hyperscan.Core
 {
+    /// <summary>
+    /// Builder pattern to create an Hyperscan engine
+    /// </summary>
     public class EngineBuilder
     {
         private Func<Database> _databaseFactory;
         private Func<Compiler> _compilerFactory;
         private ILogger _logger;
 
+        /// <summary>
+        /// Create the Hyperscan engine builder
+        /// </summary>
         public EngineBuilder()
         {
             _logger = NullLogger.Instance;
         }
 
+        /// <summary>
+        /// Link a database factory for Hyperscan engine
+        /// </summary>
+        /// <param name="databaseFactory">The database factory</param>
         public void WithDatabase(Func<Database> databaseFactory)
         {
             _databaseFactory = databaseFactory;
         }
 
+        /// <summary>
+        /// Link a compiler factory for Hyperscan engine
+        /// </summary>
+        /// <param name="compilerFactory">The compiler factory</param>
         public void WithCompiler(Func<Compiler> compilerFactory)
         {
             _compilerFactory = compilerFactory;
         }
 
+        /// <summary>
+        /// Link a logger the Hyperscan engine
+        /// </summary>
+        /// <param name="logger"><see cref="ILogger{TCategoryName}"/></param>
         public void WithLogger(ILogger logger)
         {
             _logger = logger;
         }
 
+        /// <summary>
+        /// Build the Hyperscan engine
+        /// </summary>
+        /// <returns></returns>
         public IEngine Build()
         {
             if (_databaseFactory == default)

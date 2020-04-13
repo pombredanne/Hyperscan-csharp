@@ -42,11 +42,40 @@ namespace Hyperscan {
 	namespace Scanning {
 		private ref class Scanner sealed {
 		internal:
+			/// <summary>
+			/// Construct a scanner
+			/// </summary>
+			/// <param name="database">The database</param>
+			/// <param name="expressionsById">The dictionary expressions</param>
+			/// <param name="matchObservable">The match observable</param>
 			Scanner(Database^ database, IDictionary<int, Expression^>^ expressionsById, MatchObservable^ matchObservable);
+
+			/// <summary>
+			/// Finalizer
+			/// </summary>
 			~Scanner();
+
+			/// <summary>
+			/// Destructor
+			/// </summary>
 			!Scanner();
+
+			/// <summary>
+			/// Scan against an input
+			/// </summary>
+			/// <param name="input">The input</param>
+			/// <returns>True if succeeded, false if scan already completed</returns>
 			bool Scan(String^ input);
+
+			/// <summary>
+			/// Create and allocate a memory scratch for the current scanner
+			/// </summary>
+			/// <param name="scratchPrototype">The prototype which will be cloned for allocating new scratch</param>
 			void CreateScratch(hs_scratch_t* scratchPrototype);
+
+			/// <summary>
+			/// Get the scratch size in bytes
+			/// </summary>
 			property int ScratchSize
 			{
 				int get();

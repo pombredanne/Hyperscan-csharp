@@ -6,11 +6,21 @@ using Microsoft.Extensions.Logging;
 
 namespace Hyperscan.Scanning
 {
+    /// <summary>
+    /// The consumer
+    /// </summary>
     internal class InputConsumer : IDisposable
     {
+        private bool _disposed;
         private readonly ILogger _logger;
         private readonly Consumer<string> _consumer;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="logger"><see cref="ILogger{TCategoryName}"/></param>
+        /// <param name="consumer"><see cref="Consumer{T}"/></param>
+        /// <param name="scanner"><see cref="Scanner"/></param>
         public InputConsumer(ILogger logger, Consumer<string> consumer, Scanner scanner)
         {
             _logger = logger;
@@ -18,6 +28,10 @@ namespace Hyperscan.Scanning
             Scanner = scanner;
         }
 
+        /// <summary>
+        /// Consume the channel
+        /// </summary>
+        /// <param name="cancellationToken"></param>
         public void Consume(CancellationToken cancellationToken)
         {
             var loopTask = Task.Run(async () =>
@@ -50,11 +64,34 @@ namespace Hyperscan.Scanning
                 TaskContinuationOptions.OnlyOnFaulted);
         }
 
+        /// <summary>
+        /// The internal scanner
+        /// </summary>
         internal Scanner Scanner { get; }
 
+        /// <summary>
+        /// Dispose pattern
+        /// </summary>
         public void Dispose()
         {
-            Scanner?.Dispose();
+            Dispose(true);
+        }
+
+        /// <summary>
+        /// Dispose
+        /// </summary>
+        /// <param name="disposing">If disposing</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+                return;
+
+            if (disposing)
+            {
+                Scanner?.Dispose();
+            }
+
+            _disposed = true;
         }
     }
 }

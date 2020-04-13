@@ -5,6 +5,11 @@ namespace Hyperscan.Extensions.Utils
 {
     public static class ReadOnlySequenceExtensions
     {
+        /// <summary>
+        /// Read the sequence as a string
+        /// </summary>
+        /// <param name="bytes"><see cref="ReadOnlySequence{T}"/></param>
+        /// <returns>String</returns>
         public static string Read(this ReadOnlySequence<byte> bytes)
         {
             var decoder = Encoding.UTF8.GetDecoder();

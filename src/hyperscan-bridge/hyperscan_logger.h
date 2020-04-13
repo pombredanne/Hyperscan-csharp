@@ -27,13 +27,51 @@ namespace Hyperscan {
 	namespace Logging {
 		public ref class Logger sealed {
 		public:
+			/// <summary>
+			/// Create a logger
+			/// </summary>
+			/// <param name="onTrace">Trace action</param>
+			/// <param name="onDebug">Debug action</param>
+			/// <param name="onInfo">Info action</param>
+			/// <param name="onWarning">Warning action</param>
+			/// <param name="onError">Error action</param>
+			/// <param name="onCritical">Critical action</param>
 			Logger(Action<String^>^ onTrace, Action<String^>^ onDebug, Action<String^>^ onInfo, Action<String^>^ onWarning, Action<String^>^ onError, Action<String^>^ onCritical);
 
+			/// <summary>
+			/// Log a trace level
+			/// </summary>
+			/// <param name="message">The message</param>
 			void Trace(String^ message);
+
+			/// <summary>
+			/// Log a debug level
+			/// </summary>
+			/// <param name="message">The message</param>
 			void Debug(String^ message);
+
+			/// <summary>
+			/// Log an info level
+			/// </summary>
+			/// <param name="message">The message</param>
 			void Info(String^ message);
+
+			/// <summary>
+			/// Log a warning level
+			/// </summary>
+			/// <param name="message">The message</param>
 			void Warning(String^ message);
+
+			/// <summary>
+			/// Log an error level
+			/// </summary>
+			/// <param name="message">The message</param>
 			void Error(String^ message);
+
+			/// <summary>
+			/// Log a critical level
+			/// </summary>
+			/// <param name="message">The message</param>
 			void Critical(String^ message);
 		private:
 			Action<String^>^ m_on_trace_;

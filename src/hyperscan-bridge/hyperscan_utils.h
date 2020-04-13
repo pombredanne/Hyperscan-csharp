@@ -27,6 +27,9 @@ namespace Hyperscan {
 	namespace Utils {
 		public ref class StringUtils sealed {
 		public:
+			/// <summary>
+			/// Copy a native byte array into a managed Byte array
+			/// </summary>
 			static array<Byte>^ to_managed_array(char* input, int len);
 		};
 	}

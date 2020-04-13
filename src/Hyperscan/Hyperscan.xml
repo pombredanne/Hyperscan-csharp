@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Hyperscan</name>
+    </assembly>
+    <members>
+        <member name="T:Hyperscan.Core.Engine">
+            <summary>
+            Hyperscan engine
+            </summary>
+        </member>
+        <member name="M:Hyperscan.Core.Engine.#ctor(Microsoft.Extensions.Logging.ILogger,System.Func{Hyperscan.Databases.Database},System.Func{Hyperscan.Compilation.Compiler})">
+            <summary>
+            Contructor
+            </summary>
+            <param name="logger"><see cref="T:Microsoft.Extensions.Logging.ILogger`1"/></param>
+            <param name="databaseFactory">The database factory</param>
+            <param name="compilerFactory">The compiler factory</param>
+        </member>
+        <member name="P:Hyperscan.Core.Engine.InputConsumers">
+            <summary>
+            Get the internal consumers
+            </summary>
+        </member>
+        <member name="M:Hyperscan.Core.Engine.ScanAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Trigger the scan of an input asynchronously
+            </summary>
+            <param name="input">The input</param>
+            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
+            <returns><see cref="T:System.Threading.Tasks.ValueTask"/></returns>
+        </member>
+        <member name="M:Hyperscan.Core.Engine.DisposeAsync">
+            <summary>
+            Dispose pattern
+            </summary>
+            <returns><see cref="T:System.Threading.Tasks.ValueTask"/></returns>
+        </member>
+        <member name="M:Hyperscan.Core.Engine.DisposeAsync(System.Boolean)">
+            <summary>
+            Dispose
+            </summary>
+            <param name="disposing">If disposing</param>
+            <returns><see cref="T:System.Threading.Tasks.ValueTask"/></returns>
+        </member>
+        <member name="T:Hyperscan.Core.EngineBuilder">
+            <summary>
+            Builder pattern to create an Hyperscan engine
+            </summary>
+        </member>
+        <member name="M:Hyperscan.Core.EngineBuilder.#ctor">
+            <summary>
+            Create the builder
+            </summary>
+        </member>
+        <member name="M:Hyperscan.Core.EngineBuilder.WithDatabase(System.Func{Hyperscan.Databases.Database})">
+            <summary>
+            Link a database factory for Hyperscan engine
+            </summary>
+            <param name="databaseFactory">The database factory</param>
+        </member>
+        <member name="M:Hyperscan.Core.EngineBuilder.WithCompiler(System.Func{Hyperscan.Compilation.Compiler})">
+            <summary>
+            Link a compiler factory for Hyperscan engine
+            </summary>
+            <param name="compilerFactory">The compiler factory</param>
+        </member>
+        <member name="M:Hyperscan.Core.EngineBuilder.WithLogger(Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Link a logger the Hyperscan engine
+            </summary>
+            <param name="logger"><see cref="T:Microsoft.Extensions.Logging.ILogger`1"/></param>
+        </member>
+        <member name="M:Hyperscan.Core.EngineBuilder.Build">
+            <summary>
+            Build the Hyperscan engine
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Hyperscan.Core.IEngine.Version">
+            <summary>
+            Hyperscan version
+            </summary>
+        </member>
+        <member name="P:Hyperscan.Core.IEngine.PlatformInfo">
+            <summary>
+            <see cref="P:Hyperscan.Core.IEngine.PlatformInfo"/>
+            </summary>
+        </member>
+        <member name="P:Hyperscan.Core.IEngine.Database">
+            <summary>
+            <see cref="P:Hyperscan.Core.IEngine.Database"/>
+            </summary>
+        </member>
+        <member name="P:Hyperscan.Core.IEngine.OnMatch">
+            <summary>
+            Subscribe to observe new match
+            </summary>
+        </member>
+        <member name="M:Hyperscan.Core.IEngine.ScanAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Trigger a scan on the engine
+            </summary>
+            <param name="input">Input to match</param>
+            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
+            <returns><see cref="T:System.Threading.Tasks.ValueTask"/></returns>
+        </member>
+        <member name="M:Hyperscan.Extensions.Databases.DatabaseExtensions.SerializeToFileAsync(Hyperscan.Databases.Database,System.String)">
+            <summary>
+            Serialize database to a file
+            </summary>
+            <param name="database"><see cref="T:Hyperscan.Databases.Database"/></param>
+            <param name="path">Path to the file</param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/></returns>
+        </member>
+        <member name="M:Hyperscan.Extensions.Expressions.ExpressionExtensions.IsValid(Hyperscan.Compilation.Expression)">
+            <summary>
+            Check if expression is valid
+            </summary>
+            <param name="expression"><see cref="T:Hyperscan.Compilation.Expression"/></param>
+            <returns>True if valid, false otherwise</returns>
+        </member>
+        <member name="M:Hyperscan.Extensions.Utils.ReadOnlySequenceExtensions.Read(System.Buffers.ReadOnlySequence{System.Byte})">
+            <summary>
+            Read the sequence as a string
+            </summary>
+            <param name="bytes"><see cref="T:System.Buffers.ReadOnlySequence`1"/></param>
+            <returns>String</returns>
+        </member>
+        <member name="M:Hyperscan.Extensions.Utils.StringBuilderExtensions.AppendChars(System.Text.StringBuilder,System.ReadOnlySpan{System.Byte},System.Text.Decoder,System.Int32,System.Boolean)">
+            <summary>
+            Append chars to the <see cref="T:System.Text.StringBuilder"/>
+            </summary>
+            <param name="stringBuilder"><see cref="T:System.Text.StringBuilder"/></param>
+            <param name="span"><see cref="T:System.ReadOnlySpan`1"/></param>
+            <param name="decoder"><see cref="T:System.Text.Decoder"/></param>
+            <param name="charCount">The char count</param>
+            <param name="isLast">True if last char</param>
+        </member>
+        <member name="T:Hyperscan.Scanning.InputConsumer">
+            <summary>
+            The consumer
+            </summary>
+        </member>
+        <member name="M:Hyperscan.Scanning.InputConsumer.#ctor(Microsoft.Extensions.Logging.ILogger,Hyperscan.Queuing.Consumer{System.String},Hyperscan.Scanning.Scanner)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="logger"><see cref="T:Microsoft.Extensions.Logging.ILogger`1"/></param>
+            <param name="consumer"><see cref="T:Hyperscan.Queuing.Consumer`1"/></param>
+            <param name="scanner"><see cref="P:Hyperscan.Scanning.InputConsumer.Scanner"/></param>
+        </member>
+        <member name="M:Hyperscan.Scanning.InputConsumer.Consume(System.Threading.CancellationToken)">
+            <summary>
+            Consume the channel
+            </summary>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="P:Hyperscan.Scanning.InputConsumer.Scanner">
+            <summary>
+            The internal scanner
+            </summary>
+        </member>
+        <member name="M:Hyperscan.Scanning.InputConsumer.Dispose">
+            <summary>
+            Dispose pattern
+            </summary>
+        </member>
+        <member name="M:Hyperscan.Scanning.InputConsumer.Dispose(System.Boolean)">
+            <summary>
+            Dispose
+            </summary>
+            <param name="disposing">If disposing</param>
+        </member>
+    </members>
+</doc>

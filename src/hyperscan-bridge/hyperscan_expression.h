@@ -38,8 +38,21 @@ namespace Hyperscan {
 		/// </summary>
 		public ref class Expression sealed {
 		public:
+			/// <summary>
+			/// Construct an expression
+			/// </summary>
+			/// <param name="pattern">The pattern to match with</param>
+			/// <param name="expressionFlag">Expression flag</param>
 			Expression(String^ pattern, ExpressionFlag expressionFlag);
+
+			/// <summary>
+			/// Fetching the expression info
+			/// </summary>
 			bool TryGetInfo([Out] ExpressionInfo^% info);
+
+			/// <summary>
+			/// Unique identifier of the expressions
+			/// </summary>
 			property int Id
 			{
 			public:
@@ -48,11 +61,17 @@ namespace Hyperscan {
 				void set(int);
 			}
 
+			/// <summary>
+			/// The pattern to match with
+			/// </summary>
 			property String^ Pattern
 			{
 				String^ get();
 			}
 
+			/// <summary>
+			/// The expression flag
+			/// </summary>
 			property ExpressionFlag Flag
 			{
 				ExpressionFlag get();

@@ -42,7 +42,16 @@ namespace Hyperscan {
 		/// </summary>
 		public ref class MultipleCompiler sealed : Compiler {
 		public:
+			/// <summary>
+			/// Construct a multiple compiler for matching with multiple expressions
+			/// </summary>
+			/// <param name="expressions">The expressions</param>
+			/// <param name="compilerFlag">The compiler mode</param>
 			MultipleCompiler(List<Expression^>^ expressions, CompilerMode compilerFlag);
+
+			/// <summary>
+			/// The compiler mode
+			/// </summary>
 			property CompilerMode Mode
 			{
 				CompilerMode get() override;

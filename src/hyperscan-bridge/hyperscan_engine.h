@@ -87,8 +87,20 @@ namespace Hyperscan {
 			/// <param name="databaseFactory">The factory used to configure the Hyperscan database</param>
 			/// <param name="compilerFactory">The factory used to configure the Hyperscan compiler</param>
 			HyperscanEngine(Logger^ logger, Func<Databases::Database^>^ databaseFactory, Func<Compilation::Compiler^>^ compilerFactory);
+
+			/// <summary>
+			/// Finalizer
+			/// </summary>
 			~HyperscanEngine();
+
+			/// <summary>
+			/// Destructor
+			/// </summary>
 			!HyperscanEngine();
+
+			/// <summary>
+			/// Create a scanner
+			/// </summary>
 			Scanner^ CreateScanner();
 		private:
 			Compilation::Compiler^ m_compiler_;

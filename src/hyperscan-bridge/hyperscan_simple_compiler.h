@@ -42,7 +42,16 @@ namespace Hyperscan {
 		/// </summary>
 		public ref class SimpleCompiler sealed : Compiler {
 		public:
+			/// <summary>
+			/// Construct a simple compiler for matching with a single expression
+			/// </summary>
+			/// <param name="expression">The expression</param>
+			/// <param name="compilerFlag">The compiler mode</param>
 			SimpleCompiler(Expression^ expression, CompilerMode compilerFlag);
+
+			/// <summary>
+			/// The compiler mode
+			/// </summary>
 			property CompilerMode Mode
 			{
 				CompilerMode get() override;

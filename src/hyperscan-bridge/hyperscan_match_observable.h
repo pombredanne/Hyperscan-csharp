@@ -30,8 +30,21 @@ namespace Hyperscan {
 	namespace Scanning {
 		private ref class Unsubscriber {
 		public:
+			/// <summary>
+			/// Construct an unsubscriber
+			/// </summary>
+			/// <param name="observers">The observers collection</param>
+			/// <param name="observer">The new observer to add</param>
 			Unsubscriber(ConcurrentDictionary<IObserver<Match^>^, bool>^ observers, IObserver<Match^>^ observer);
+
+			/// <summary>
+			/// Finalizer
+			/// </summary>
 			~Unsubscriber();
+
+			/// <summary>
+			/// Destructor
+			/// </summary>
 			!Unsubscriber();
 		private:
 			ConcurrentDictionary<IObserver<Match^>^, bool>^ m_observers_;
@@ -40,8 +53,21 @@ namespace Hyperscan {
 
 		public ref class MatchObservable : public IObservable<Match^> {
 		public:
+			/// <summary>
+			/// Create a match observable
+			/// </summary>
 			MatchObservable();
+
+			/// <summary>
+			/// Subscribe to the observable
+			/// </summary>
+			/// <param name="observer">The observer</param>
 			virtual IDisposable^ Subscribe(IObserver<Match^>^ observer);
+
+			/// <summary>
+			/// Get called on matched
+			/// </summary>
+			/// <param name="match">The match</param>
 			void OnMatch(Match^ match);
 		private:
 			ConcurrentDictionary<IObserver<Match^>^, bool>^ m_observers_;

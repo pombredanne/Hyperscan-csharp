@@ -31,18 +31,47 @@ using namespace Hyperscan::Utils;
 
 namespace Hyperscan {
 	namespace Databases {
+		/// <summary>
+		/// Hyperscan database which stores compiled expressions
+		/// </summary>
 		public ref class Database sealed {
 		public:
+			/// <summary>
+			/// Construct a default database
+			/// </summary>
 			Database();
+
+			/// <summary>
+			/// Construct a database from a previously serialized database from a file
+			/// </summary>
 			explicit Database(String^ filePath);
+
+			/// <summary>
+			/// Construct a database from a previously serialized database from a byte array
+			/// </summary>
 			explicit Database(array<Byte>^ serializedDatabase);
+
+			/// <summary>
+			/// Finalizer
+			/// </summary>
 			~Database();
+
+			/// <summary>
+			/// Destructor
+			/// </summary>
 			!Database();
+
+			/// <summary>
+			/// The size of the database in bytes
+			/// </summary>
 			property int Size
 			{
 				int get();
 			}
 
+			/// <summary>
+			/// Serialize the database as a byte array
+			/// </summary>
 			array<Byte>^ Serialize();
 		internal:
 			hs_database_t* m_database;
