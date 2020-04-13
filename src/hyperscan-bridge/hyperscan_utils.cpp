@@ -21,8 +21,6 @@
 
 #include "pch.h"
 
-#include <vcclr.h>
-#include <algorithm>
 #include "hyperscan_utils.h"
 
 using namespace System;

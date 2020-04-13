@@ -45,7 +45,7 @@ namespace Hyperscan {
 			Scanner(Database^ database, IDictionary<int, Expression^>^ expressionsById, MatchObservable^ matchObservable);
 			~Scanner();
 			!Scanner();
-			void Scan(String^ input);
+			bool Scan(String^ input);
 			void CreateScratch(hs_scratch_t* scratchPrototype);
 			property int ScratchSize
 			{

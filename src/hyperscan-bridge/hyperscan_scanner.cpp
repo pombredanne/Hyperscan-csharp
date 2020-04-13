@@ -43,7 +43,7 @@ Scanner::!Scanner()
     hs_free_scratch(this->m_scratch_);
 }
 
-void Scanner::Scan(String^ input) {
+bool Scanner::Scan(String^ input) {
     const auto match_attr = new MatchAttribute();
     match_attr->expressions_by_id_handle = this->m_expressions_by_id_handle_;
     match_attr->source = new gcroot<String^>(input);
@@ -51,9 +51,11 @@ void Scanner::Scan(String^ input) {
     try {
         const auto data = static_cast<const char*>(input_ptr.ToPointer());
         const auto scan_err = hs_scan(this->m_database_, data, input->Length, 0, this->m_scratch_, this->m_match_event_handler_->m_handler, match_attr);
-        if (scan_err != HS_SUCCESS) {
+        if (scan_err != HS_SUCCESS && scan_err != HS_SCAN_TERMINATED) {
             throw gcnew HyperscanException(String::Format("ERROR {0}: Unable to scan input buffer.", scan_err));
         }
+
+        return scan_err == HS_SUCCESS;
     }
     finally
     {

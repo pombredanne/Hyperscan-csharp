@@ -113,7 +113,7 @@ jobs:
         working-directory: ${{env.root-directory}}
       - name: Coverage
         run: |
-          OpenCover.Console.exe -register:administrator -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:"src\Hyperscan.Tests\bin\x64\Release\netcoreapp3.1\Hyperscan.Tests.dll -noshadow" -filter:"+[Hyperscan.Tests*]*" -output:".\coverage.xml"
+          OpenCover.Console.exe -register:administrator -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:"test src\Hyperscan.Tests\bin\x64\Release\netcoreapp3.1\Hyperscan.Tests.dll" -filter:"+[*]* -[*.Tests*]*" -output:".\coverage.xml" -oldStyle
           codecov -f "coverage.xml" -t ${{secrets.CODECOV_TOKEN}}
         shell: cmd
         working-directory: ${{env.root-directory}}

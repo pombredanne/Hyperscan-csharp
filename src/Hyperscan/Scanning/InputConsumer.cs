@@ -26,7 +26,17 @@ namespace Hyperscan.Scanning
                 {
                     await foreach (var message in _consumer.ReadMessagesAsync(cancellationToken))
                     {
-                        Scanner.Scan(message);
+                        try
+                        {
+                            if (!Scanner.Scan(message))
+                            {
+                                _logger.LogWarning("Scan has been terminated");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogError(ex, "An error has occurred while scanning.");
+                        }
                     }
                 }
                 catch (OperationCanceledException)
