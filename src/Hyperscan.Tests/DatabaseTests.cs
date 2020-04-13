@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Threading.Tasks;
+using FluentAssertions;
 using Hyperscan.Compilation;
 using Hyperscan.Core;
 using Hyperscan.Databases;
@@ -9,17 +10,18 @@ namespace Hyperscan.Tests
     public class DatabaseTests
     {
         [Fact]
-        public void Database_Size_Should_Be_Valid()
+        public async Task Database_Size_Should_Be_Valid()
         {
             var engineBuilder = new EngineBuilder();
             engineBuilder.WithDatabase(() => new Database());
             engineBuilder.WithCompiler(() => new SimpleCompiler(new Expression("", ExpressionFlag.HsFlagAllowempty), CompilerMode.HsModeBlock));
             var engine = engineBuilder.Build();
             engine.Database.Size.Should().BeGreaterThan(0);
+            await engine.DisposeAsync();
         }
 
         [Fact]
-        public void Database_Serialization_Should_Serialize()
+        public async Task Database_Serialization_Should_Serialize()
         {
             var engineBuilder = new EngineBuilder();
             engineBuilder.WithDatabase(() => new Database());
@@ -33,6 +35,8 @@ namespace Hyperscan.Tests
             engineBuilder2.WithCompiler(() => new SimpleCompiler(new Expression("", ExpressionFlag.HsFlagAllowempty), CompilerMode.HsModeBlock));
             var engine2 = engineBuilder.Build();
             engine2.Database.Size.Should().Be(engine.Database.Size);
+            await engine.DisposeAsync();
+            await engine2.DisposeAsync();
         }
     }
 }

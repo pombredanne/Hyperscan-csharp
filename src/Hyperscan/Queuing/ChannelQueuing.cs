@@ -44,11 +44,6 @@ namespace Hyperscan.Queuing
                 if (_writer.TryWrite(deferredMessage)) return;
             }
         }
-
-        public void Complete()
-        {
-            _writer.Complete();
-        }
     }
 
     internal class Consumer<T>
@@ -63,11 +58,6 @@ namespace Hyperscan.Queuing
         public IAsyncEnumerable<T> ReadMessagesAsync(CancellationToken cancellationToken)
         {
             return _reader.ToAsyncEnumerable(cancellationToken);
-        }
-
-        public bool TryRead(out T message)
-        {
-            return _reader.TryRead(out message);
         }
     }
 }

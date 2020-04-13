@@ -9,17 +9,28 @@ using Hyperscan.Core;
 using Hyperscan.Databases;
 using Hyperscan.Extensions.Utils;
 using Hyperscan.Scanning;
+using Hyperscan.Tests.XUnit;
 using Microsoft.Reactive.Testing;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Hyperscan.Tests
 {
     public class ScannerTests
     {
+        private readonly ITestOutputHelper _testOutputHelper;
+
+        public ScannerTests(ITestOutputHelper testOutputHelper)
+        {
+            _testOutputHelper = testOutputHelper;
+        }
+
         [Fact]
         public async Task Engine_With_Simple_Compiler_Should_Match_Pattern()
         {
+            var loggerProvider = new XunitLoggerProvider(_testOutputHelper);
             var engineBuilder = new EngineBuilder();
+            engineBuilder.WithLogger(loggerProvider.CreateLogger("Hyperscan"));
             engineBuilder.WithDatabase(() => new Database());
             engineBuilder.WithCompiler(() => new SimpleCompiler(new Expression("foo(?i)bar(?-i)baz", ExpressionFlag.HsFlagUtf8), CompilerMode.HsModeBlock));
             var engine = engineBuilder.Build();
@@ -33,12 +44,15 @@ namespace Hyperscan.Tests
             info.CompilationErrorMessage.Should().BeEmpty();
             match.Input.Read().Should().Be("foofoobarbazbazbaz");
             match.Expression.Pattern.Should().Be("foo(?i)bar(?-i)baz");
+            await engine.DisposeAsync();
         }
 
         [Fact]
         public async Task Engine_With_Multiple_Compiler_Should_Match_Patterns()
         {
+            var loggerProvider = new XunitLoggerProvider(_testOutputHelper);
             var engineBuilder = new EngineBuilder();
+            engineBuilder.WithLogger(loggerProvider.CreateLogger("Hyperscan"));
             engineBuilder.WithDatabase(() => new Database());
             engineBuilder.WithCompiler(() => new MultipleCompiler(new List<Expression>
             {
@@ -56,6 +70,7 @@ namespace Hyperscan.Tests
             observer.Messages.Should().Contain(message => message.Value.Value.FullMatch == "foofoo");
             observer.Messages.Should().Contain(message => message.Value.Value.FullMatch == "foofoobar");
             observer.Messages.Should().Contain(message => message.Value.Value.FullMatch == "foofoobarbaz");
+            await engine.DisposeAsync();
         }
     }
 }
