@@ -26,25 +26,25 @@
 using namespace Hyperscan::Scanning;
 
 MatchObservable::MatchObservable() {
-	this->m_observers_ = gcnew List<IObserver<Match^>^>();
+	this->m_observers_ = gcnew ConcurrentDictionary<IObserver<Match^>^, bool>();
 }
 
 IDisposable^ MatchObservable::Subscribe(IObserver<Match^>^ observer) {
-	if (!this->m_observers_->Contains(observer)) {
-		this->m_observers_->Add(observer);
+	if (!this->m_observers_->ContainsKey(observer)) {
+		this->m_observers_->TryAdd(observer, true);
 	}
 
 	return gcnew Unsubscriber(this->m_observers_, observer);
 }
 
 void MatchObservable::OnMatch(Match^ match) {
-	for each (IObserver<Match^>^ observer in gcnew List<IObserver<Match^>^>(this->m_observers_))
+	for each (KeyValuePair<IObserver<Match^>^, bool>^ observer in this->m_observers_)
 	{
-		observer->OnNext(match);
+		observer->Key->OnNext(match);
 	}
 }
 
-Unsubscriber::Unsubscriber(List<IObserver<Match^>^>^ observers, IObserver<Match^>^ observer) {
+Unsubscriber::Unsubscriber(ConcurrentDictionary<IObserver<Match^>^, bool>^ observers, IObserver<Match^>^ observer) {
 	this->m_observers_ = observers;
 	this->m_observer_ = observer;
 }
@@ -54,7 +54,8 @@ Unsubscriber::~Unsubscriber() {
 }
 
 Unsubscriber::!Unsubscriber() {
-	if (this->m_observers_->Contains(this->m_observer_)) {
-		this->m_observers_->Remove(this->m_observer_);
+	if (this->m_observers_->ContainsKey(this->m_observer_)) {
+		bool removed;
+		this->m_observers_->TryRemove(this->m_observer_, removed);
 	}
 }

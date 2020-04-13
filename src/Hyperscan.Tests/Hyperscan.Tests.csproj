@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\hyperscan-bridge\hyperscan-bridge.vcxproj" />
     <ProjectReference Include="..\Hyperscan\Hyperscan.csproj" />
   </ItemGroup>
 

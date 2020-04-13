@@ -24,17 +24,17 @@
 #include "hyperscan_match.h"
 
 using namespace System;
-using namespace Collections::Generic;
+using namespace Collections::Concurrent;
 
 namespace Hyperscan {
 	namespace Scanning {
 		private ref class Unsubscriber {
 		public:
-			Unsubscriber(List<IObserver<Match^>^>^ observers, IObserver<Match^>^ observer);
+			Unsubscriber(ConcurrentDictionary<IObserver<Match^>^, bool>^ observers, IObserver<Match^>^ observer);
 			~Unsubscriber();
 			!Unsubscriber();
 		private:
-			List<IObserver<Match^>^>^ m_observers_;
+			ConcurrentDictionary<IObserver<Match^>^, bool>^ m_observers_;
 			IObserver<Match^>^ m_observer_;
 		};
 
@@ -44,7 +44,7 @@ namespace Hyperscan {
 			virtual IDisposable^ Subscribe(IObserver<Match^>^ observer);
 			void OnMatch(Match^ match);
 		private:
-			List<IObserver<Match^>^>^ m_observers_;
+			ConcurrentDictionary<IObserver<Match^>^, bool>^ m_observers_;
 		};
 	}
 }
