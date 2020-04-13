@@ -23,8 +23,6 @@
 
 #include "hyperscan_match_event_handler.h"
 
-#include <vcclr.h>
-
 using namespace Event;
 
 MatchEventHandler::MatchEventHandler(MatchObservable^ matchObservable) {
@@ -46,11 +44,12 @@ MatchEventHandler::!MatchEventHandler() {
 
 int MatchEventHandler::on_match(const unsigned int id, const unsigned long long from, const unsigned long long to, unsigned int flags, void* context) {
 	const auto match_attr = static_cast<MatchAttribute*>(context);
-	const auto source = *match_attr->source_handle;
-	const auto input = gcnew ReadOnlySequence<Byte>(this->m_utf8_encoding_->GetBytes(source), 0, source->Length);
+	const auto source_handle = match_attr->input_handle;
 	const auto expressions_by_id_handle = match_attr->expressions_by_id_handle;
 	Expression^ expression;
-	const pin_ptr<const wchar_t> pinned_input = PtrToStringChars(source);
-	this->m_match_observable_->OnMatch(gcnew Match(id, gcnew String(pinned_input, static_cast<int>(from), static_cast<int>(to - from)), (*expressions_by_id_handle)->TryGetValue(id, expression) ? expression : nullptr, *input));
+	const auto source = *source_handle;
+	auto match_sequence = source->Slice(static_cast<int>(from), static_cast<int>(to - from));
+	const auto match = this->m_utf8_encoding_->GetString(match_sequence.FirstSpan);
+	this->m_match_observable_->OnMatch(gcnew Match(id, match, (*expressions_by_id_handle)->TryGetValue(id, expression) ? expression : nullptr, source));
 	return 0;
 }

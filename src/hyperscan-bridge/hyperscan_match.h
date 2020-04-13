@@ -36,7 +36,7 @@ namespace Hyperscan {
 	namespace Scanning {
 		private struct MatchAttribute {
 			gcroot<IDictionary<int, Expression^>^>* expressions_by_id_handle;
-			gcroot<String^>* source_handle;
+			gcroot<ReadOnlySequence<Byte>^>* input_handle;
 		};
 
 		/// <summary>
@@ -79,12 +79,12 @@ namespace Hyperscan {
 			/// <param name="fullMatch">The match</param>
 			/// <param name="expression">The expression</param>
 			/// <param name="input">The input</param>
-			Match(int id, String^ fullMatch, Compilation::Expression^ expression, ReadOnlySequence<Byte> input);
+			Match(int id, String^ fullMatch, Compilation::Expression^ expression, ReadOnlySequence<Byte>^ input);
 		private:
 			int m_id_;
 			String^ m_full_match_;
 			Compilation::Expression^ m_expression_;
-			ReadOnlySequence<Byte> m_input_;
+			ReadOnlySequence<Byte>^ m_input_;
 		};
 	}
 }

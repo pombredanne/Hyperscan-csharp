@@ -34,3 +34,17 @@ array<Byte>^ StringUtils::to_managed_array(char* input, const int len)
 	Marshal::Copy(static_cast<IntPtr>(input), managed_array, 0, len);
 	return managed_array;
 }
+
+array<Byte>^ StringUtils::string_to_managed_array(String^ input, const int len)
+{
+	auto input_ptr = Marshal::StringToHGlobalAnsi(input);
+	try {
+		const auto managed_array = gcnew array<Byte>(len);
+		Marshal::Copy(input_ptr, managed_array, 0, len);
+		return managed_array;
+	}
+	finally
+	{
+		Marshal::FreeHGlobal(input_ptr);
+	}
+}

@@ -57,8 +57,14 @@ namespace Hyperscan {
 				CompilerMode get() override;
 			}
 		internal:
+			/// <summary>
+			/// Compile expression against the database
+			/// </summary>
 			void Compile(Database^ database, PlatformInfo^ platformInfo) override;
 
+			/// <summary>
+			/// The expressions by id dictionary
+			/// </summary>
 			property IDictionary<int, Expression^>^ ExpressionsById
 			{
 				IDictionary<int, Expression^>^ get() override;

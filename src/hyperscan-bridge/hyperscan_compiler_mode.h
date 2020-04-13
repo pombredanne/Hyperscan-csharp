@@ -39,7 +39,19 @@ namespace Hyperscan {
             /// <summary>
             /// Vectored scanning database
             /// </summary>
-            HsModeVectored = 4
+            HsModeVectored = 4,
+        	/// <summary>
+        	/// Use full precision to track start of match offsets in stream state.
+        	/// </summary>
+            HsModeSomHorizonLarge = 1U << 24,
+            /// <summary>
+			/// Use medium precision to track start of match offsets in stream state.
+			/// </summary>
+        	HsModeSomHorizonMedium = 1U << 25,
+            /// <summary>
+            /// Use limited precision to track start of match offsets in stream state.
+            /// </summary>
+        	HsModeSomHorizonSmall = 1U << 26
         };
     }
 }

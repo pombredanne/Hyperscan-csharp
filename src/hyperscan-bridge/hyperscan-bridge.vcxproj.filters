@@ -61,6 +61,12 @@
     <Filter Include="Source Files\Logging">
       <UniqueIdentifier>{7acb02d4-8993-4b0f-b7a0-3a4c47046422}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Scanning\Scanners">
+      <UniqueIdentifier>{70ae8752-0294-450f-a94a-c2f3aa7aa398}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scanning\Scanners">
+      <UniqueIdentifier>{28bedb91-2bb1-42a7-b47a-9c36168cd72b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -123,6 +129,12 @@
     <ClInclude Include="hyperscan_multiple_compiler.h">
       <Filter>Header Files\Compilation</Filter>
     </ClInclude>
+    <ClInclude Include="hyperscan_block_scanner.h">
+      <Filter>Header Files\Scanning\Scanners</Filter>
+    </ClInclude>
+    <ClInclude Include="hyperscan_stream_scanner.h">
+      <Filter>Header Files\Scanning\Scanners</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
@@ -172,6 +184,12 @@
     </ClCompile>
     <ClCompile Include="hyperscan_mutiple_compiler.cpp">
       <Filter>Source Files\Compilation</Filter>
+    </ClCompile>
+    <ClCompile Include="hyperscan_block_scanner.cpp">
+      <Filter>Source Files\Scanning\Scanners</Filter>
+    </ClCompile>
+    <ClCompile Include="hyperscan_stream_scanner.cpp">
+      <Filter>Source Files\Scanning\Scanners</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -28,15 +28,19 @@
 #include "hyperscan_match.h"
 #include "hyperscan_platform_info.h"
 #include "hyperscan_logger.h"
+#include "hyperscan_block_scanner.h"
+#include "hyperscan_stream_scanner.h"
 
 using namespace System;
 
 using namespace Hyperscan;
+using namespace Core;
 using namespace Databases;
 using namespace Compilation;
 using namespace Scanning;
 using namespace Platform;
 using namespace Logging;
+using namespace Scanners;
 
 namespace Hyperscan {
 	namespace Core {
@@ -108,6 +112,7 @@ namespace Hyperscan {
 			Platform::PlatformInfo^ m_platform_info_;
 			Logger^ m_logger_;
 			MatchObservable^ m_match_observable_;
+			hs_stream_t* m_stream_prototype_;
 		};
 	}
 }

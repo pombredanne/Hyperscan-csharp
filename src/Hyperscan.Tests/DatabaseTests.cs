@@ -15,9 +15,8 @@ namespace Hyperscan.Tests
             var engineBuilder = new EngineBuilder();
             engineBuilder.WithDatabase(() => new Database());
             engineBuilder.WithCompiler(() => new SimpleCompiler(new Expression("", ExpressionFlag.HsFlagAllowempty), CompilerMode.HsModeBlock));
-            var engine = engineBuilder.Build();
+            await using var engine = engineBuilder.Build();
             engine.Database.Size.Should().BeGreaterThan(0);
-            await engine.DisposeAsync();
         }
 
         [Fact]
@@ -26,17 +25,15 @@ namespace Hyperscan.Tests
             var engineBuilder = new EngineBuilder();
             engineBuilder.WithDatabase(() => new Database());
             engineBuilder.WithCompiler(() => new SimpleCompiler(new Expression("", ExpressionFlag.HsFlagAllowempty), CompilerMode.HsModeBlock));
-            var engine = engineBuilder.Build();
+            await using var engine = engineBuilder.Build();
             var bytes = engine.Database.Serialize();
             bytes.Should().NotBeEmpty();
 
             var engineBuilder2 = new EngineBuilder();
             engineBuilder2.WithDatabase(() => new Database(bytes));
             engineBuilder2.WithCompiler(() => new SimpleCompiler(new Expression("", ExpressionFlag.HsFlagAllowempty), CompilerMode.HsModeBlock));
-            var engine2 = engineBuilder.Build();
+            await using var engine2 = engineBuilder2.Build();
             engine2.Database.Size.Should().Be(engine.Database.Size);
-            await engine.DisposeAsync();
-            await engine2.DisposeAsync();
         }
     }
 }

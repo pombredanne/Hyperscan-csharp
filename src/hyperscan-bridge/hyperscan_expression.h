@@ -48,6 +48,7 @@ namespace Hyperscan {
 			/// <summary>
 			/// Fetching the expression info
 			/// </summary>
+			/// <param name="info">The expression info</param>
 			bool TryGetInfo([Out] ExpressionInfo^% info);
 
 			/// <summary>

@@ -43,9 +43,8 @@ namespace Hyperscan.Tests
             engineBuilder.WithLogger(loggerProvider.CreateLogger("Hyperscan"));
             engineBuilder.WithDatabase(() => new Database());
             engineBuilder.WithCompiler(() => new SimpleCompiler(new Expression("", ExpressionFlag.HsFlagAllowempty), CompilerMode.HsModeBlock));
-            var engine = engineBuilder.Build();
+            await using var engine = engineBuilder.Build();
             engine.Version.Should().NotBeNullOrEmpty();
-            await engine.DisposeAsync();
         }
 
         [Fact]
@@ -56,10 +55,9 @@ namespace Hyperscan.Tests
             engineBuilder.WithLogger(loggerProvider.CreateLogger("Hyperscan"));
             engineBuilder.WithDatabase(() => new Database());
             engineBuilder.WithCompiler(() => new SimpleCompiler(new Expression("", ExpressionFlag.HsFlagAllowempty), CompilerMode.HsModeBlock));
-            var engine = engineBuilder.Build();
+            await using var engine = engineBuilder.Build();
             engine.PlatformInfo.Should().NotBeNull();
             engine.PlatformInfo.IsPlatformValid.Should().BeTrue();
-            await engine.DisposeAsync();
         }
 
         [Fact]
@@ -70,10 +68,9 @@ namespace Hyperscan.Tests
             engineBuilder.WithLogger(loggerProvider.CreateLogger("Hyperscan"));
             engineBuilder.WithDatabase(() => new Database());
             engineBuilder.WithCompiler(() => new SimpleCompiler(new Expression("foo(?i)bar(?-i)baz", ExpressionFlag.HsFlagUtf8), CompilerMode.HsModeBlock));
-            var engine = engineBuilder.Build();
+            await using var engine = engineBuilder.Build();
             var traces = loggerProvider.GetTraces();
             traces.Should().ContainMatch("*1 expression(s) compiled*");
-            await engine.DisposeAsync();
         }
     }
 }

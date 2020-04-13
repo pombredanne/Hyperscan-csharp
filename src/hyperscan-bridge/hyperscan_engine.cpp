@@ -38,6 +38,17 @@ HyperscanEngine::HyperscanEngine(Logger^ logger, Func<Databases::Database^>^ dat
 
 	const auto match_observable = gcnew MatchObservable();
 	this->m_match_observable_ = match_observable;
+
+	if ((this->m_compiler_->Mode & CompilerMode::HsModeStream) == CompilerMode::HsModeStream) {
+		hs_stream_t* stream_prototype = nullptr;
+		const auto open_stream_err = hs_open_stream(this->m_database_->m_database, 0, &stream_prototype);
+		if (open_stream_err != HS_SUCCESS)
+		{
+			throw gcnew HyperscanException(String::Format("ERROR {0}: Unable to open stream.", open_stream_err));
+		}
+
+		this->m_stream_prototype_ = stream_prototype;
+	}
 }
 
 HyperscanEngine::~HyperscanEngine() {
@@ -45,7 +56,13 @@ HyperscanEngine::~HyperscanEngine() {
 }
 
 HyperscanEngine::!HyperscanEngine() {
-
+	if ((this->m_compiler_->Mode & CompilerMode::HsModeStream) == CompilerMode::HsModeStream) {
+		const auto close_stream_err = hs_close_stream(this->m_stream_prototype_, nullptr, nullptr, nullptr);
+		if (close_stream_err != HS_SUCCESS)
+		{
+			throw gcnew HyperscanException(String::Format("ERROR {0}: Unable to close stream.", close_stream_err));
+		}
+	}
 }
 
 Database^ HyperscanEngine::Database::get() {
@@ -79,9 +96,26 @@ Scanner^ HyperscanEngine::CreateScanner()
 			throw gcnew HyperscanException(String::Format("ERROR {0}: Unable to allocate scratch prototype.", scratch_error));
 		}
 
-		const auto scanner = gcnew Scanner(this->m_database_, this->m_compiler_->ExpressionsById, this->m_match_observable_);
-		scanner->CreateScratch(scratch_prototype);
-		return scanner;
+		if ((this->m_compiler_->Mode & CompilerMode::HsModeBlock) == CompilerMode::HsModeBlock) {
+			const auto scanner = gcnew BlockScanner(this->m_database_, this->m_compiler_->ExpressionsById, this->m_match_observable_);
+			scanner->CreateScratch(scratch_prototype);
+			return scanner;
+		}
+
+		if ((this->m_compiler_->Mode & CompilerMode::HsModeStream) == CompilerMode::HsModeStream) {
+			hs_stream_t* stream;
+			const auto copy_stream_err = hs_copy_stream(&stream, this->m_stream_prototype_);
+			if (copy_stream_err != HS_SUCCESS)
+			{
+				throw gcnew HyperscanException(String::Format("ERROR {0}: Unable to copy stream.", copy_stream_err));
+			}
+
+			const auto scanner = gcnew StreamScanner(this->m_database_, this->m_compiler_->ExpressionsById, this->m_match_observable_, stream);
+			scanner->CreateScratch(scratch_prototype);
+			return scanner;
+		}
+
+		throw gcnew NotImplementedException("Mode: " + this->m_compiler_->Mode.ToString() + " is not implemented.");
 	}
 	finally
 	{

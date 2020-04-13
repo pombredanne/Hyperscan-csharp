@@ -21,35 +21,12 @@
 
 #pragma once
 
-#include "hyperscan_database.h"
-#include "hyperscan_exception.h"
-#include "hyperscan_match_event_handler.h"
-#include "hyperscan_match_observable.h"
-#include "hyperscan_expression.h"
-
-#include <msclr/gcroot.h>
-
 using namespace System;
-using namespace msclr;
-
-using namespace Hyperscan::Core;
-using namespace Hyperscan::Databases;
-using namespace Hyperscan::Compilation;
-using namespace Exceptions;
-using namespace Event;
 
 namespace Hyperscan {
 	namespace Scanning {
-		private ref class Scanner sealed {
-		internal:
-			/// <summary>
-			/// Construct a scanner
-			/// </summary>
-			/// <param name="database">The database</param>
-			/// <param name="expressionsById">The dictionary expressions</param>
-			/// <param name="matchObservable">The match observable</param>
-			Scanner(Database^ database, IDictionary<int, Expression^>^ expressionsById, MatchObservable^ matchObservable);
-
+		public ref class Scanner abstract {
+		public:
 			/// <summary>
 			/// Finalizer
 			/// </summary>
@@ -59,32 +36,20 @@ namespace Hyperscan {
 			/// Destructor
 			/// </summary>
 			!Scanner();
-
 			/// <summary>
 			/// Scan against an input
 			/// </summary>
 			/// <param name="input">The input</param>
 			/// <returns>True if succeeded, false if scan already completed</returns>
-			bool Scan(String^ input);
-
-			/// <summary>
-			/// Create and allocate a memory scratch for the current scanner
-			/// </summary>
-			/// <param name="scratchPrototype">The prototype which will be cloned for allocating new scratch</param>
-			void CreateScratch(hs_scratch_t* scratchPrototype);
+			virtual bool Scan(String^ input);
 
 			/// <summary>
 			/// Get the scratch size in bytes
 			/// </summary>
-			property int ScratchSize
+			virtual property int ScratchSize
 			{
 				int get();
 			}
-		private:
-			MatchEventHandler^ m_match_event_handler_;
-			gcroot<IDictionary<int, Expression^>^>* m_expressions_by_id_handle_;
-			hs_scratch_t* m_scratch_;
-			hs_database_t* m_database_;
 		};
 	}
 }

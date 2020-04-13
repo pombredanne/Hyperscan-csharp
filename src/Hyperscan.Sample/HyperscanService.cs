@@ -30,8 +30,8 @@ namespace Hyperscan.Sample
             engineBuilder.WithCompiler(() => new MultipleCompiler(new List<Expression>
             {
                 new Expression("foo(?i)bar(?-i)baz", ExpressionFlag.HsFlagCaseless),
-                new Expression("foo", ExpressionFlag.HsFlagCaseless | ExpressionFlag.HsFlagUtf8),
-                new Expression("foo(?i)bar", ExpressionFlag.HsFlagCaseless | ExpressionFlag.HsFlagDotall)
+                new Expression("foo", ExpressionFlag.HsFlagCaseless),
+                new Expression("foo(?i)bar", ExpressionFlag.HsFlagCaseless)
             }, CompilerMode.HsModeBlock));
             await using var engine = engineBuilder.Build();
             using var matchSubscription = engine.OnMatch
@@ -67,7 +67,7 @@ namespace Hyperscan.Sample
                 .Subscribe(match => { },
                     ex => { },
                     () => { });
-            await engine.ScanAsync("foofoobarbazbazbaz", stoppingToken);
+            await engine.ScanAsync("foofoobarbazbaz", stoppingToken);
             await Task.Delay(-1, stoppingToken);
         }
     }

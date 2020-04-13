@@ -77,21 +77,18 @@ namespace Hyperscan.Core
             }
 
             var hyperscanVersion = engine.Version;
-            string mode;
-            switch (engine.Compiler.Mode)
+            var mode = string.Empty;
+            if ((engine.Compiler.Mode & CompilerMode.HsModeBlock) == CompilerMode.HsModeBlock)
             {
-                case CompilerMode.HsModeBlock:
-                    mode = "block mode (non-streaming)";
-                    break;
-                case CompilerMode.HsModeStream:
-                    mode = "streaming mode";
-                    break;
-                case CompilerMode.HsModeVectored:
-                    mode = "vector mode";
-                    break;
-                default:
-                    mode = string.Empty;
-                    break;
+                mode = "block mode (non-streaming)";
+            }
+            else if ((engine.Compiler.Mode & CompilerMode.HsModeStream) == CompilerMode.HsModeStream)
+            {
+                mode = "streaming mode";
+            }
+            else if ((engine.Compiler.Mode & CompilerMode.HsModeVectored) == CompilerMode.HsModeVectored)
+            {
+                mode = "vector mode";
             }
 
             _logger.LogInformation($@"
@@ -105,7 +102,7 @@ namespace Hyperscan.Core
 Version {hyperscanVersion}
 ========================
 CPU-enabled intrinsics: {(engine.PlatformInfo.CpuFeature == CpuFeature.HsCpuFeatureAvx2 ? "AVX2" : "none")}
-{engine.InputConsumers.Count} multi-threaded scanners initialized with a total of {engine.InputConsumers.Sum(consumer => consumer.Scanner.ScratchSize)} bytes of scratch allocation.
+{engine.InputConsumers.Count} {(engine.InputConsumers.Count == 1 ? "single" : "multi")}-threaded scanner(s) initialized with a total of {engine.InputConsumers.Sum(consumer => consumer.Scanner.ScratchSize)} bytes of scratch allocation.
 {engine.Compiler.ExpressionsById.Count} expression(s) compiled.
 Database size is {engine.Database.Size} bytes.
 Engine compiler running in {mode}...

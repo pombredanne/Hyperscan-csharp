@@ -25,7 +25,7 @@
 
 using namespace Hyperscan::Scanning;
 
-Match::Match(int id, String^ fullMatch, Compilation::Expression^ expression, ReadOnlySequence<Byte> input) {
+Match::Match(int id, String^ fullMatch, Compilation::Expression^ expression, ReadOnlySequence<Byte>^ input) {
 	this->m_id_ = id;
 	this->m_full_match_ = fullMatch;
 	this->m_expression_ = expression;
@@ -45,5 +45,5 @@ Expression^ Match::Expression::get() {
 }
 
 ReadOnlySequence<Byte> Match::Input::get() {
-	return this->m_input_;
+	return *this->m_input_;
 }
