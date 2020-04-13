@@ -2,6 +2,9 @@
 
 namespace Hyperscan.Extensions.Expressions
 {
+    /// <summary>
+    /// Extensions for working with Hyperscan expressions
+    /// </summary>
     public static class ExpressionExtensions
     {
         /// <summary>

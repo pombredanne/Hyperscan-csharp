@@ -4,6 +4,9 @@ using Hyperscan.Databases;
 
 namespace Hyperscan.Extensions.Databases
 {
+    /// <summary>
+    /// Extensions for working with Hyperscan database
+    /// </summary>
     public static class DatabaseExtensions
     {
         /// <summary>

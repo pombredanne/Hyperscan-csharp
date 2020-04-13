@@ -7,6 +7,9 @@ using Hyperscan.Scanning;
 
 namespace Hyperscan.Core
 {
+    /// <summary>
+    /// Hyperscan engine
+    /// </summary>
     public interface IEngine : IAsyncDisposable
     {
         /// <summary>

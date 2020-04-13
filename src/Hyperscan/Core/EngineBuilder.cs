@@ -15,8 +15,8 @@ namespace Hyperscan.Core
     /// </summary>
     public class EngineBuilder
     {
-        private Func<Database> _databaseFactory;
-        private Func<Compiler> _compilerFactory;
+        private Func<Database>? _databaseFactory;
+        private Func<Compiler>? _compilerFactory;
         private ILogger _logger;
 
         /// <summary>

@@ -6,6 +6,9 @@
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <PackProject>true</PackProject>
     <DebugType>full</DebugType>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <WarningsAsErrors>CS8600;CS8602;CS8603</WarningsAsErrors>
     <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);CreatePackNupkg</TargetsForTfmSpecificContentInPackage>
     <PackageId>Hyperscan</PackageId>
     <Authors>bbougot</Authors>
@@ -33,7 +36,160 @@
         <PackagePath>lib/netcoreapp3.1</PackagePath>
       </TfmSpecificPackageFile>
       <TfmSpecificPackageFile Include="$(OutputPath)\Ijwhost.dll">
-        <PackagePath>lib/netcoreapp3.1</PackagePath>
+        <PackagePath>tools/Ijwhost.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_core_console_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_core_console_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_core_datetime_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_core_datetime_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_core_debug_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_core_debug_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_core_errorhandling_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_core_errorhandling_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_core_file_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_core_file_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_core_file_l1_2_0.dll">
+        <PackagePath>tools/api_ms_win_core_file_l1_2_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_core_file_l2_1_0.dll">
+        <PackagePath>tools/api_ms_win_core_file_l2_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_core_handle_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_core_handle_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_core_heap_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_core_heap_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_core_interlocked_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_core_interlocked_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_core_libraryloader_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_core_libraryloader_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_core_localization_l1_2_0.dll">
+        <PackagePath>tools/api_ms_win_core_localization_l1_2_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_core_memory_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_core_memory_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_core_namedpipe_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_core_namedpipe_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_core_processenvironment_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_core_processenvironment_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_core_processthreads_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_core_processthreads_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_core_processthreads_l1_1_1.dll">
+        <PackagePath>tools/api_ms_win_core_processthreads_l1_1_1.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_core_profile_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_core_profile_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_core_rtlsupport_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_core_rtlsupport_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_core_string_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_core_string_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_core_synch_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_core_synch_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_core_synch_l1_2_0.dll">
+        <PackagePath>tools/api_ms_win_core_synch_l1_2_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_core_sysinfo_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_core_sysinfo_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_core_timezone_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_core_timezone_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_core_util_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_core_util_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_crt_conio_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_crt_conio_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_crt_convert_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_crt_convert_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_crt_environment_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_crt_environment_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_crt_filesystem_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_crt_filesystem_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_crt_heap_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_crt_heap_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_crt_locale_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_crt_locale_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_crt_math_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_crt_math_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_crt_multibyte_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_crt_multibyte_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_crt_private_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_crt_private_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_crt_process_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_crt_process_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_crt_runtime_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_crt_runtime_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_crt_stdio_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_crt_stdio_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_crt_string_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_crt_string_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_crt_time_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_crt_time_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\api_ms_win_crt_utility_l1_1_0.dll">
+        <PackagePath>tools/api_ms_win_crt_utility_l1_1_0.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\concrt140.dll">
+        <PackagePath>tools/concrt140.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\msvcp140.dll">
+        <PackagePath>tools/msvcp140.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\msvcp140_1.dll">
+        <PackagePath>tools/msvcp140_1.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\msvcp140_2.dll">
+        <PackagePath>tools/msvcp140_2.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\msvcp140_codecvt_ids.dll">
+        <PackagePath>tools/msvcp140_codecvt_ids.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\ucrtbase.dll">
+        <PackagePath>tools/ucrtbase.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\vcamp140.dll">
+        <PackagePath>tools/vcamp140.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\vccorlib140.dll">
+        <PackagePath>tools/vccorlib140.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\vcomp140.dll">
+        <PackagePath>tools/vcomp140.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\vcruntime140.dll">
+        <PackagePath>tools/vcruntime140.dll</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="..\..\vc_142_redist_x64_14.25.28508\vcruntime140_1.dll">
+        <PackagePath>tools/vcruntime140_1.dll</PackagePath>
       </TfmSpecificPackageFile>
     </ItemGroup>
   </Target>

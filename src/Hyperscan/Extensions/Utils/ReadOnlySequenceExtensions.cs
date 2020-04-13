@@ -3,6 +3,9 @@ using System.Text;
 
 namespace Hyperscan.Extensions.Utils
 {
+    /// <summary>
+    /// Extensions for <see cref="ReadOnlySequence{T}"/>
+    /// </summary>
     public static class ReadOnlySequenceExtensions
     {
         /// <summary>
